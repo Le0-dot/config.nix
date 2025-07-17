@@ -1,0 +1,27 @@
+{ lib, config, ... }:
+
+{
+  options.editor.neovim = {
+    enable = lib.mkEnableOption "neovim";
+    config = lib.mkOption {
+      type = lib.types.str;
+      description = "String with path to neovim config directory";
+      example = "/home/user/neovim-config";
+    };
+  };
+
+  config = lib.mkIf config.editor.neovim.enable {
+    programs.neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    home.shellAliases = {
+      vim = "nvim";
+      v = "nvim";
+    };
+
+    home.file.".config/nvim".source =
+        lib.warn "Linking ${config.editor.neovim.config} to ~/.config/nvim"
+        config.lib.file.mkOutOfStoreSymlink config.editor.neovim.config;
+  };
+}
