@@ -24,11 +24,11 @@
           ahead = "";
           behind = "";
           diverged = "";
-          stashed = "";
-          modified = "";
-          staged = "";
-          renamed = "󱀱";
-          deleted = "";
+          stashed = "󰘓";
+          modified = "±";
+          staged = "+";
+          renamed = "";
+          deleted = "-";
         };
         package.disabled = true;
       };
