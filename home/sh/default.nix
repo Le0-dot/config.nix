@@ -22,6 +22,7 @@
       ll = "ls -laF --time-style=long-iso";
       tree = "eza --tree -a";
       yc = "git log --pretty=format:%s -1 | wl-copy"; # copy last commit message
+      pycharm-wayland = "pycharm-professional -Dawt.toolkit.name=WLToolkit";
     };
 
     stylix.targets.bat.enable = true;
