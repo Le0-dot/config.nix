@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   options.editor.neovim = {
@@ -13,8 +13,10 @@
   config = lib.mkIf config.editor.neovim.enable {
     programs.neovim = {
       enable = true;
-      defaultEditor = true;
     };
+
+    home.sessionVariables.EDITOR = "${pkgs.neovim}/bin/nvim";
+
     home.shellAliases = {
       vim = "nvim";
       v = "nvim";
