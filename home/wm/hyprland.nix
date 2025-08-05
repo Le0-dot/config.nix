@@ -32,6 +32,28 @@ in {
       brightnessctl
       playerctl
       networkmanagerapplet
+      (pkgs.writeShellScriptBin "playerctl-save" ''
+        #!/usr/bin/env sh
+
+        file=~/.player
+
+        function status() {
+            playerctl -a metadata -f '{{ playerName }} {{ status }}'
+        }
+
+        function status-to-script() {
+            sed '/Paused/d; /Stopped/d; s/^\(.\+\) Playing/playerctl -p \1 play/'
+        }
+
+        status | status-to-script > $file
+      '')
+      (pkgs.writeShellScriptBin "playerctl-resume" ''
+        #!/usr/bin/env sh
+
+        file=~/.player
+
+        sh $file && rm $file
+      '')
     ];
 
     home.pointerCursor = {
@@ -103,6 +125,7 @@ in {
           "rounding 0, floating:0, onworkspace:f[1]"
 
           "tag +development, class:.*ghostty.*"
+          "tag +development, title:.*Monkeytype.*"
           "tag +browser, class:google-chrome"
           "tag +social, class:.*Slack.*"
           "tag +video, title:.*Meet.*"
@@ -187,13 +210,15 @@ in {
           output.alias = "BUILTIN";
         }
         {
-          output.criteria = "Dell Inc. DELL P2317H V2G517BE336L";
+          # output.criteria = "Dell Inc. DELL P2317H V2G517BE336L";
+          output.criteria = "Dell Inc. DELL P2319H C2J9RS2";
           output.mode = "1920x1080@60";
           output.scale = 1.0;
           output.alias = "LEFT";
         }
         {
-          output.criteria = "Dell Inc. DELL P2317H V2G517BE331L";
+          # output.criteria = "Dell Inc. DELL P2317H V2G517BE331L";
+          output.criteria = "Dell Inc. DELL P2319H CKW45R2";
           output.mode = "1920x1080@60";
           output.scale = 1.0;
           output.alias = "RIGHT";
@@ -227,6 +252,8 @@ in {
       settings = {
         general = {
           lock_cmd = "pidof ${config.default.lock} || ${config.default.lock}";
+          on_lock_cmd = "playerctl-save && playerctl -a pause";
+          on_unlock_cmd = "playerctl-resume";
           before_sleep_cmd = "loginctl lock-session";
           after_sleep_cmd = "hyprctl dispatch dpms on";
         };
