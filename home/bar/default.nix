@@ -1,9 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [
-    ./waybar.nix
-  ];
+  imports = [ ./waybar.nix ];
 
   options.default.bar = lib.mkOption {
     type = lib.types.str;

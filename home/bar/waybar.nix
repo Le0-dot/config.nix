@@ -50,9 +50,7 @@
             persistent-workspaces = { "*" = 5; };
           };
 
-          tray = {
-            spacing = 10;
-          };
+          tray = { spacing = 10; };
 
           wireplumber = {
             format = "{volume}% {icon}";

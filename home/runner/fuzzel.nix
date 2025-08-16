@@ -13,7 +13,7 @@
       settings = {
         main = {
           use-bold = true;
-          prompt = "\"❯   \"";
+          prompt = ''"❯   "'';
           show-actions = "yes";
           width = 50;
           line-height = 18;

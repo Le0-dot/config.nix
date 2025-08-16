@@ -1,9 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [
-    ./hyprland.nix
-  ];
+  imports = [ ./hyprland.nix ];
 
   options.default.wm = lib.mkOption {
     type = lib.types.str;

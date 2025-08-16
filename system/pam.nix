@@ -1,6 +1,5 @@
 { lib, pkgs, config, ... }:
 
-
 {
   config = {
     environment.etc."pam.d/hyprlock".text = ''

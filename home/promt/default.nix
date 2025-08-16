@@ -1,5 +1,1 @@
-{
-  imports = [
-    ./starship.nix
-  ];
-}
+{ imports = [ ./starship.nix ]; }

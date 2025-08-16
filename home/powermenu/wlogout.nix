@@ -35,50 +35,50 @@
         }
       ];
       style = ''
-      * {
-          background-image: none;
-          box-shadow: none;
-      }
+        * {
+            background-image: none;
+            box-shadow: none;
+        }
 
-      window {
-          font-family: monospace;
-          font-size: 14pt;
-          color: #cad3f5; /* @base05 */
-          background-color: rgba(54, 58, 79, 0.5); /* @base02 + 0.5 alpha */
-      }
+        window {
+            font-family: monospace;
+            font-size: 14pt;
+            color: #cad3f5; /* @base05 */
+            background-color: rgba(54, 58, 79, 0.5); /* @base02 + 0.5 alpha */
+        }
 
-      button {
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 25%;
-          background-color: rgba(54, 58, 79, 0.5); /* @base02 + 0.5 alpha */
-          color: #cad3f5; /* @base05 */
-          border-color: #8aadf4; /* @base0D */
-          border-width: 0.2rem;
-          border-radius: 2rem;
-          margin: 10px;
-      }
+        button {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 25%;
+            background-color: rgba(54, 58, 79, 0.5); /* @base02 + 0.5 alpha */
+            color: #cad3f5; /* @base05 */
+            border-color: #8aadf4; /* @base0D */
+            border-width: 0.2rem;
+            border-radius: 2rem;
+            margin: 10px;
+        }
 
-      button:focus, button:active, button:hover {
-          background-color: #5b6078; /* @base04 */
-          outline-style: none;
-      }
+        button:focus, button:active, button:hover {
+            background-color: #5b6078; /* @base04 */
+            outline-style: none;
+        }
 
-      #lock {
-          background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
-      }
+        #lock {
+            background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
+        }
 
-      #logout {
-          background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
-      }
+        #logout {
+            background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
+        }
 
-      #shutdown {
-          background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
-      }
+        #shutdown {
+            background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
+        }
 
-      #reboot {
-          background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
-      }
+        #reboot {
+            background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
+        }
       '';
     };
   };

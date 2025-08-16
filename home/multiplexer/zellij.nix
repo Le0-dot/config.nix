@@ -2,16 +2,14 @@
 
 let
   bind = keys: actions: { "bind \"${keys}\"" = actions; };
-  groupBinds = binds: builtins.foldl' (x: y: x // y) {} binds;
-  toKDL = lib.hm.generators.toKDL {}; # TODO: Maybe try somehow convert layout files to nix
-in
-{
+  groupBinds = binds: builtins.foldl' (x: y: x // y) { } binds;
+  toKDL = lib.hm.generators.toKDL
+    { }; # TODO: Maybe try somehow convert layout files to nix
+in {
   options.multiplexer.zellij = lib.mkEnableOption "zellij";
 
   config = lib.mkIf config.multiplexer.zellij {
-    home.shellAliases = {
-      zellij = "zellij -l welcome";
-    };
+    home.shellAliases = { zellij = "zellij -l welcome"; };
 
     stylix.targets.zellij.enable = true;
 
@@ -27,25 +25,58 @@ in
         serialization_interval = 60;
         keybinds = {
           shared = groupBinds [
-            (bind "Alt d" { Detach = {}; })
-            (bind "Alt w" { LaunchOrFocusPlugin = {
+            (bind "Alt d" { Detach = { }; })
+            (bind "Alt w" {
+              LaunchOrFocusPlugin = {
                 _args = [ "session-manager" ];
                 floating = true;
                 move_to_focused_tab = true;
-              }; SwitchToMode = "Locked"; })
+              };
+              SwitchToMode = "Locked";
+            })
 
-            (bind "Alt t" { NewTab = { layout = "new-tab"; }; SwitchToMode = "Locked"; })
-            (bind "Alt 1" { GoToTab = 1; SwitchToMode = "Locked"; })
-            (bind "Alt 2" { GoToTab = 2; SwitchToMode = "Locked"; })
-            (bind "Alt 3" { GoToTab = 3; SwitchToMode = "Locked"; })
-            (bind "Alt 4" { GoToTab = 4; SwitchToMode = "Locked"; })
-            (bind "Alt 5" { GoToTab = 5; SwitchToMode = "Locked"; })
-            (bind "Alt 6" { GoToTab = 6; SwitchToMode = "Locked"; })
-            (bind "Alt 7" { GoToTab = 7; SwitchToMode = "Locked"; })
-            (bind "Alt 8" { GoToTab = 8; SwitchToMode = "Locked"; })
-            (bind "Alt 9" { GoToTab = 9; SwitchToMode = "Locked"; })
+            (bind "Alt t" {
+              NewTab = { layout = "new-tab"; };
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 1" {
+              GoToTab = 1;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 2" {
+              GoToTab = 2;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 3" {
+              GoToTab = 3;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 4" {
+              GoToTab = 4;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 5" {
+              GoToTab = 5;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 6" {
+              GoToTab = 6;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 7" {
+              GoToTab = 7;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 8" {
+              GoToTab = 8;
+              SwitchToMode = "Locked";
+            })
+            (bind "Alt 9" {
+              GoToTab = 9;
+              SwitchToMode = "Locked";
+            })
 
-            (bind "Alt p" { NewPane = {}; })
+            (bind "Alt p" { NewPane = { }; })
             (bind "Alt h" { MoveFocusOrTab = "Left"; })
             (bind "Alt j" { MoveFocusOrTab = "Down"; })
             (bind "Alt k" { MoveFocusOrTab = "Up"; })

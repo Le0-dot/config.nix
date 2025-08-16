@@ -1,9 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [
-    ./fuzzel.nix
-  ];
+  imports = [ ./fuzzel.nix ];
 
   options.default.runner = lib.mkOption {
     type = lib.types.str;

@@ -23,31 +23,30 @@
     };
   };
 
-  outputs = { nixpkgs, system-manager, nix-system-graphics, home-manager, stylix, ... }:
-  let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in
-  {
-    systemConfigs.default = system-manager.lib.makeSystemConfig {
-      modules = [
-        ./system
-        nix-system-graphics.systemModules.default ({
-          config = {
-            nixpkgs.hostPlatform = system;
-            system-manager.allowAnyDistro = true;
-            system-graphics.enable = true;
-          };
-        })
-      ];
+  outputs =
+    { nixpkgs, system-manager, nix-system-graphics, home-manager, stylix, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      systemConfigs.default = system-manager.lib.makeSystemConfig {
+        modules = [
+          ./system
+          nix-system-graphics.systemModules.default
+          ({
+            config = {
+              nixpkgs.hostPlatform = system;
+              system-manager.allowAnyDistro = true;
+              system-graphics.enable = true;
+            };
+          })
+        ];
+      };
+      homeConfigurations."lev.koliadich" =
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ stylix.homeModules.stylix ./home.nix ./home ];
+        };
+      formatter."${system}" = pkgs.nixfmt;
     };
-    homeConfigurations."lev.koliadich" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        stylix.homeModules.stylix
-        ./home.nix
-        ./home
-      ];
-    };
-  };
 }

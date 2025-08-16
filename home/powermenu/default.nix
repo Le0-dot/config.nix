@@ -6,7 +6,5 @@
     description = "Default powermenu application";
   };
 
-  imports = [
-    ./wlogout.nix
-  ];
+  imports = [ ./wlogout.nix ];
 }

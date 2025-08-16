@@ -70,9 +70,14 @@ in {
       enable = true;
       systemd.enable = true;
       systemd.enableXdgAutostart = true;
-      systemd.variables = ["--all"];
+      systemd.variables = [ "--all" ];
       settings = {
-        exec-once = [ "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1" "kanshi" config.default.bar "wl-paste --watch cliphist store" ];
+        exec-once = [
+          "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
+          "kanshi"
+          config.default.bar
+          "wl-paste --watch cliphist store"
+        ];
         "$mod" = "SUPER";
         bind = [
           "$mod CTRL, Q, exit"
@@ -89,17 +94,16 @@ in {
           (key: workspace: "$mod, ${key}, workspace, ${workspace}") workspaces
           ++ lib.mapAttrsToList
           (key: direction: "$mod, ${key}, movefocus, ${direction}") navigation
-          ++ lib.mapAttrsToList
-          (key: workspace: "$mod SHIFT, ${key}, movetoworkspacesilent, ${workspace}") workspaces
-          ++ lib.mapAttrsToList
-          (key: direction: "$mod SHIFT, ${key}, movewindow, ${direction}") navigation
-          ++ lib.mapAttrsToList
-          (key: direction: "$mod CTRL, ${key}, movecurrentworkspacetomonitor, ${direction}") navigation;
+          ++ lib.mapAttrsToList (key: workspace:
+            "$mod SHIFT, ${key}, movetoworkspacesilent, ${workspace}")
+          workspaces ++ lib.mapAttrsToList
+          (key: direction: "$mod SHIFT, ${key}, movewindow, ${direction}")
+          navigation ++ lib.mapAttrsToList (key: direction:
+            "$mod CTRL, ${key}, movecurrentworkspacetomonitor, ${direction}")
+          navigation;
 
-        bindm = [
-          "$mod, mouse:272, movewindow"
-          "$mod, mouse:273, resizewindow"
-        ];
+        bindm =
+          [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
 
         bindl = [
           ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -114,10 +118,8 @@ in {
           ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ];
 
-        workspace = [
-          "w[tv1], gapsout:0, gapsin:0"
-          "f[1], gapsout:0, gapsin:0"
-        ];
+        workspace =
+          [ "w[tv1], gapsout:0, gapsin:0" "f[1], gapsout:0, gapsin:0" ];
 
         windowrule = [
           "bordersize 0, floating:0, onworkspace:w[tv1]"

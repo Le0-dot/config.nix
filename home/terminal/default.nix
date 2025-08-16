@@ -1,9 +1,7 @@
-{ lib, ...}:
+{ lib, ... }:
 
 {
-  imports = [
-    ./ghostty.nix
-  ];
+  imports = [ ./ghostty.nix ];
 
   options.default.terminal = lib.mkOption {
     type = lib.types.str;

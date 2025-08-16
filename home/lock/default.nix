@@ -1,9 +1,7 @@
 { lib, ... }:
 
 {
-  imports = [
-    ./hyprlock.nix
-  ];
+  imports = [ ./hyprlock.nix ];
 
   options.default.lock = lib.mkOption {
     type = lib.types.str;
