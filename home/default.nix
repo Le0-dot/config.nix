@@ -1,6 +1,7 @@
 {
   imports = [
     ./wm
+    ./dm
     ./lock
     ./terminal
     ./bar

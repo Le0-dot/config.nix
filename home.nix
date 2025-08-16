@@ -6,6 +6,7 @@
   lock.hyprlock = true;
   bar.waybar = true;
   wm.hyprland = true;
+  dm.kanshi = true;
   powermenu.wlogout = true;
   sh.zsh = true; # Finish configuration
   promt.starship = true;
