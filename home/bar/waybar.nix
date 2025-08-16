@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.bar.waybar = lib.mkEnableOption "waybar";
@@ -46,22 +51,42 @@
               # "9" = "";
               # "10" = "";
             };
-            persistent-workspaces = { "*" = 5; };
+            persistent-workspaces = {
+              "*" = 5;
+            };
           };
 
-          tray = { spacing = 10; };
+          tray = {
+            spacing = 10;
+          };
 
           wireplumber = {
             format = "{volume}% {icon}";
             format-muted = "";
-            format-icons = [ "" "" "" ];
+            format-icons = [
+              ""
+              ""
+              ""
+            ];
             scroll-step = 5;
             on-click = "pwvucontrol";
           };
 
           backlight = {
             format = "{icon}";
-            format-icons = [ "" "" "" "" "" "" "" "" "" "" "" ];
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
             scroll-step = 5;
             tooltip = false;
           };
@@ -74,8 +99,30 @@
             };
             format = "{icon}";
             format-icons = {
-              default = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-              charging = [ "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" "󰂉" "󰢞" "󰂊" "󰂋" ];
+              default = [
+                "󰂎"
+                "󰁺"
+                "󰁻"
+                "󰁼"
+                "󰁽"
+                "󰁾"
+                "󰁿"
+                "󰂀"
+                "󰂁"
+                "󰂂"
+                "󰁹"
+              ];
+              charging = [
+                "󰢜"
+                "󰂆"
+                "󰂇"
+                "󰂈"
+                "󰢝"
+                "󰂉"
+                "󰢞"
+                "󰂊"
+                "󰂋"
+              ];
               plugged = "󰂅";
             };
             format-time = "{H}h {m}m";
@@ -93,11 +140,12 @@
               mode = "month";
               mode-mon-col = 3;
               format = {
-                today =
-                  "<span color='#dddd00' background='#000000'><b><u>{}</u></b></span>";
+                today = "<span color='#dddd00' background='#000000'><b><u>{}</u></b></span>";
               };
             };
-            actions = { on-click = "mode"; };
+            actions = {
+              on-click = "mode";
+            };
           };
         };
       };

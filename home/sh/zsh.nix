@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.sh.zsh = lib.mkEnableOption "zsh";
@@ -11,10 +16,12 @@
       defaultKeymap = "emacs";
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
-      plugins = [{
-        name = "fzf-tab";
-        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
-      }];
+      plugins = [
+        {
+          name = "fzf-tab";
+          src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+        }
+      ];
       initContent = ''
         # zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}" # Does not work for some reason
         zstyle ':completion:*' menu no

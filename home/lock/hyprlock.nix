@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.lock.hyprlock = lib.mkEnableOption "hyprlock";
@@ -15,16 +20,20 @@
         exec ${pkgs.hyprlock}/bin/hyprlock "$@"
       '';
       settings = {
-        general = { hide_cursor = true; };
+        general = {
+          hide_cursor = true;
+        };
 
         auth.fingerprint.enabled = true;
 
-        background = lib.mkForce [{
-          monitor = "";
-          path = "screenshot";
-          blur_passes = 3;
-          blur_size = 3;
-        }];
+        background = lib.mkForce [
+          {
+            monitor = "";
+            path = "screenshot";
+            blur_passes = 3;
+            blur_size = 3;
+          }
+        ];
 
         input-field = {
           monitor = "";

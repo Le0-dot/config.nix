@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   workspaces = {
@@ -19,7 +24,8 @@ let
     K = "u";
     L = "r";
   };
-in {
+in
+{
   options.wm.hyprland = lib.mkEnableOption "hyprland";
 
   config = lib.mkIf config.wm.hyprland {
@@ -66,20 +72,21 @@ in {
           "$mod Shift, Return, exec, ${config.default.runner}"
           "$mod, Escape, exec, ${config.default.powermenu}"
           "$mod, F, exec, wlrctl window focus google-chrome || hyprctl dispatch exec google-chrome"
-        ] ++ lib.mapAttrsToList
-          (key: workspace: "$mod, ${key}, workspace, ${workspace}") workspaces
-          ++ lib.mapAttrsToList
-          (key: direction: "$mod, ${key}, movefocus, ${direction}") navigation
-          ++ lib.mapAttrsToList (key: workspace:
-            "$mod SHIFT, ${key}, movetoworkspacesilent, ${workspace}")
-          workspaces ++ lib.mapAttrsToList
-          (key: direction: "$mod SHIFT, ${key}, movewindow, ${direction}")
-          navigation ++ lib.mapAttrsToList (key: direction:
-            "$mod CTRL, ${key}, movecurrentworkspacetomonitor, ${direction}")
-          navigation;
+        ]
+        ++ lib.mapAttrsToList (key: workspace: "$mod, ${key}, workspace, ${workspace}") workspaces
+        ++ lib.mapAttrsToList (key: direction: "$mod, ${key}, movefocus, ${direction}") navigation
+        ++ lib.mapAttrsToList (
+          key: workspace: "$mod SHIFT, ${key}, movetoworkspacesilent, ${workspace}"
+        ) workspaces
+        ++ lib.mapAttrsToList (key: direction: "$mod SHIFT, ${key}, movewindow, ${direction}") navigation
+        ++ lib.mapAttrsToList (
+          key: direction: "$mod CTRL, ${key}, movecurrentworkspacetomonitor, ${direction}"
+        ) navigation;
 
-        bindm =
-          [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
+        bindm = [
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+        ];
 
         bindl = [
           ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -94,8 +101,10 @@ in {
           ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ];
 
-        workspace =
-          [ "w[tv1], gapsout:0, gapsin:0" "f[1], gapsout:0, gapsin:0" ];
+        workspace = [
+          "w[tv1], gapsout:0, gapsin:0"
+          "f[1], gapsout:0, gapsin:0"
+        ];
 
         windowrule = [
           "bordersize 0, floating:0, onworkspace:w[tv1]"
@@ -120,26 +129,16 @@ in {
           "workspace 5, tag:media"
         ];
 
-        debug.disable_logs = false;
-
         general = {
           border_size = 2;
-          no_border_on_floating = false;
           gaps_in = 5;
           gaps_out = 5;
-          layout = "dwindle";
         };
 
         decoration = {
           rounding = 10;
-          active_opacity = 1.0;
           inactive_opacity = 0.9;
           dim_inactive = true;
-          dim_stength = 0.2;
-          shadow = {
-            range = 4;
-            render_power = 3;
-          };
         };
 
         animations.enabled = false;
@@ -155,24 +154,13 @@ in {
           scroll_method = "2fg";
 
           follow_mouse = true;
-
-          touchpad.natural_scroll = false;
-
-          sensitivity = 0;
         };
-
-        gestures.workspace_swipe = false;
 
         misc.disable_hyprland_logo = true;
         misc.disable_splash_rendering = true;
-        misc.allow_session_lock_restore = true;
         misc.background_color = lib.mkForce "0x111111"; # Temporary
 
-        dwindle = {
-          pseudotile = false;
-          force_split = 2;
-          preserve_split = true;
-        };
+        dwindle.force_split = 2;
       };
     };
 

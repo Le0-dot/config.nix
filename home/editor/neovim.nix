@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.editor.neovim = {
@@ -11,7 +16,9 @@
   };
 
   config = lib.mkIf config.editor.neovim.enable {
-    programs.neovim = { enable = true; };
+    programs.neovim = {
+      enable = true;
+    };
 
     home.sessionVariables.EDITOR = "${pkgs.neovim}/bin/nvim";
 
@@ -22,6 +29,7 @@
 
     home.file.".config/nvim".source =
       lib.warn "Linking ${config.editor.neovim.config} to ~/.config/nvim"
-      config.lib.file.mkOutOfStoreSymlink config.editor.neovim.config;
+        config.lib.file.mkOutOfStoreSymlink
+        config.editor.neovim.config;
   };
 }

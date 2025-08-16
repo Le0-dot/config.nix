@@ -3,13 +3,15 @@
 let
   bind = keys: actions: { "bind \"${keys}\"" = actions; };
   groupBinds = binds: builtins.foldl' (x: y: x // y) { } binds;
-  toKDL = lib.hm.generators.toKDL
-    { }; # TODO: Maybe try somehow convert layout files to nix
-in {
+  toKDL = lib.hm.generators.toKDL { }; # TODO: Maybe try somehow convert layout files to nix
+in
+{
   options.multiplexer.zellij = lib.mkEnableOption "zellij";
 
   config = lib.mkIf config.multiplexer.zellij {
-    home.shellAliases = { zellij = "zellij -l welcome"; };
+    home.shellAliases = {
+      zellij = "zellij -l welcome";
+    };
 
     stylix.targets.zellij.enable = true;
 
@@ -36,7 +38,9 @@ in {
             })
 
             (bind "Alt t" {
-              NewTab = { layout = "new-tab"; };
+              NewTab = {
+                layout = "new-tab";
+              };
               SwitchToMode = "Locked";
             })
             (bind "Alt 1" {
@@ -82,7 +86,11 @@ in {
             (bind "Alt k" { MoveFocusOrTab = "Up"; })
             (bind "Alt l" { MoveFocusOrTab = "Right"; })
 
-            (bind "Alt g" { NewTab = { layout = "lazygit"; }; })
+            (bind "Alt g" {
+              NewTab = {
+                layout = "lazygit";
+              };
+            })
           ];
           "shared_except \"Locked\"" = groupBinds [
             (bind "Ctrl g" { SwitchToMode = "Locked"; })

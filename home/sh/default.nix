@@ -45,7 +45,13 @@
         show_tabs = false;
         keys.scroll_exits = false;
         stats.common_prefix = [ "sudo" ];
-        stats.ignored_commands = [ "cd" "ls" "vim" "nvim" "v" ];
+        stats.ignored_commands = [
+          "cd"
+          "ls"
+          "vim"
+          "nvim"
+          "v"
+        ];
       };
     };
   };

@@ -15,7 +15,7 @@
         }
         {
           profile.name = "default";
-          profile.outputs = [{ criteria = "$BUILTIN"; }];
+          profile.outputs = [ { criteria = "$BUILTIN"; } ];
         }
         {
           profile.name = "docked1";

@@ -24,11 +24,19 @@
   };
 
   outputs =
-    { nixpkgs, system-manager, nix-system-graphics, home-manager, stylix, ... }:
+    {
+      nixpkgs,
+      system-manager,
+      nix-system-graphics,
+      home-manager,
+      stylix,
+      ...
+    }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    in
+    {
       systemConfigs.default = system-manager.lib.makeSystemConfig {
         modules = [
           ./system
@@ -42,11 +50,14 @@
           })
         ];
       };
-      homeConfigurations."lev.koliadich" =
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ stylix.homeModules.stylix ./home.nix ./home ];
-        };
+      homeConfigurations."lev.koliadich" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          stylix.homeModules.stylix
+          ./home.nix
+          ./home
+        ];
+      };
       formatter."${system}" = pkgs.nixfmt;
     };
 }
