@@ -52,8 +52,6 @@ in {
       settings = {
         exec-once = [
           "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
-          "kanshi"
-          config.default.bar
           "wl-paste --watch cliphist store"
         ];
         "$mod" = "SUPER";

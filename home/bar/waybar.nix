@@ -4,8 +4,6 @@
   options.bar.waybar = lib.mkEnableOption "waybar";
 
   config = lib.mkIf config.bar.waybar {
-    default.bar = lib.mkDefault "waybar";
-
     stylix.targets.waybar = {
       enable = true;
       addCss = false;
@@ -15,6 +13,7 @@
 
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
       settings = {
         mainBar = {
           layer = "top";
