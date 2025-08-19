@@ -14,5 +14,6 @@
     ./filemanager
     ./notificaion
     ./scripts
+    ./wallpaper
   ];
 }

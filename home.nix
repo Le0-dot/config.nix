@@ -13,6 +13,7 @@
   multiplexer.zellij = true;
   filemanager.yazi = true;
   notification.dunst = true;
+  wallpaper.hyprpaper = true;
   editor.neovim = {
     enable = true;
     config = "/home/lev.koliadich/projects/config.nvim";
