@@ -72,6 +72,7 @@ in
           "$mod Shift, Return, exec, ${config.default.runner}"
           "$mod, Escape, exec, ${config.default.powermenu}"
           "$mod, F, exec, wlrctl window focus google-chrome || hyprctl dispatch exec google-chrome"
+          "$mod Ctrl, V, exec, clipselect"
         ]
         ++ lib.mapAttrsToList (key: workspace: "$mod, ${key}, workspace, ${workspace}") workspaces
         ++ lib.mapAttrsToList (key: direction: "$mod, ${key}, movefocus, ${direction}") navigation

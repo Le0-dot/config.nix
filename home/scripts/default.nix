@@ -1,1 +1,6 @@
-{ imports = [ ./playerctl.nix ]; }
+{
+  imports = [
+    ./playerctl.nix
+    ./cliphist.nix
+  ];
+}
