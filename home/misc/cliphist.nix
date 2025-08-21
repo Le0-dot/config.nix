@@ -15,4 +15,15 @@
         | wl-copy
     '')
   ];
+
+  keybinds = [
+    {
+      modifiers = [
+        "SUPER"
+        "CTRL"
+      ];
+      key = "V";
+      action = "clipselect";
+    }
+  ];
 }

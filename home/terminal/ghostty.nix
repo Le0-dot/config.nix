@@ -4,8 +4,6 @@
   options.terminal.ghostty = lib.mkEnableOption "ghostty";
 
   config = lib.mkIf config.terminal.ghostty {
-    default.terminal = lib.mkDefault "ghostty";
-
     stylix.targets.ghostty.enable = true;
 
     programs.ghostty = {
@@ -15,5 +13,13 @@
         keybind = builtins.map (n: "alt+${toString n}=unbind") (lib.range 1 9);
       };
     };
+
+    keybinds = [
+      {
+        modifiers = [ "SUPER" ];
+        key = "RETURN";
+        action = "ghostty";
+      }
+    ];
   };
 }

@@ -9,8 +9,6 @@
   options.powermenu.wlogout = lib.mkEnableOption "wlogout";
 
   config = lib.mkIf config.powermenu.wlogout {
-    default.powermenu = lib.mkDefault "wlogout -b 2 -L 480 -R 480";
-
     programs.wlogout = {
       enable = true;
       layout = [
@@ -86,5 +84,13 @@
         }
       '';
     };
+
+    keybinds = [
+      {
+        modifiers = [ "SUPER" ];
+        key = "ESCAPE";
+        action = "wlogout -b 2 -L 480 -R 480";
+      }
+    ];
   };
 }

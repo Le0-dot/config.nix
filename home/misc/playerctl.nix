@@ -25,4 +25,15 @@
       sh $file && rm $file
     '')
   ];
+
+  keybinds = [
+    {
+      modifiers = [
+        "SUPER"
+        "ALT"
+      ];
+      key = "SPACE";
+      action = "playerctl -a play-pause";
+    }
+  ];
 }

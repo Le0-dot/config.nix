@@ -15,6 +15,8 @@
       icons = "auto";
     };
 
+    programs.gh.enable = true;
+
     home.sessionPath = [ "$HOME/.local/bin" ];
 
     home.shellAliases = {

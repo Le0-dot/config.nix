@@ -13,7 +13,8 @@
     ./editor
     ./filemanager
     ./notificaion
-    ./scripts
     ./wallpaper
+    ./misc
+    ./keybinds.nix
   ];
 }

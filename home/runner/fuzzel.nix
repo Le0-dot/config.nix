@@ -4,8 +4,6 @@
   options.runner.fuzzel = lib.mkEnableOption "fuzzel";
 
   config = lib.mkIf config.runner.fuzzel {
-    default.runner = lib.mkDefault "fuzzel";
-
     stylix.targets.fuzzel.enable = true;
 
     programs.fuzzel = {
@@ -21,5 +19,16 @@
         border.radius = 20;
       };
     };
+
+    keybinds = [
+      {
+        modifiers = [
+          "SUPER"
+          "SHIFT"
+        ];
+        key = "RETURN";
+        action = "fuzzel";
+      }
+    ];
   };
 }

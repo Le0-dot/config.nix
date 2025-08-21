@@ -12,11 +12,6 @@ let
     "3" = "3";
     "4" = "4";
     "5" = "5";
-    "6" = "6";
-    "7" = "7";
-    "8" = "8";
-    "9" = "9";
-    "0" = "10";
   };
   navigation = {
     H = "l";
@@ -24,6 +19,15 @@ let
     K = "u";
     L = "r";
   };
+  renderKeybind =
+    {
+      modifiers,
+      key,
+      action,
+      type,
+    }:
+    "${builtins.concatStringsSep " " modifiers}, ${key}, exec, ${action}";
+  keybindsByType = keybindType: builtins.filter ({ type, ... }: type == keybindType);
 in
 {
   options.wm.hyprland = lib.mkEnableOption "hyprland";
@@ -33,9 +37,7 @@ in
 
     home.packages = with pkgs; [
       wl-clipboard-rs
-      wireplumber
       wlrctl
-      brightnessctl
       playerctl
       networkmanagerapplet
       sway-contrib.grimshot
@@ -58,7 +60,6 @@ in
       settings = {
         exec-once = [
           "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1"
-          "wl-paste --watch cliphist store"
         ];
         "$mod" = "SUPER";
         bind = [
@@ -67,13 +68,10 @@ in
           "$mod, Tab, fullscreen, 1"
           "$mod SHIFT, V, togglefloating"
           "$mod SHIFT, V, centerwindow"
-
-          "$mod, Return, exec, ${config.default.terminal}"
-          "$mod Shift, Return, exec, ${config.default.runner}"
-          "$mod, Escape, exec, ${config.default.powermenu}"
-          "$mod, F, exec, wlrctl window focus google-chrome || hyprctl dispatch exec google-chrome"
-          "$mod Ctrl, V, exec, clipselect"
         ]
+
+        ++ map renderKeybind (keybindsByType "PRESS" config.keybinds)
+
         ++ lib.mapAttrsToList (key: workspace: "$mod, ${key}, workspace, ${workspace}") workspaces
         ++ lib.mapAttrsToList (key: direction: "$mod, ${key}, movefocus, ${direction}") navigation
         ++ lib.mapAttrsToList (
@@ -89,18 +87,7 @@ in
           "$mod, mouse:273, resizewindow"
         ];
 
-        bindl = [
-          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
-          ", XF86MonBrightnessUp, exec, brightnessctl set 5%+"
-
-          "$mod ALT, Space, exec, playerctl -a play-pause"
-        ];
-
-        binde = [
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ];
+        binde = map renderKeybind (keybindsByType "HOLD" config.keybinds);
 
         workspace = [
           "w[tv1], gapsout:0, gapsin:0"
