@@ -59,6 +59,27 @@
             }
           ];
         }
+        {
+          profile.name = "docked3";
+          profile.outputs = [
+            {
+              criteria = "$BUILTIN";
+              position = "960,1080";
+            }
+            {
+              criteria = "Dell Inc. DELL P2317H 9KFDW757216I";
+              position = "0,0";
+              mode = "1920x1080@60";
+              scale = 1.0;
+            }
+            {
+              criteria = "Dell Inc. DELL P2317H V2G517BAB9FL";
+              position = "1920,0";
+              mode = "1920x1080@60";
+              scale = 1.0;
+            }
+          ];
+        }
       ];
     };
   };
