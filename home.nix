@@ -26,7 +26,10 @@
   home.stateVersion = "25.05";
 
   nixpkgs.config.allowUnfree = true;
-  home.packages = [ pkgs.jetbrains.pycharm-professional ];
+  home.packages = [
+    pkgs.jetbrains.pycharm-professional
+    pkgs.nil
+  ];
 
   fonts.fontconfig.enable = true;
   stylix = {
