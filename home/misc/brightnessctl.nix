@@ -3,7 +3,7 @@
 {
   home.packages = [ pkgs.brightnessctl ];
 
-  keybinds = [
+  keybind.binds = [
     {
       key = "XF86MonBrightnessDown";
       action = "brightnessctl set 5%-";

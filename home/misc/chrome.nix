@@ -1,16 +1,11 @@
-{ pkgs, ... }:
-
 {
-  home.packages = [
-    pkgs.google-chrome
-    pkgs.wlrctl
-  ];
-
-  keybinds = [
+  keybind.binds = [
     {
-      modifiers = [ "SUPER" ];
-      key = "F";
-      action = "google-chrome-stable";
+      modifiers = [
+        "SUPER"
+      ];
+      key = "f";
+      action = "google-chrome";
     }
   ];
 }

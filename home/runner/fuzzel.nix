@@ -20,7 +20,7 @@
       };
     };
 
-    keybinds = [
+    keybind.binds = [
       {
         modifiers = [
           "SUPER"

@@ -21,6 +21,11 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    keybind = {
+      url = "github:Le0-dot/keybind.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -30,6 +35,7 @@
       nix-system-graphics,
       home-manager,
       stylix,
+      keybind,
       ...
     }:
     let
@@ -42,11 +48,9 @@
           ./system
           nix-system-graphics.systemModules.default
           ({
-            config = {
-              nixpkgs.hostPlatform = system;
-              system-manager.allowAnyDistro = true;
-              system-graphics.enable = true;
-            };
+            nixpkgs.hostPlatform = system;
+            system-manager.allowAnyDistro = true;
+            system-graphics.enable = true;
           })
         ];
       };
@@ -54,6 +58,7 @@
         inherit pkgs;
         modules = [
           stylix.homeModules.stylix
+          keybind.homeModules.keybind
           ./home.nix
           ./home
         ];

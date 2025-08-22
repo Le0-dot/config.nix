@@ -3,7 +3,7 @@
 {
   home.packages = [ pkgs.wireplumber ];
 
-  keybinds = [
+  keybind.binds = [
     {
       key = "XF86AudioMute";
       action = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
