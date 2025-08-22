@@ -26,7 +26,7 @@
     '')
   ];
 
-  keybinds = [
+  key.binds = [
     {
       modifiers = [
         "SUPER"

@@ -85,7 +85,7 @@
       '';
     };
 
-    keybinds = [
+    key.binds = [
       {
         modifiers = [ "SUPER" ];
         key = "ESCAPE";

@@ -15,6 +15,5 @@
     ./notificaion
     ./wallpaper
     ./misc
-    ./keybinds.nix
   ];
 }

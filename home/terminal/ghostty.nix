@@ -14,7 +14,7 @@
       };
     };
 
-    keybinds = [
+    key.binds = [
       {
         modifiers = [ "SUPER" ];
         key = "RETURN";

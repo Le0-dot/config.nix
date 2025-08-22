@@ -19,15 +19,6 @@ let
     K = "u";
     L = "r";
   };
-  renderKeybind =
-    {
-      modifiers,
-      key,
-      action,
-      type,
-    }:
-    "${builtins.concatStringsSep " " modifiers}, ${key}, exec, ${action}";
-  keybindsByType = keybindType: builtins.filter ({ type, ... }: type == keybindType);
 in
 {
   options.wm.hyprland = lib.mkEnableOption "hyprland";
@@ -51,6 +42,7 @@ in
     };
 
     stylix.targets.hyprland.enable = true;
+    key.hyprland.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -69,9 +61,6 @@ in
           "$mod SHIFT, V, togglefloating"
           "$mod SHIFT, V, centerwindow"
         ]
-
-        ++ map renderKeybind (keybindsByType "PRESS" config.keybinds)
-
         ++ lib.mapAttrsToList (key: workspace: "$mod, ${key}, workspace, ${workspace}") workspaces
         ++ lib.mapAttrsToList (key: direction: "$mod, ${key}, movefocus, ${direction}") navigation
         ++ lib.mapAttrsToList (
@@ -86,8 +75,6 @@ in
           "$mod, mouse:272, movewindow"
           "$mod, mouse:273, resizewindow"
         ];
-
-        binde = map renderKeybind (keybindsByType "HOLD" config.keybinds);
 
         workspace = [
           "w[tv1], gapsout:0, gapsin:0"
