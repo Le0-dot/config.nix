@@ -3,7 +3,6 @@
 let
   bind = keys: actions: { "bind \"${keys}\"" = actions; };
   groupBinds = binds: builtins.foldl' (x: y: x // y) { } binds;
-  toKDL = lib.hm.generators.toKDL { }; # TODO: Maybe try somehow convert layout files to nix
 in
 {
   options.multiplexer.zellij = lib.mkEnableOption "zellij";
