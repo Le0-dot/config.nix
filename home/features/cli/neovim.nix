@@ -6,7 +6,7 @@
 }:
 
 {
-  options.editor.neovim = {
+  options.features.cli.neovim = {
     enable = lib.mkEnableOption "neovim";
     config = lib.mkOption {
       type = lib.types.str;
@@ -15,7 +15,7 @@
     };
   };
 
-  config = lib.mkIf config.editor.neovim.enable {
+  config = lib.mkIf config.features.cli.neovim.enable {
     programs.neovim = {
       enable = true;
     };

@@ -2,9 +2,9 @@
 { lib, config, ... }:
 
 {
-  options.dm.kanshi = lib.mkEnableOption "kanshi";
+  options.features.desktop.kanshi = lib.mkEnableOption "kanshi";
 
-  config = lib.mkIf config.dm.kanshi {
+  config = lib.mkIf config.features.desktop.kanshi {
     services.kanshi = {
       enable = true;
       settings = [

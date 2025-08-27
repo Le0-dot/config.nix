@@ -1,7 +1,14 @@
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 {
-  keybind.binds = [
+  options.features.desktop.brightnessctl = lib.mkEnableOption "brightnessctl";
+
+  config.keybins.binds = lib.mkIf config.features.desktop.brightnessctl [
     {
       key = "XF86MonBrightnessDown";
       action = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";

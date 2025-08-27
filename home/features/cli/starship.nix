@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.promt.starship = lib.mkEnableOption "starship";
+  options.features.cli.starship = lib.mkEnableOption "starship";
 
-  config = lib.mkIf config.promt.starship {
+  config = lib.mkIf config.features.cli.starship {
     stylix.targets.starship.enable = true;
 
     programs.starship = {

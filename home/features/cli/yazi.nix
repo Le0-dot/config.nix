@@ -1,9 +1,9 @@
 { lib, config, ... }:
 
 {
-  options.filemanager.yazi = lib.mkEnableOption "yazi";
+  options.features.cli.yazi = lib.mkEnableOption "yazi";
 
-  config = lib.mkIf config.filemanager.yazi {
+  config = lib.mkIf config.features.cli.yazi {
     stylix.targets.yazi.enable = true;
 
     programs.yazi = {

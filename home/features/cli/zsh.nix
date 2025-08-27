@@ -6,9 +6,9 @@
 }:
 
 {
-  options.sh.zsh = lib.mkEnableOption "zsh";
+  options.features.cli.zsh = lib.mkEnableOption "zsh";
 
-  config = lib.mkIf config.sh.zsh {
+  config = lib.mkIf config.features.cli.zsh {
     default.sh = lib.mkDefault "zsh";
 
     programs.zsh = {

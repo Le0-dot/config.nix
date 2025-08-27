@@ -7,9 +7,9 @@
 }:
 
 {
-  options.bar.waybar = lib.mkEnableOption "waybar";
+  options.features.desktop.waybar = lib.mkEnableOption "waybar";
 
-  config = lib.mkIf config.bar.waybar {
+  config = lib.mkIf config.features.desktop.waybar {
     stylix.targets.waybar = {
       enable = true;
       addCss = false;

@@ -5,9 +5,9 @@ let
   groupBinds = binds: builtins.foldl' (x: y: x // y) { } binds;
 in
 {
-  options.multiplexer.zellij = lib.mkEnableOption "zellij";
+  options.features.cli.zellij = lib.mkEnableOption "zellij";
 
-  config = lib.mkIf config.multiplexer.zellij {
+  config = lib.mkIf config.features.cli.zellij {
     home.shellAliases = {
       zellij = "zellij -l welcome";
     };

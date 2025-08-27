@@ -6,9 +6,9 @@
 }:
 
 {
-  options.runner.fuzzel = lib.mkEnableOption "fuzzel";
+  options.features.desktop.fuzzel = lib.mkEnableOption "fuzzel";
 
-  config = lib.mkIf config.runner.fuzzel {
+  config = lib.mkIf config.features.desktop.fuzzel {
     stylix.targets.fuzzel.enable = true;
 
     programs.fuzzel = {

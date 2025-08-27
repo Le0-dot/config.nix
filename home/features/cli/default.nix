@@ -9,8 +9,6 @@
   ];
 
   config = {
-    home.sessionPath = [ "$HOME/.local/bin" ]; # TODO: Move
-
     programs.fzf.enable = true; # TODO: Extract all metions into script
     programs.lazygit.enable = true;
     programs.direnv.enable = true;

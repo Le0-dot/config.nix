@@ -2,9 +2,9 @@
 { lib, config, ... }:
 
 {
-  options.notification.dunst = lib.mkEnableOption "dunst";
+  options.features.desktop.dunst = lib.mkEnableOption "dunst";
 
-  config = lib.mkIf config.notification.dunst {
+  config = lib.mkIf config.features.desktop.dunst {
     stylix.targets.dunst.enable = true;
 
     services.dunst = {

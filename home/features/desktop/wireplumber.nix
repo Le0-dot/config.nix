@@ -1,7 +1,14 @@
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 {
-  keybind.binds = [
+  options.features.desktop.wireplumber = lib.mkEnableOption "wireplumber";
+
+  config.keybind.binds = lib.mkIf config.features.desktop.wireplumber [
     {
       key = "XF86AudioMute";
       action = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";

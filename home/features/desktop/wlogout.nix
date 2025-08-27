@@ -7,9 +7,9 @@
 }:
 
 {
-  options.powermenu.wlogout = lib.mkEnableOption "wlogout";
+  options.features.desktop.wlogout = lib.mkEnableOption "wlogout";
 
-  config = lib.mkIf config.powermenu.wlogout {
+  config = lib.mkIf config.features.desktop.wlogout {
     programs.wlogout = {
       enable = true;
       layout = [

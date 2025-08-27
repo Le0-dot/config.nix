@@ -21,9 +21,9 @@ let
   };
 in
 {
-  options.wm.hyprland = lib.mkEnableOption "hyprland";
+  options.features.desktop.hyprland = lib.mkEnableOption "hyprland";
 
-  config = lib.mkIf config.wm.hyprland {
+  config = lib.mkIf config.features.desktop.hyprland {
     default.wm = lib.mkDefault "Hyprland";
 
     home.packages = with pkgs; [

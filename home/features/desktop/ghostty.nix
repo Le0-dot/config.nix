@@ -2,9 +2,9 @@
 { lib, config, ... }:
 
 {
-  options.terminal.ghostty = lib.mkEnableOption "ghostty";
+  options.features.desktop.ghostty = lib.mkEnableOption "ghostty";
 
-  config = lib.mkIf config.terminal.ghostty {
+  config = lib.mkIf config.features.desktop.ghostty {
     stylix.targets.ghostty.enable = true;
 
     programs.ghostty = {
