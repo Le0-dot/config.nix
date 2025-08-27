@@ -59,7 +59,6 @@
         modules = [
           stylix.homeModules.stylix
           keybind.homeModules.keybind
-          ./home.nix
           ./home
         ];
       };
