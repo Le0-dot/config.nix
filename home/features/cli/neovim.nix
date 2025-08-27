@@ -28,8 +28,8 @@
     };
 
     home.file.".config/nvim".source =
-      lib.warn "Linking ${config.editor.neovim.config} to ~/.config/nvim"
+      lib.warn "Linking ${config.features.cli.neovim.config} to ~/.config/nvim"
         config.lib.file.mkOutOfStoreSymlink
-        config.editor.neovim.config;
+        config.features.cli.neovim.config;
   };
 }
