@@ -1,5 +1,5 @@
 {
-  import = [
+  imports = [
     ./ghostty.nix
     ./chrome.nix
     ./fuzzel.nix
