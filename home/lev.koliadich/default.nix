@@ -45,11 +45,9 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = [
     pkgs.nil
-    pkgs.writeShellScriptBin
-    "pycharm-professional"
-    ''
+    (pkgs.writeShellScriptBin "pycharm-professional" ''
       ${pkgs.jetbrains.pycharm-professional}/bin/pycharm-professional -Dawt.toolkit.name=WLToolkit";
-    ''
+    '')
   ];
 
   home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
