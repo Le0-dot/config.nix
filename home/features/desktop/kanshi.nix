@@ -1,3 +1,4 @@
+# TODO: Try setting docked with builtin and any 2 displays
 { lib, config, ... }:
 
 {

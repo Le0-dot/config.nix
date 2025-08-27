@@ -28,10 +28,7 @@
 
   keybind.binds = [
     {
-      modifiers = [
-        "SUPER"
-        "ALT"
-      ];
+      modifiers = [ "SUPER" ];
       key = "SPACE";
       action = "playerctl -a play-pause";
     }

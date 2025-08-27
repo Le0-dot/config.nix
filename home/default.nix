@@ -1,19 +1,6 @@
 {
-  imports = [
-    ./wm
-    ./dm
-    ./lock
-    ./terminal
-    ./bar
-    ./runner
-    ./powermenu
-    ./sh
-    ./promt
-    ./multiplexer
-    ./editor
-    ./filemanager
-    ./notificaion
-    ./wallpaper
-    ./misc
+  import = [
+    ./features
+    ./lev.koliadich
   ];
 }

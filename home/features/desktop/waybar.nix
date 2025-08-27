@@ -1,3 +1,4 @@
+# TODO: Add check for hyprland workspaces
 {
   pkgs,
   lib,
