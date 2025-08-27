@@ -5,8 +5,8 @@
   config = lib.mkIf config.features.cli.git {
     programs.git = {
       enable = true;
-      # userEmail = "lev.koliadich@kyriba.com";
-      # userName = "Lev Koliadich";
+      userEmail = "lev.koliadich@kyriba.com";
+      userName = "Lev Koliadich";
       delta = {
         enable = true;
         options.side-by-side = true;
