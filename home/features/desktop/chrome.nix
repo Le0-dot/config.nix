@@ -1,5 +1,7 @@
+{ lib, config, ... }:
 {
-  keybind.binds = [
+  options.features.desktop.chrome = lib.mkEnableOption "chrome";
+  config.keybind.binds = lib.mkIf config.features.desktop.chrome [
     {
       modifiers = [
         "SUPER"
