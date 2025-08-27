@@ -9,8 +9,6 @@
   options.features.cli.zsh = lib.mkEnableOption "zsh";
 
   config = lib.mkIf config.features.cli.zsh {
-    default.sh = lib.mkDefault "zsh";
-
     programs.zsh = {
       enable = true;
       defaultKeymap = "emacs";
@@ -39,9 +37,10 @@
             fi
         }
       '';
+      # TODO: Handle hardcoded wm
       loginExtra = ''
         if [ -z "''${DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-            ${config.default.wm}
+            Hyprland
         fi
       '';
     };

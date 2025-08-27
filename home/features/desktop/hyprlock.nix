@@ -9,8 +9,6 @@
   options.features.desktop.hyprlock = lib.mkEnableOption "hyprlock";
 
   config = lib.mkIf config.features.desktop.hyprlock {
-    default.lock = lib.mkDefault "hyprlock";
-
     stylix.targets.hyprlock.enable = true;
 
     programs.hyprlock = {

@@ -24,8 +24,6 @@ in
   options.features.desktop.hyprland = lib.mkEnableOption "hyprland";
 
   config = lib.mkIf config.features.desktop.hyprland {
-    default.wm = lib.mkDefault "Hyprland";
-
     home.packages = with pkgs; [
       wl-clipboard-rs
       wlrctl
@@ -143,7 +141,8 @@ in
       enable = true;
       settings = {
         general = {
-          lock_cmd = "pidof ${config.default.lock} || ${config.default.lock}";
+          # TODO: Handle hardcoded lock
+          lock_cmd = "pidof hyprlock || hyprlock";
           on_lock_cmd = "playerctl-save && playerctl -a pause";
           on_unlock_cmd = "playerctl-resume";
           before_sleep_cmd = "loginctl lock-session";
