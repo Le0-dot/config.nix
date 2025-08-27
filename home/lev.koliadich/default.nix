@@ -8,7 +8,6 @@
 {
   features = {
     cli = {
-      default = lib.mkDefault true;
       git = lib.mkDefault true;
       starship = lib.mkDefault true;
       yazi = lib.mkDefault true;
@@ -22,7 +21,6 @@
     desktop = {
       brightnessctl = lib.mkDefault true;
       chrome = lib.mkDefault true;
-      default = lib.mkDefault true;
       dunst = lib.mkDefault true;
       fuzzel = lib.mkDefault true;
       ghostty = lib.mkDefault true;
