@@ -62,14 +62,7 @@
       homeConfigurations = {
         "lev.koliadich" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = homeModules ++ [ ./home/lev.koliadich ];
-        };
-        "lev.koliadich@PL-WAW-LX-025.fr.kyriba.com" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = homeModules ++ [
-            ./home/lev.koliadich
-            ./home/lev.koliadich/PL-WAW-LX-025.fr.kyriba.com.nix
-          ];
+          modules = homeModules ++ [ ./home/profiles/work.nix ];
         };
       };
       formatter.${system} = pkgs.treefmt.withConfig {
