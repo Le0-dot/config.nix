@@ -63,6 +63,9 @@
         "lev.koliadich" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = homeModules ++ [ ./home/profiles/work.nix ];
+          extraSpecialArgs = {
+            user = "lev.koliadich";
+          };
         };
       };
       formatter.${system} = pkgs.treefmt.withConfig {

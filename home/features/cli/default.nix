@@ -13,10 +13,12 @@
   config = {
     home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
-    home.packages = [ pkgs.rustc ];
+    home.packages = [
+      pkgs.nil
+    ];
     programs.uv.enable = true;
 
-    programs.fzf.enable = true; # TODO: Extract all metions into script
+    programs.fzf.enable = true;
     programs.lazygit.enable = true;
     programs.direnv.enable = true;
 
@@ -33,7 +35,7 @@
       enable = true;
       settings = {
         dialect = "uk";
-        filter_mode_shell_up_key_binding = "session";
+        filter_mode = "directory";
         enter_accept = true;
         style = "compact";
         show_help = false;
@@ -43,9 +45,6 @@
     };
 
     home.shellAliases = {
-      # ls = "eza";
-      ll = "eza -laF --time-style=long-iso";
-      tree = "eza --tree -a";
       cat = "bat -p";
       yc = "git log --pretty=format:%s -1 | wl-copy";
       pycharm-wayland = "pycharm-professional -Dawt.toolkit.name=WLToolkit";
