@@ -1,6 +1,0 @@
-{
-  imports = [
-    ./features
-    ./lev.koliadich
-  ];
-}

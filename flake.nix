@@ -41,6 +41,11 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      homeModules = [
+        stylix.homeModules.stylix
+        keybind.homeModules.keybind
+        ./home/features
+      ];
     in
     {
       systemConfigs.default = system-manager.lib.makeSystemConfig {
@@ -54,13 +59,18 @@
           })
         ];
       };
-      homeConfigurations."lev.koliadich" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          stylix.homeModules.stylix
-          keybind.homeModules.keybind
-          ./home
-        ];
+      homeConfigurations = {
+        "lev.koliadich" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = homeModules ++ [ ./home/lev.koliadich ];
+        };
+        "lev.koliadich@PL-WAW-LX-025.fr.kyriba.com" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = homeModules ++ [
+            ./home/lev.koliadich
+            ./home/lev.koliadich/PL-WAW-LX-025.fr.kyriba.com.nix
+          ];
+        };
       };
       formatter.${system} = pkgs.treefmt.withConfig {
         runtimeInputs = with pkgs; [

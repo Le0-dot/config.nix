@@ -1,3 +1,5 @@
+{ pkgs, config, ... }:
+
 {
   imports = [
     ./git.nix
@@ -9,10 +11,14 @@
   ];
 
   config = {
+    home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
+
+    home.packages = [ pkgs.rustc ];
+    programs.uv.enable = true;
+
     programs.fzf.enable = true; # TODO: Extract all metions into script
     programs.lazygit.enable = true;
     programs.direnv.enable = true;
-    programs.uv.enable = true;
 
     programs.bat.enable = true;
     stylix.targets.bat.enable = true;
