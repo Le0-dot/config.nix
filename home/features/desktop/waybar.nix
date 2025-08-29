@@ -1,4 +1,3 @@
-# TODO: Add check for hyprland workspaces
 {
   pkgs,
   lib,
@@ -28,15 +27,16 @@
           no-center = true;
           output = "eDP-1";
           margin-bottom = 5;
-          modules-left = [ "hyprland/workspaces" ];
+          modules-left =
+            if config.wayland.windowManager.hyprland.enable then [ "hyprland/workspaces" ] else [ ];
           modules-right = [
             "tray"
             "wireplumber"
             "backlight"
             "battery"
-            "hyprland/language"
-            "clock"
-          ];
+          ]
+          ++ (if config.wayland.windowManager.hyprland.enable then [ "hyprland/language" ] else [ ])
+          ++ [ "clock" ];
 
           "hyprland/workspaces" = {
             format = "{icon}";
@@ -46,11 +46,6 @@
               "3" = "";
               "4" = "";
               "5" = "";
-              # "6" = "6";
-              # "7" = "";
-              # "8" = "";
-              # "9" = "";
-              # "10" = "";
             };
             persistent-workspaces = {
               "*" = 5;
