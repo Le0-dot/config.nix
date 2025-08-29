@@ -8,11 +8,10 @@
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  # TODO: Extract stylix config into another file
   fonts.fontconfig.enable = true;
   stylix = {
     enable = true;
-    autoEnable = false;
+    autoEnable = false; # Causes issues on ubuntu 24.04
     targets = {
       gtk.enable = true;
       font-packages.enable = true;
@@ -29,7 +28,7 @@
         name = "Fira Sans";
       };
       monospace = {
-        package = pkgs.nerd-fonts.fira-code;
+        # package = pkgs.nerd-fonts.fira-code;
         name = "FiraCode Nerd Font Mono";
       };
     };

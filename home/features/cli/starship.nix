@@ -20,16 +20,6 @@
           format = "[$symbol$branch(:$remote_branch)]($style) ";
           truncation_length = 4;
         };
-        git_status = {
-          ahead = "";
-          behind = "";
-          diverged = "";
-          stashed = "󰘓";
-          modified = "±";
-          staged = "+";
-          renamed = "";
-          deleted = "-";
-        };
         package.disabled = true;
       };
     };
