@@ -26,8 +26,6 @@ in
   config = lib.mkIf config.features.desktop.hyprland {
     home.packages = with pkgs; [
       wl-clipboard-rs
-      wlrctl
-      playerctl
       networkmanagerapplet
       sway-contrib.grimshot
     ];
@@ -40,7 +38,7 @@ in
     };
 
     stylix.targets.hyprland.enable = true;
-    key.hyprland.enable = true;
+    keybind.hyprland.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
