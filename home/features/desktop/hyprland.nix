@@ -27,7 +27,6 @@ in
     home.packages = with pkgs; [
       wl-clipboard-rs
       networkmanagerapplet
-      sway-contrib.grimshot
     ];
 
     home.pointerCursor = {

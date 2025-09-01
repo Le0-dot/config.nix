@@ -23,6 +23,7 @@
         hyprland = true;
         hyprlock = true;
         hyprpaper = true;
+        hyprshot = true;
         kanshi = true;
         playerctl = true;
         waybar = true;

@@ -11,6 +11,7 @@
     ./hyprland.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./hyprshot.nix
     ./kanshi.nix
     ./waybar.nix
     ./wlogout.nix
