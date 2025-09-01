@@ -147,7 +147,7 @@
       };
       style = ''
         * {
-            font-family: 'FiraCode Nerd Font Propo';
+            font-family: '${lib.removeSuffix "Mono" config.stylix.fonts.monospace.name}Propo';
             font-size: 16px;
             min-height: 0;
         }
