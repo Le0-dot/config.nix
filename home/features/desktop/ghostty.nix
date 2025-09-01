@@ -1,4 +1,3 @@
-# TODO: Try adding fonts manually
 { lib, config, ... }:
 
 {
