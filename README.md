@@ -1,11 +1,12 @@
-## System manager
+# Switch
 
 ```sh
-sudo $(which nix) run 'github:numtide/system-manager' -- switch --flake .
+nix run 'github:Le0-dot/config.nix'
 ```
 
-## Home manager
+## Or
 
 ```sh
-home-manager switch --flake .
+git clone https://github.com/Le0-dot/config.nix.git
+nix run config.nix
 ```
