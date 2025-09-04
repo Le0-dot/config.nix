@@ -59,7 +59,7 @@
       apps.${system}.default =
         let
           switch = pkgs.writeShellScript "switch" ''
-            nix run "github:nix-community/home-manager" -- switch --flake ${./.}
+            nix run "github:nix-community/home-manager" -- switch --flake ${./.} && \
             sudo -i nix run "github:numtide/system-manager" -- switch --flake ${./.}
           '';
         in
