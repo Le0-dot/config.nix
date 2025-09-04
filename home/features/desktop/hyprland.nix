@@ -27,6 +27,7 @@ in
     home.packages = with pkgs; [
       wl-clipboard-rs
       networkmanagerapplet
+      (pkgs.writeShellScriptBin "start-desktop" "Hyprland")
     ];
 
     home.pointerCursor = {

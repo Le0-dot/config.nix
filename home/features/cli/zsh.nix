@@ -37,10 +37,9 @@
             fi
         }
       '';
-      # TODO: Handle hardcoded wm
       loginExtra = ''
         if [ -z "''${DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-            Hyprland
+            start-desktop
         fi
       '';
     };
