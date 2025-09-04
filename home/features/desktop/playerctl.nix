@@ -12,28 +12,35 @@
     services.playerctld.enable = true;
 
     home.packages = [
-      (pkgs.writeShellScriptBin "playerctl-save" ''
-        #!/usr/bin/env sh
+      (pkgs.writeShellApplication {
+        name = "playerctl-save";
+        runtimeInputs = [
+          pkgs.playerctl
+          pkgs.gnused
+        ];
+        text = ''
+          file=$HOME/.player
 
-        file=~/.player
+          function status() {
+              playerctl -a metadata -f '{{ playerName }} {{ status }}'
+          }
 
-        function status() {
-            playerctl -a metadata -f '{{ playerName }} {{ status }}'
-        }
+          function status-to-script() {
+              sed '/Paused/d; /Stopped/d; s/^\(.\+\) Playing/playerctl -p \1 play/'
+          }
 
-        function status-to-script() {
-            sed '/Paused/d; /Stopped/d; s/^\(.\+\) Playing/playerctl -p \1 play/'
-        }
+          status | status-to-script > "$file"
+        '';
+      })
+      (pkgs.writeShellApplication {
+        name = "playerctl-resume";
+        runtimeInputs = [ pkgs.coreutils ];
+        text = ''
+          file=$HOME/.player
 
-        status | status-to-script > $file
-      '')
-      (pkgs.writeShellScriptBin "playerctl-resume" ''
-        #!/usr/bin/env sh
-
-        file=~/.player
-
-        sh $file && rm $file
-      '')
+          $SHELL "$file" && rm "$file"
+        '';
+      })
     ];
 
     keybind.binds = [

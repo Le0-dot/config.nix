@@ -33,9 +33,13 @@
     };
 
     home.packages = [
-      (pkgs.writeShellScriptBin "pycharm-professional" ''
-        ${pkgs.jetbrains.pycharm-professional}/bin/pycharm-professional -Dawt.toolkit.name=WLToolkit
-      '')
+      (pkgs.writeShellApplication {
+        name = "pycharm-professional";
+        runtimeInputs = [ pkgs.jetbrains.pycharm-professional ];
+        text = ''
+          pycharm-professional -Dawt.toolkit.name=WLToolkit
+        '';
+      })
     ];
   };
 }
