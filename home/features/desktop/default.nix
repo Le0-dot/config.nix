@@ -1,3 +1,5 @@
+{ lib, ... }:
+
 {
   imports = [
     ./ghostty.nix
@@ -16,4 +18,17 @@
     ./waybar.nix
     ./wlogout.nix
   ];
+
+  options.features.desktop = {
+    on-lock = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "List of scripts to run on session lock";
+    };
+    on-unlock = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "List of scripts to run on session unlock";
+    };
+  };
 }

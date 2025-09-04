@@ -55,8 +55,12 @@
       settings = {
         general = {
           lock_cmd = "pidof hyprlock || hyprlock";
-          on_lock_cmd = "playerctl-save && playerctl -a pause";
-          on_unlock_cmd = "playerctl-resume";
+          on_lock_cmd = "${pkgs.writeShellScript "on-lock" (
+            builtins.concatStringsSep "\n" config.features.desktop.on-lock
+          )}";
+          on_unlock_cmd = "${pkgs.writeShellScript "on-unlock" (
+            builtins.concatStringsSep "\n" config.features.desktop.on-unlock
+          )}";
           before_sleep_cmd = "loginctl lock-session";
           after_sleep_cmd = "hyprctl dispatch dpms on";
         };

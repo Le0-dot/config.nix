@@ -50,5 +50,10 @@
         action = "playerctl -a play-pause";
       }
     ];
+
+    features.desktop = {
+      on-lock = [ "playerctl-save && playerctl -a pause" ];
+      on-unlock = [ "playerctl-resume" ];
+    };
   };
 }
