@@ -20,15 +20,15 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     fonts = {
       serif = {
-        package = pkgs.fira-sans;
+        package = pkgs.stable.fira;
         name = "Fira Sans";
       };
       sansSerif = {
-        package = pkgs.fira-sans;
+        package = pkgs.stable.fira;
         name = "Fira Sans";
       };
       monospace = {
-        # package = pkgs.nerd-fonts.fira-code;
+        # package = pkgs.stable.nerd-fonts.fira-code;
         name = "FiraCode Nerd Font Mono";
       };
     };
