@@ -109,8 +109,7 @@ in
 
         decoration = {
           rounding = 10;
-          inactive_opacity = 0.9;
-          dim_inactive = true;
+          inactive_opacity = 0.75;
         };
 
         animations.enabled = false;
