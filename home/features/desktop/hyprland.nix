@@ -89,6 +89,7 @@ in
           "tag +social, class:.*Slack.*"
           "tag +video, title:.*Meet.*"
           "tag +media, class:spotify"
+          "tag +media, title:.*Audiobookshelf.*"
 
           "opaque 1, tag:video"
           "nodim 1, tag:video"
