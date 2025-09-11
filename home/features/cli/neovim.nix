@@ -18,6 +18,7 @@
   config = lib.mkIf config.features.cli.neovim.enable {
     programs.neovim = {
       enable = true;
+      withNodeJs = true;
     };
 
     home.sessionVariables.EDITOR = "${pkgs.neovim}/bin/nvim";
