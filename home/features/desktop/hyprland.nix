@@ -93,6 +93,7 @@ in
 
           "opaque 1, tag:video"
           "nodim 1, tag:video"
+          "fullscreen, tag:video"
 
           "workspace 1, tag:development"
           "workspace 2, tag:browser"
