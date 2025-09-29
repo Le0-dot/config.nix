@@ -5,6 +5,7 @@
     ./ghostty.nix
     ./chrome.nix
     ./fuzzel.nix
+    ./tofi.nix
     ./brightnessctl.nix
     ./wireplumber.nix
     ./playerctl.nix

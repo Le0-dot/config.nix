@@ -18,7 +18,7 @@
         brightnessctl = true;
         chrome = true;
         dunst = true;
-        fuzzel = true;
+        tofi = true;
         ghostty = true;
         hyprland = true;
         hyprlock = true;
