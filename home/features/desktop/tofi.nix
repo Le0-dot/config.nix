@@ -9,15 +9,13 @@
   options.features.desktop.tofi = lib.mkEnableOption "tofi";
 
   config = lib.mkIf config.features.desktop.tofi {
-    stylix.targets.tofi.enable = true;
-
     programs.tofi = {
       enable = true;
       settings = {
-        font-size = lib.mkForce "14";
+        font = config.stylix.fonts.monospace.name;
+        font-size = "14";
 
-        background-color = lib.mkForce "#${config.lib.stylix.colors.base00}AA";
-        default-result-background = lib.mkForce "#${config.lib.stylix.colors.base00}AA";
+        background-color = "#${config.lib.stylix.colors.base00}AA";
         width = "100%";
         height = "100%";
         outline-width = 0;
@@ -28,13 +26,8 @@
         num-results = 10;
 
         prompt-text = "\"\"";
-        prompt-padding = 10;
         placeholder-text = "Choose";
-        scale = true;
-        hide-cursor = false;
-        history = true;
         fuzzy-match = true;
-        auto-accept-single = false;
       };
     };
 
