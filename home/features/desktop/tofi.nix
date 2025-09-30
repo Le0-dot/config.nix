@@ -15,7 +15,6 @@
         font = config.stylix.fonts.monospace.name;
         font-size = "14";
 
-        background-color = "#${config.lib.stylix.colors.base00}AA";
         width = "100%";
         height = "100%";
         outline-width = 0;
@@ -28,6 +27,11 @@
         prompt-text = "\"\"";
         placeholder-text = "Choose";
         fuzzy-match = true;
+
+        background-color = "#${config.lib.stylix.colors.base00}BB";
+        placeholder-color = "#${config.lib.stylix.colors.base04}";
+        text-color = "#${config.lib.stylix.colors.base05}";
+        selection-color = "#${config.lib.stylix.colors.base0E}";
       };
     };
 
