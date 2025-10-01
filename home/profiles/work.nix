@@ -29,6 +29,7 @@
         waybar = true;
         wireplumber = true;
         wlogout = true;
+        cliphist = true;
       };
     };
 
