@@ -9,6 +9,7 @@
     ./brightnessctl.nix
     ./wireplumber.nix
     ./playerctl.nix
+    ./cliphist.nix
 
     ./dunst.nix
     ./hyprland.nix
@@ -21,6 +22,14 @@
   ];
 
   options.features.desktop = {
+    dmenu = lib.mkOption {
+      type = lib.types.str;
+      description = "Application to run as default dmenu compatible picker";
+    };
+    term = lib.mkOption {
+      type = lib.types.str;
+      description = "Application to run as default terminal emulator";
+    };
     on-lock = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];

@@ -6,6 +6,8 @@
   config = lib.mkIf config.features.desktop.ghostty {
     stylix.targets.ghostty.enable = true;
 
+    features.desktop.term = "ghostty";
+
     programs.ghostty = {
       enable = true;
       settings = {

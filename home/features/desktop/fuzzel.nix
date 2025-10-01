@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -10,6 +9,7 @@
 
   config = lib.mkIf config.features.desktop.fuzzel {
     stylix.targets.fuzzel.enable = true;
+    features.desktop.dmenu = "fuzzle --dmenu";
 
     programs.fuzzel = {
       enable = true;
@@ -25,25 +25,6 @@
       };
     };
 
-    services.cliphist.enable = true;
-    home.packages = [
-      (pkgs.writeShellApplication {
-        name = "clipselect";
-        runtimeInputs = [
-          pkgs.wl-clipboard-rs
-          pkgs.fuzzel
-          pkgs.cliphist
-        ];
-        text = ''
-          cliphist list \
-            | fuzzel --dmenu --with-nth 2 --accept-nth 1 \
-            | tr -d '\n' \
-            | cliphist decode \
-            | wl-copy
-        '';
-      })
-    ];
-
     keybind.binds = [
       {
         modifiers = [
@@ -52,14 +33,6 @@
         ];
         key = "RETURN";
         action = "fuzzel";
-      }
-      {
-        modifiers = [
-          "SUPER"
-          "CTRL"
-        ];
-        key = "V";
-        action = "clipselect";
       }
     ];
   };
