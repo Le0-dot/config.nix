@@ -19,6 +19,7 @@
     ./kanshi.nix
     ./waybar.nix
     ./wlogout.nix
+    ./project-switch.nix
   ];
 
   options.features.desktop = {
