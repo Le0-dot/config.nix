@@ -32,5 +32,10 @@
       lib.warn "Linking ${config.features.cli.neovim.config} to ~/.config/nvim"
         config.lib.file.mkOutOfStoreSymlink
         config.features.cli.neovim.config;
+
+    programs.git.extraConfig = lib.mkIf config.features.cli.git {
+      difftool."nvimdiff".cmd = "nvim -d \"$LOCAL\" \"$REMOTE\"";
+      diff.tool = "nvimdiff";
+    };
   };
 }
