@@ -102,6 +102,9 @@
           };
         };
       };
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [ pkgs.nil ];
+      };
       formatter.${system} = pkgs.treefmt.withConfig {
         runtimeInputs = with pkgs; [
           nixfmt

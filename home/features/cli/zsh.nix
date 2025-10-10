@@ -29,13 +29,6 @@
         function yank() {
           cat $1 | wl-copy
         }
-
-        function za() {
-            local session=$(zellij list-sessions | fzf --ansi | cut -d' ' -f1)
-            if ! [[ -z "$session" ]]; then
-                zellij attach $session
-            fi
-        }
       '';
       loginExtra = ''
         if [ -z "''${DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then

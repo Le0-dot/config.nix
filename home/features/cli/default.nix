@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
 {
   imports = [
@@ -13,14 +13,10 @@
   config = {
     home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
-    home.packages = [
-      pkgs.nil
-    ];
-    programs.uv.enable = true;
-
-    programs.fzf.enable = true;
-    programs.lazygit.enable = true;
     programs.direnv.enable = true;
+    programs.lazygit.enable = true;
+    programs.uv.enable = true;
+    programs.fzf.enable = true;
 
     programs.bat.enable = true;
     stylix.targets.bat.enable = true;
@@ -47,7 +43,6 @@
     home.shellAliases = {
       cat = "bat -p";
       yc = "git log --pretty=format:%s -1 | wl-copy";
-      pycharm-wayland = "pycharm-professional -Dawt.toolkit.name=WLToolkit";
     };
   };
 }
