@@ -12,6 +12,7 @@
     flake.homeModules.zsh
     flake.homeModules.starship
     flake.homeModules.atuin
+    flake.homeModules.neovim
   ];
 
   config = {
@@ -37,6 +38,11 @@
       enable = true;
       colors = "always";
       icons = "auto";
+    };
+
+    programs.neovim = {
+      enable = true;
+      config = "${config.home.homeDirectory}/projects/config.nvim";
     };
 
     programs.git = {
