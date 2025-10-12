@@ -25,11 +25,14 @@
     };
 
     programs.zsh.enable = true;
-    programs.starship.enable = true;
+    programs.atuin.enable = true;
     programs.direnv.enable = true;
     programs.lazygit.enable = true;
     programs.fzf.enable = true;
     programs.uv.enable = true;
+
+    stylix.targets.starship.enable = true;
+    programs.starship.enable = true;
 
     stylix.targets.bat.enable = true;
     programs.bat.enable = true;
