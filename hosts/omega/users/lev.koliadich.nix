@@ -1,4 +1,9 @@
-{ flake, inputs, ... }:
+{
+  flake,
+  inputs,
+  config,
+  ...
+}:
 
 {
   imports = [
@@ -9,9 +14,10 @@
   ];
 
   config = {
-    home.username = "lev.koliadich";
-    home.homeDirectory = "/home/lev.koliadich";
     home.stateVersion = "25.05";
+    home.username = "lev.koliadich";
+    home.homeDirectory = "/home/${config.home.username}";
+    home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
     programs.zsh.enable = true;
     programs.starship.enable = true;
