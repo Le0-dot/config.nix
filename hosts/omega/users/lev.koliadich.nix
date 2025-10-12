@@ -1,7 +1,8 @@
-{ flake, ... }:
+{ flake, inputs, ... }:
 
 {
   imports = [
+    inputs.stylix.homeModules.default
     flake.homeModules.git
     flake.homeModules.zsh
   ];
