@@ -2,6 +2,7 @@
 {
   imports = [
     inputs.nix-system-graphics.systemModules.default
+    flake.modules.system.hyprlock
   ];
 
   config = {
