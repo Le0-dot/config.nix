@@ -5,6 +5,7 @@
     inputs.stylix.homeModules.default
     flake.homeModules.git
     flake.homeModules.zsh
+    flake.homeModules.starship
   ];
 
   config = {
@@ -13,6 +14,7 @@
     home.stateVersion = "25.05";
 
     programs.zsh.enable = true;
+    programs.starship.enable = true;
 
     programs.git = {
       enable = true;
