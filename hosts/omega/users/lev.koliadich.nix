@@ -1,12 +1,17 @@
 { flake, ... }:
 
 {
-  imports = [ flake.homeModules.git ];
+  imports = [
+    flake.homeModules.git
+    flake.homeModules.zsh
+  ];
 
   config = {
     home.username = "lev.koliadich";
     home.homeDirectory = "/home/lev.koliadich";
     home.stateVersion = "25.05";
+
+    programs.zsh.enable = true;
 
     programs.git = {
       enable = true;
