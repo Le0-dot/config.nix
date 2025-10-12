@@ -13,6 +13,7 @@
     flake.homeModules.starship
     flake.homeModules.atuin
     flake.homeModules.neovim
+    flake.homeModules.zellij
   ];
 
   config = {
@@ -53,6 +54,9 @@
       userName = "Lev Koliadich";
       userEmail = "lkolyadich@gmail.com";
     };
+
+    stylix.targets.zellij.enable = true;
+    programs.zellij.enable = true;
 
     stylix.targets.yazi.enable = true;
     programs.yazi = {
