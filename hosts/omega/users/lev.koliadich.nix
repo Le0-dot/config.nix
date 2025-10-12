@@ -11,6 +11,7 @@
     flake.homeModules.git
     flake.homeModules.zsh
     flake.homeModules.starship
+    flake.homeModules.atuin
   ];
 
   config = {
