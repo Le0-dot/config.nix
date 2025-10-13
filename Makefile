@@ -1,4 +1,4 @@
-host := omega
+host := $(shell [ -e "$PWD/hosts/$HOST" ] && echo "$HOST" || echo omega)
 user := $(USER)
 
 build-home:  ## Build home-manager configuration
