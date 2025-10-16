@@ -17,6 +17,8 @@
     flake.homeModules.neovim
     flake.homeModules.zellij
 
+    flake.homeModules.wm-common
+
     flake.homeModules.brightnessctl
     flake.homeModules.wireplumber
   ];
