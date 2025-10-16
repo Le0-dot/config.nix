@@ -24,6 +24,7 @@
     flake.homeModules.wireplumber
     flake.homeModules.playerctl
     flake.homeModules.cliphist
+    flake.homeModules.tofi
   ];
 
   config = {
@@ -98,6 +99,8 @@
       enable = true;
       settings.mgr.show_hidden = true;
     };
+
+    programs.tofi.enable = true;
 
     programs.brightnessctl.enable = true;
     programs.wireplumber.enable = true;
