@@ -26,6 +26,7 @@
     flake.homeModules.cliphist
     flake.homeModules.tofi
     flake.homeModules.kanshi
+    flake.homeModules.wlogout
   ];
 
   config = {
@@ -108,5 +109,6 @@
     services.playerctld.enable = true;
     services.cliphist.enable = true;
     services.kanshi.enable = true;
+    programs.wlogout.enable = true;
   };
 }
