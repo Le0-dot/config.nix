@@ -28,6 +28,7 @@
     flake.homeModules.kanshi
     flake.homeModules.wlogout
     flake.homeModules.dunst
+    flake.homeModules.ghostty
   ];
 
   config = {
