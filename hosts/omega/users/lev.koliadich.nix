@@ -29,6 +29,7 @@
     flake.homeModules.wlogout
     flake.homeModules.dunst
     flake.homeModules.ghostty
+    flake.homeModules.hyprland
   ];
 
   config = {
@@ -114,5 +115,9 @@
     programs.wlogout.enable = true;
     services.dunst.enable = true;
     programs.ghostty.enable = true;
+
+    wayland.windowManager.hyprland.enable = true;
+    services.hyprpolkitagent.enable = true;
+    services.hypridle.enable = true;
   };
 }
