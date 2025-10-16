@@ -21,6 +21,7 @@
 
     flake.homeModules.brightnessctl
     flake.homeModules.wireplumber
+    flake.homeModules.playerctl
   ];
 
   config = {
@@ -73,5 +74,6 @@
 
     programs.brightnessctl.enable = true;
     programs.wireplumber.enable = true;
+    services.playerctld.enable = true;
   };
 }
