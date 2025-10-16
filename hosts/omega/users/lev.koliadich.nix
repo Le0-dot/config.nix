@@ -27,6 +27,7 @@
     flake.homeModules.tofi
     flake.homeModules.kanshi
     flake.homeModules.wlogout
+    flake.homeModules.dunst
   ];
 
   config = {
@@ -110,5 +111,7 @@
     services.cliphist.enable = true;
     services.kanshi.enable = true;
     programs.wlogout.enable = true;
+    services.dunst.enable = true;
+    programs.ghostty.enable = true;
   };
 }
