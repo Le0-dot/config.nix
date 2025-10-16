@@ -102,6 +102,7 @@
       userName = "Lev Koliadich";
       userEmail = "lkolyadich@gmail.com";
     };
+    programs.gh.enable = true;
 
     stylix.targets.zellij.enable = true;
     programs.zellij.enable = true;
