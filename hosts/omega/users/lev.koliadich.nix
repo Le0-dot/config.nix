@@ -33,6 +33,9 @@
     flake.homeModules.hyprlock
     flake.homeModules.hypridle
     flake.homeModules.hyprpaper
+    flake.homeModules.hyprshot
+    flake.homeModules.waybar
+    flake.homeModules.project-switcher
   ];
 
   config = {
@@ -126,5 +129,7 @@
     services.hyprpaper.enable = true;
     programs.hyprshot.enable = true;
     programs.waybar.enable = true;
+
+    programs.project-switcher.enable = true;
   };
 }
