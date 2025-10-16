@@ -32,6 +32,7 @@
     flake.homeModules.hyprland
     flake.homeModules.hyprlock
     flake.homeModules.hypridle
+    flake.homeModules.hyprpaper
   ];
 
   config = {
@@ -122,5 +123,6 @@
     services.hyprpolkitagent.enable = true;
     services.hypridle.enable = true;
     programs.hyprlock.enable = true;
+    services.hyprpaper.enable = true;
   };
 }
