@@ -124,5 +124,6 @@
     services.hypridle.enable = true;
     programs.hyprlock.enable = true;
     services.hyprpaper.enable = true;
+    programs.hyprshot.enable = true;
   };
 }
