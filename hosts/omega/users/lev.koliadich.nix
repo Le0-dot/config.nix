@@ -36,6 +36,7 @@
     flake.homeModules.hyprshot
     flake.homeModules.waybar
     flake.homeModules.project-switcher
+    flake.homeModules.chrome
   ];
 
   config = {
