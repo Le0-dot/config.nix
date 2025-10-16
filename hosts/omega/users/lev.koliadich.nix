@@ -125,5 +125,6 @@
     programs.hyprlock.enable = true;
     services.hyprpaper.enable = true;
     programs.hyprshot.enable = true;
+    programs.waybar.enable = true;
   };
 }
