@@ -7,13 +7,17 @@
 
 {
   imports = [
-    inputs.stylix.homeModules.default
+    inputs.stylix.homeModules.stylix
+    inputs.keybind.homeModules.keybind
+
     flake.homeModules.git
     flake.homeModules.zsh
     flake.homeModules.starship
     flake.homeModules.atuin
     flake.homeModules.neovim
     flake.homeModules.zellij
+
+    flake.homeModules.brightnessctl
   ];
 
   config = {
@@ -63,5 +67,7 @@
       enable = true;
       settings.mgr.show_hidden = true;
     };
+
+    programs.brightnessctl.enable = true;
   };
 }
