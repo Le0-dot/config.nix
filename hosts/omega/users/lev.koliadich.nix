@@ -31,6 +31,7 @@
     flake.homeModules.ghostty
     flake.homeModules.hyprland
     flake.homeModules.hyprlock
+    flake.homeModules.hypridle
   ];
 
   config = {
@@ -120,5 +121,6 @@
     wayland.windowManager.hyprland.enable = true;
     services.hyprpolkitagent.enable = true;
     services.hypridle.enable = true;
+    programs.hyprlock.enable = true;
   };
 }
