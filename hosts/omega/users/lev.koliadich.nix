@@ -18,6 +18,7 @@
     flake.homeModules.zellij
 
     flake.homeModules.brightnessctl
+    flake.homeModules.wireplumber
   ];
 
   config = {
@@ -69,5 +70,6 @@
     };
 
     programs.brightnessctl.enable = true;
+    programs.wireplumber.enable = true;
   };
 }
