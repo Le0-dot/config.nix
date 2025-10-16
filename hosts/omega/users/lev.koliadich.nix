@@ -25,6 +25,7 @@
     flake.homeModules.playerctl
     flake.homeModules.cliphist
     flake.homeModules.tofi
+    flake.homeModules.kanshi
   ];
 
   config = {
@@ -106,5 +107,6 @@
     programs.wireplumber.enable = true;
     services.playerctld.enable = true;
     services.cliphist.enable = true;
+    services.kanshi.enable = true;
   };
 }
