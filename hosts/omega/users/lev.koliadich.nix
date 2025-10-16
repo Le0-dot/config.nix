@@ -30,6 +30,7 @@
     flake.homeModules.dunst
     flake.homeModules.ghostty
     flake.homeModules.hyprland
+    flake.homeModules.hyprlock
   ];
 
   config = {

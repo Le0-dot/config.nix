@@ -10,6 +10,10 @@
       type = lib.types.str;
       description = "Application to run as default dmenu compatible picker";
     };
+    lock = lib.mkOption {
+      type = lib.types.str;
+      description = "Application to run as screen locker";
+    };
     on-lock = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
