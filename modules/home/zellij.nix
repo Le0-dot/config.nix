@@ -10,6 +10,8 @@ in
       zellij = "zellij -l welcome";
     };
 
+    stylix.targets.zellij.enable = true;
+
     programs.zellij = {
       settings = {
         default_mode = "locked";

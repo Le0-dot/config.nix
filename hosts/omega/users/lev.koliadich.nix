@@ -79,8 +79,6 @@
     programs.lazygit.enable = true;
     programs.fzf.enable = true;
     programs.uv.enable = true;
-
-    stylix.targets.starship.enable = true;
     programs.starship.enable = true;
 
     stylix.targets.bat.enable = true;
@@ -104,7 +102,6 @@
     };
     programs.gh.enable = true;
 
-    stylix.targets.zellij.enable = true;
     programs.zellij.enable = true;
 
     stylix.targets.yazi.enable = true;
