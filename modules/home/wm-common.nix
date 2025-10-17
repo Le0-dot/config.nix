@@ -10,19 +10,24 @@
       type = lib.types.str;
       description = "Application to run as default dmenu compatible picker";
     };
-    lock = lib.mkOption {
-      type = lib.types.str;
-      description = "Application to run as screen locker";
-    };
-    on-lock = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      description = "List of scripts to run on session lock";
-    };
-    on-unlock = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      description = "List of scripts to run on session unlock";
+  };
+
+  config = {
+    systemd.user.targets = {
+      on-session-lock = {
+        Unit = {
+          Description = "Session lock services";
+          Requires = [ "graphical-session.target" ];
+          Conflicts = [ "on-session-unlock.target" ];
+        };
+      };
+      on-session-unlock = {
+        Unit = {
+          Description = "Session unlock services";
+          Requires = [ "graphical-session.target" ];
+          Conflicts = [ "on-session-lock.target" ];
+        };
+      };
     };
   };
 }

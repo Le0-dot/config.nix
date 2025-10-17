@@ -1,22 +1,10 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 
 {
   config = lib.mkIf config.services.hypridle.enable {
     services.hypridle.settings = {
       general = {
-        lock_cmd = "pidof ${config.wm.lock} || ${config.wm.lock}";
-        on_lock_cmd = "${pkgs.writeShellScript "on-lock" (
-          builtins.concatStringsSep "\n" config.wm.on-lock
-        )}";
-        on_unlock_cmd = "${pkgs.writeShellScript "on-unlock" (
-          builtins.concatStringsSep "\n" config.wm.on-unlock
-        )}";
-        before_sleep_cmd = "loginctl lock-session";
+        lock_cmd = "systemctl --user start session-lock.service";
         after_sleep_cmd = "hyprctl dispatch dpms on";
       };
       listener = [
