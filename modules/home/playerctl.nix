@@ -68,21 +68,11 @@ in
         };
         Install.WantedBy = [ "on-session-lock.target" ];
         Service = {
-          ExecStart = "${playerctl-save}/bin/playerctl-save";
-        };
-      };
-      playerctl-stop = {
-        Unit = {
-          Description = "Save media player states before locking the session";
-          Requires = [
-            "graphical-session.target"
-            "playerctld.service"
+          Type = "oneshot";
+          ExecStart = [
+            "${playerctl-save}/bin/playerctl-save"
+            "${pkgs.playerctl}/bin/playerctl -a pause"
           ];
-          After = [ "playerctl-save.service" ];
-        };
-        Install.WantedBy = [ "on-session-lock.target" ];
-        Service = {
-          ExecStart = "${pkgs.playerctl}/bin/playerctl -a pause";
         };
       };
       playerctl-resume = {
