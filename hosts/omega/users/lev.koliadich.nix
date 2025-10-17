@@ -80,6 +80,7 @@
     programs.fzf.enable = true;
     programs.uv.enable = true;
     programs.starship.enable = true;
+    programs.zellij.enable = true;
 
     stylix.targets.bat.enable = true;
     programs.bat.enable = true;
@@ -102,24 +103,11 @@
     };
     programs.gh.enable = true;
 
-    programs.zellij.enable = true;
-
     stylix.targets.yazi.enable = true;
     programs.yazi = {
       enable = true;
       settings.mgr.show_hidden = true;
     };
-
-    programs.tofi.enable = true;
-
-    programs.brightnessctl.enable = true;
-    programs.wireplumber.enable = true;
-    services.playerctld.enable = true;
-    services.cliphist.enable = true;
-    services.kanshi.enable = true;
-    programs.wlogout.enable = true;
-    services.dunst.enable = true;
-    programs.ghostty.enable = true;
 
     wayland.windowManager.hyprland.enable = true;
     services.hyprpolkitagent.enable = true;
@@ -127,8 +115,16 @@
     programs.hyprlock.enable = true;
     services.hyprpaper.enable = true;
     programs.hyprshot.enable = true;
+    services.kanshi.enable = true;
     programs.waybar.enable = true;
-
+    programs.wlogout.enable = true;
+    programs.brightnessctl.enable = true;
+    programs.wireplumber.enable = true;
+    services.playerctld.enable = true;
+    services.cliphist.enable = true;
+    services.dunst.enable = true;
+    programs.tofi.enable = true;
+    programs.ghostty.enable = true;
     programs.project-switcher.enable = true;
   };
 }
