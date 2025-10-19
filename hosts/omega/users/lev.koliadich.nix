@@ -41,8 +41,6 @@
 
   config = {
     home.stateVersion = "25.05";
-    home.username = "lev.koliadich";
-    home.homeDirectory = "/home/${config.home.username}";
     home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
     home.shellAliases = {
       cat = "bat -p";
