@@ -17,3 +17,14 @@ build-system:  ## Build system-manager configuration
 system:  ## Switch system-manager configuration
 	sudo -i nix run "github:numtide/system-manager" -- switch --flake "$(PWD)#$(host)"
 
+build-os: ## Build NixOS configuration
+	echo "TODO"
+
+os: ## Switch NixOS configuration
+	echo "TODO"
+
+anywhere: ## Install NixOS via nix-anywhere
+	nix run "github:nix-community/nixos-anywhere" -- \
+		--flake "$(PWD)#$(host)" \
+		--generate-hardware-config nixos-generate-config ./hosts/$(host)/hardware-configuration.nix \
+		--target-host $(user)@$(host)
