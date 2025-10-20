@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ hostName, inputs, ... }:
 
 {
   imports = [
@@ -16,6 +16,8 @@
       efiSupport = true;
       efiInstallAsRemovable = true;
     };
+
+    networking.hostName = hostName;
 
     services.openssh.enable = true;
 
