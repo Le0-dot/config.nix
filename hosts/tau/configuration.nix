@@ -1,4 +1,9 @@
-{ hostName, config, inputs, ... }:
+{
+  hostName,
+  config,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -26,7 +31,10 @@
       enable = true;
       authKeyFile = config.age.secrets.tailscale-key.path;
       authKeyParameters.ephemeral = false;
-      extraUpFlags = [ "--advertise-tags=tag:server" "--ssh" ];
+      extraUpFlags = [
+        "--advertise-tags=tag:server"
+        "--ssh"
+      ];
     };
 
     users.users.root.openssh.authorizedKeys.keys = [

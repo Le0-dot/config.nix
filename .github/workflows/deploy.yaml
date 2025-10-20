@@ -5,20 +5,29 @@ on:
       host:
         description: 'NixOS host to deploy to'
         required: true
+      user:
+        description: 'User on the NixOS host'
+        required: true
+        default: root
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - run: echo "Deployment for ${{ github.event.inputs.host }}"
-    - uses: actions/checkout@v5
-    - uses: cachix/install-nix-action@v31
-    - uses: nicknovitski/nix-develop@v1
     - name: Connect to Tailscale
       uses: tailscale/github-action@v4
       with:
-        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }} # TODO: Create
-        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }} # TODO: Create
-        tags: tag:ci # TODO: Add tag to tailscale
+        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+        tags: tag:ci
         ping: ${{ github.event.inputs.host }}
+    - name: Connect to host to save its key
+      run: ssh -o StrictHostKeyChecking=no ${{ github.event.inputs.user }}@${{ github.event.inputs.host }} "exit"
+    - name: Check out git repository
+      uses: actions/checkout@v5
+    - name: Install nix
+      uses: cachix/install-nix-action@v31
+    - name: Enter nix shell
+      uses: nicknovitski/nix-develop@v1
     - name: Deploy NixOS flake onto remote system
-      run: make remote-os user=root host=${{ github.event.inputs.host }}
+      run: make remote-os user=${{ github.event.inputs.user }} host=${{ github.event.inputs.host }}
