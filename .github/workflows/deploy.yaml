@@ -1,26 +1,15 @@
 name: "Deploy nix flake to remote system"
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+    inputs:
+      host:
+        description: 'NixOS host to deploy to'
+        required: true
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-    steps:
-    - uses: actions/checkout@v5
-    - uses: cachix/install-nix-action@v31
-    - uses: nicknovitski/nix-develop@v1
-    - run: nix flake check --all-systems
-    - id: matrix
-      run: echo "value=$(make nixos-hosts-json)" >> $GITHUB_OUTPUT
-    - run: echo "Configured NixOS hosts: ${{ steps.matrix.outputs.value }}"
   deploy:
     runs-on: ubuntu-latest
-    needs: [ setup ]
-    strategy:
-      matrix:
-        value: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
-    - run: echo "Deployment for ${{ matrix.value }}"
+    - run: echo "Deployment for ${{ github.event.inputs.host }}"
     - uses: actions/checkout@v5
     - uses: cachix/install-nix-action@v31
     - uses: nicknovitski/nix-develop@v1
@@ -31,6 +20,6 @@ jobs:
         oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }} # TODO: Create
         oauth-secret: ${{ secrets.TS_OAUTH_SECRET }} # TODO: Create
         tags: tag:ci # TODO: Add tag to tailscale
-        ping: ${{ matrix.value }}
+        ping: ${{ github.event.inputs.host }}
     - name: Deploy NixOS flake onto remote system
-      run: make remote-os user=root host=${{ matrix.value }} # TODO: Change user
+      run: make remote-os user=root host=${{ github.event.inputs.host }}
