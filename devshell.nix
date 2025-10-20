@@ -5,5 +5,6 @@ pkgs.mkShell {
     pkgs.nil
     pkgs.nixos-rebuild
     pkgs.gnumake
+    pkgs.jq
   ];
 }

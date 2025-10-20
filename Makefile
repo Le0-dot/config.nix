@@ -44,3 +44,7 @@ check-non-nixos:
 		echo "This command can only be run on non NixOS systems."; \
 		exit 1; \
 	fi
+
+nixos-hosts-json:
+	@find ./hosts -name "configuration.nix" -exec $(SHELL) -c 'dirname {} | xargs basename' \; \
+		| jq --raw-input --slurp --compact-output 'split("\n") | map(select(length > 0))'
