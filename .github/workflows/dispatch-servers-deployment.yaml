@@ -1,0 +1,26 @@
+name: "Dispatch deployment of NixOS flake configurations"
+on: workflow_dispatch
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - uses: dcarbone/install-jq-action@v3
+    - id: hosts
+      run: find ./hosts -name "configuration.nix" -exec $SHELL -c 'dirname {} | xargs basename' \; >> $GITHUB_OUTPUT
+    - id: matrix
+      run: echo "${{ steps.hosts.outputs }}" | jq -Rc 'split(" ")' >> $GITHUB_OUTPUT
+    - run: echo "Configured NixOS hosts: ${{ steps.matrix.outputs }}"
+    outputs:
+      matrix: ${{ steps.matrix.outputs }}
+  dispatch:
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    strategy:
+      matrix:
+        host: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    steps:
+    - uses: actions/checkout@v5
+    - run: gh workflow trigger deploy.yaml -f host=${{ matrix.host }}
+      env: 
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
