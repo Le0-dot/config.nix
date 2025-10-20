@@ -10,6 +10,7 @@
   imports = [
     inputs.stylix.homeModules.stylix
     inputs.keybind.homeModules.keybind
+    inputs.agenix.homeManagerModules.default
 
     flake.homeModules.git
     flake.homeModules.zsh

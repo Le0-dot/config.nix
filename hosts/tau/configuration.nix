@@ -3,6 +3,7 @@
 {
   imports = [
     inputs.disko.nixosModules.disko
+    inputs.agenix.nixosModules.default
 
     ./hardware-configuration.nix
     ./disk-config.nix
