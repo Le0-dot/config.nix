@@ -37,6 +37,39 @@
       ];
     };
 
+    services.traefik = {
+      enable = true;
+      staticConfigOptions = {
+        api = {
+          dashboard = true;
+          insecure = true; # TODO Remove this in production
+        };
+        certificatesResolvers.tailscaleResolver.tailscale = true;
+        entryPoints = {
+          web = {
+            address = ":80";
+          };
+          websecure = {
+            address = ":443";
+            http.tls = {
+              certResolver = "tailscaleResolver";
+              domains = [ { main = "${hostName}.spitz-mora.ts.net"; } ];
+            };
+          };
+        };
+      };
+      dynamicConfigOptions = {
+        http.routers.traefik = {
+          entryPoints = [
+            "web"
+            "websecure"
+          ];
+          rule = "Host(`traefik.${hostName}.spitz-mora.ts.net`)";
+          service = "api@internal";
+        };
+      };
+    };
+
     users.users.root.openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q"
     ];
