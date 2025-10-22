@@ -10,7 +10,7 @@ jobs:
       run: find ./hosts -name "configuration.nix" -exec $SHELL -c 'dirname {} | xargs basename' \; >> $GITHUB_OUTPUT
     - id: matrix
       run: echo "${{ steps.hosts.outputs }}" | jq -Rc 'split(" ")' >> $GITHUB_OUTPUT
-    - run: echo "Configured NixOS hosts: ${{ steps.matrix.outputs }}"
+    - run: echo "Configured NixOS hosts are ${{ steps.matrix.outputs }}"
     outputs:
       matrix: ${{ steps.matrix.outputs }}
   dispatch:
