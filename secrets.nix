@@ -9,4 +9,5 @@ let
 in
 {
   "secrets/tailscale-key.age".publicKeys = all;
+  "secrets/admin-password.age".publicKeys = all;
 }
