@@ -42,7 +42,7 @@
       staticConfigOptions = {
         api = {
           dashboard = true;
-          insecure = true; # TODO Remove this in production
+          insecure = true;
         };
         certificatesResolvers.tailscaleResolver.tailscale = true;
         entryPoints = {
@@ -66,6 +66,18 @@
           ];
           rule = "Host(`traefik.${hostName}.spitz-mora.ts.net`)";
           service = "api@internal";
+        };
+      };
+    };
+
+    services.adguardhome = {
+      enable = true;
+      settings = {
+        mutableSettings = false;
+        dns = {
+          upstream_dns = [
+            "9.9.9.9#dns.quad9.net"
+          ];
         };
       };
     };
