@@ -25,7 +25,7 @@ os: check-nixos  ## Switch NixOS configuration
 	nixos-rebuild switch --flake "$(PWD)#$(host)"
 
 remote-os:  ## Switch NixOS configuration on remote host
-	nixos-rebuild switch --flake "$(PWD)#$(host)" --target-host $(user)@$(host) --use-remote-sudo
+	nixos-rebuild switch --flake "$(PWD)#$(host)" --target-host $(user)@$(host) --sudo
 
 anywhere:  ## Install NixOS via nixos-anywhere
 	nix run "github:nix-community/nixos-anywhere" -- \
