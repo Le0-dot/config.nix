@@ -1,4 +1,6 @@
 {
+  lib,
+  pkgs,
   hostName,
   config,
   inputs,
@@ -16,7 +18,10 @@
   ];
 
   config = {
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     system.stateVersion = "25.05";
 
@@ -76,6 +81,12 @@
       enable = true;
       settings = {
         mutableSettings = false;
+        users = [
+          {
+            name = "admin";
+            password = "@admin-password@";
+          }
+        ];
         dns = {
           upstream_dns = [
             "9.9.9.9#dns.quad9.net"
@@ -83,6 +94,9 @@
         };
       };
     };
+
+    systemd.services.adguardhome.serviceConfig.ExecStartPre =
+      "+${lib.getExe pkgs.replace-secret} @admin-password@ ${config.age.secrets.admin-password.path} /var/lib/AdGuardHome/AdGuardHome.yaml";
 
     users.users.root.openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q"
