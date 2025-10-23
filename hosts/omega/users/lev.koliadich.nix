@@ -3,6 +3,7 @@
   flake,
   inputs,
   config,
+  perSystem,
   ...
 }:
 
@@ -46,6 +47,8 @@
     home.shellAliases = {
       cat = "bat -p";
     };
+
+    home.packages = [ perSystem.self.choose-repo ];
 
     stylix = {
       enable = true;
