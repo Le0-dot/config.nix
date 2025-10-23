@@ -3,6 +3,7 @@
   flake,
   inputs,
   config,
+  perSystem,
   ...
 }:
 
@@ -36,7 +37,6 @@
     flake.homeModules.hyprpaper
     flake.homeModules.hyprshot
     flake.homeModules.waybar
-    flake.homeModules.project-switcher
     flake.homeModules.chrome
   ];
 
@@ -46,6 +46,16 @@
     home.shellAliases = {
       cat = "bat -p";
     };
+
+    home.packages = [ perSystem.self.choose-repo ];
+
+    keybind.binds = [
+      {
+        modifiers = [ "SUPER" ];
+        key = "P";
+        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e nvim -c 'cd {}' -c 'WithSession'";
+      }
+    ];
 
     stylix = {
       enable = true;
@@ -124,6 +134,5 @@
     services.dunst.enable = true;
     programs.tofi.enable = true;
     programs.ghostty.enable = true;
-    programs.project-switcher.enable = true;
   };
 }
