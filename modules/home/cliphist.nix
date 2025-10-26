@@ -2,23 +2,13 @@
   lib,
   pkgs,
   config,
+  perSystem,
   ...
 }:
 
 {
   config = lib.mkIf config.services.cliphist.enable {
-    home.packages = [
-      (pkgs.writeShellApplication {
-        name = "clipselect";
-        runtimeInputs = [
-          pkgs.wl-clipboard-rs
-          pkgs.cliphist
-        ];
-        text = ''
-          cliphist list | cut -f2 | ${config.wm.dmenu} | wl-copy
-        '';
-      })
-    ];
+    home.packages = [ perSystem.self.clipselect ];
 
     keybind.binds = [
       {
@@ -27,7 +17,7 @@
           "CTRL"
         ];
         key = "V";
-        action = "clipselect";
+        action = "clipselect ${config.wm.dmenu}";
       }
     ];
   };

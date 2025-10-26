@@ -47,7 +47,7 @@
       cat = "bat -p";
     };
 
-    home.packages = [ perSystem.self.choose-repo ];
+    home.packages = [ perSystem.self.choose-repo perSystem.self.clipselect ];
 
     keybind.binds = [
       {
