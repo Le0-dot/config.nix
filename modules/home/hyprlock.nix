@@ -2,21 +2,16 @@
   pkgs,
   lib,
   config,
+  perSystem,
   ...
 }:
 
-let
-  package = pkgs.writeShellScriptBin "hyprlock" ''
-    export LD_PRELOAD="${pkgs.sssd}/lib/libnss_sss.so.2:$LD_PRELOAD"
-    exec ${pkgs.hyprlock}/bin/hyprlock "$@"
-  '';
-in
 {
   config = lib.mkIf config.programs.hyprlock.enable {
     stylix.targets.hyprlock.enable = true;
 
     programs.hyprlock = {
-      package = package;
+      package = perSystem.self.hyprlock;
       settings = {
         general.hide_cursor = true;
         auth.fingerprint.enabled = true;
@@ -53,7 +48,7 @@ in
         OnSuccess = [ "on-session-unlock.target" ];
       };
       Service = {
-        ExecStart = "${package}/bin/hyprlock";
+        ExecStart = lib.getExe config.programs.hyprlock.package;
       };
     };
   };
