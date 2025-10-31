@@ -47,13 +47,16 @@
       cat = "bat -p";
     };
 
-    home.packages = [ perSystem.self.choose-repo perSystem.self.clipselect ];
+    home.packages = [
+      perSystem.self.choose-repo
+      perSystem.self.clipselect
+    ];
 
     keybind.binds = [
       {
         modifiers = [ "SUPER" ];
         key = "P";
-        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e nvim -c 'cd {}' -c 'WithSession'";
+        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e direnv exec {} nvim -c 'cd {} | WithSession'";
       }
     ];
 
