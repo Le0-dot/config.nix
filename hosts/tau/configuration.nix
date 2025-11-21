@@ -48,26 +48,39 @@
       ];
     };
 
-    services.adguardhome = {
+    services.samba = {
       enable = true;
+      openFirewall = true;
       settings = {
-        mutableSettings = false;
-        users = [
-          {
-            name = "admin";
-            password = "@admin-password@";
-          }
-        ];
-        dns = {
-          upstream_dns = [
-            "9.9.9.9#dns.quad9.net"
-          ];
+        global = {
+          "workgroup" = "WORKGROUP";
+          "server string" = "${hostName} server";
+          "security" = "user";
+          "server min protocol" = "SMB3";
+          "unix password sync" = "yes";
+          "passwd program" = "/usr/bin/passwd %u";
+          "guest account" = "nobody";
+          "map to guest" = "bad user";
+          "use sendfile" = "yes";
+          "aio read size" = 1;
+          "aio write size" = 1;
+        };
+        "public" = {
+          "path" = "/tmp";
+          "public" = "no";
+          "browseable" = "yes";
+          "read only" = "yes";
+          "force user" = "root";
         };
       };
     };
 
-    systemd.services.adguardhome.serviceConfig.ExecStartPre =
-      "+${lib.getExe pkgs.replace-secret} @admin-password@ ${config.age.secrets.admin-password.path} /var/lib/AdGuardHome/AdGuardHome.yaml";
+    services.samba-wsdd.enable = true;
 
+    system.activationScripts.samba-users.text = builtins.concatStringsSep "\n" (
+      builtins.map (user: "/run/current-system/sw/bin/smbpasswd -sa ${user.name} << EOF\n\n\nEOF") (
+        builtins.filter (user: user.isNormalUser) (builtins.attrValues config.users.users)
+      )
+    );
   };
 }
