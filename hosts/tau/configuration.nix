@@ -34,47 +34,18 @@
 
     services.openssh.enable = true;
 
+    users.users.root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q"
+    ];
+
     services.tailscale = {
       enable = true;
       authKeyFile = config.age.secrets.tailscale-key.path;
       authKeyParameters.ephemeral = false;
       extraUpFlags = [
-        "--advertise-tags=tag:server"
+        "--advertise-tags=tag:nix"
         "--ssh"
       ];
-    };
-
-    services.traefik = {
-      enable = true;
-      staticConfigOptions = {
-        api = {
-          dashboard = true;
-          insecure = true;
-        };
-        certificatesResolvers.tailscaleResolver.tailscale = true;
-        entryPoints = {
-          web = {
-            address = ":80";
-          };
-          websecure = {
-            address = ":443";
-            http.tls = {
-              certResolver = "tailscaleResolver";
-              domains = [ { main = "${hostName}.spitz-mora.ts.net"; } ];
-            };
-          };
-        };
-      };
-      dynamicConfigOptions = {
-        http.routers.traefik = {
-          entryPoints = [
-            "web"
-            "websecure"
-          ];
-          rule = "Host(`traefik.${hostName}.spitz-mora.ts.net`)";
-          service = "api@internal";
-        };
-      };
     };
 
     services.adguardhome = {
@@ -98,8 +69,5 @@
     systemd.services.adguardhome.serviceConfig.ExecStartPre =
       "+${lib.getExe pkgs.replace-secret} @admin-password@ ${config.age.secrets.admin-password.path} /var/lib/AdGuardHome/AdGuardHome.yaml";
 
-    users.users.root.openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q"
-    ];
   };
 }
