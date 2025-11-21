@@ -12,6 +12,7 @@
         core.autocrlf = false;
         core.rebase = true;
         pull.rebase = true;
+        rerere.enabled = true;
       };
     };
   };
