@@ -1,9 +1,8 @@
 {
-  lib,
-  pkgs,
-  hostName,
-  config,
+  flake,
   inputs,
+  config,
+  hostName,
   ...
 }:
 
@@ -11,6 +10,8 @@
   imports = [
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
+
+    flake.nixosModules.samba
 
     ./hardware-configuration.nix
     ./disk-config.nix
@@ -34,9 +35,13 @@
 
     services.openssh.enable = true;
 
-    users.users.root.openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q"
-    ];
+    users = {
+      mutableUsers = false;
+      users.root.openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q"
+      ];
+      users.le0.isNormalUser = true;
+    };
 
     services.tailscale = {
       enable = true;
@@ -50,21 +55,13 @@
 
     services.samba = {
       enable = true;
-      openFirewall = true;
+      users = [
+        rec {
+          name = "le0";
+          password-file = config.age.secrets."${name}-password".path;
+        }
+      ];
       settings = {
-        global = {
-          "workgroup" = "WORKGROUP";
-          "server string" = "${hostName} server";
-          "security" = "user";
-          "server min protocol" = "SMB3";
-          "unix password sync" = "yes";
-          "passwd program" = "/usr/bin/passwd %u";
-          "guest account" = "nobody";
-          "map to guest" = "bad user";
-          "use sendfile" = "yes";
-          "aio read size" = 1;
-          "aio write size" = 1;
-        };
         "public" = {
           "path" = "/tmp";
           "public" = "no";
@@ -74,13 +71,5 @@
         };
       };
     };
-
-    services.samba-wsdd.enable = true;
-
-    system.activationScripts.samba-users.text = builtins.concatStringsSep "\n" (
-      builtins.map (user: "/run/current-system/sw/bin/smbpasswd -sa ${user.name} << EOF\n\n\nEOF") (
-        builtins.filter (user: user.isNormalUser) (builtins.attrValues config.users.users)
-      )
-    );
   };
 }
