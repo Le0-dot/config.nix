@@ -1,6 +1,6 @@
 {
   age.secrets = {
     tailscale-key.file = ../../secrets/tailscale-key.age;
-    admin-password.file = ../../secrets/admin-password.age;
+    le0-password.file = ../../secrets/le0-password.age;
   };
 }
