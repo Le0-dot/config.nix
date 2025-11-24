@@ -16,6 +16,8 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     ./secrets.nix
+
+    ./containers/audiobookshelf.nix
   ];
 
   config = {
