@@ -56,7 +56,7 @@
       {
         modifiers = [ "SUPER" ];
         key = "P";
-        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e direnv exec {} nvim -c 'WithSession {}'";
+        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e direnv exec {} nvim -c 'WithSession {}' +new-window";
       }
     ];
 
@@ -110,8 +110,10 @@
 
     programs.git = {
       enable = true;
-      userName = "Lev Koliadich";
-      userEmail = "lkolyadich@gmail.com";
+      settings.user = {
+        name = "Lev Koliadich";
+        email = "lkolyadich@gmail.com";
+      };
     };
     programs.gh.enable = true;
 

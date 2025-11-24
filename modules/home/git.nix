@@ -7,7 +7,7 @@
         "Session.vim"
         ".envrc"
       ];
-      extraConfig = {
+      settings = {
         init.defaultBranch = "main";
         core.autocrlf = false;
         core.rebase = true;

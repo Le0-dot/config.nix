@@ -27,8 +27,6 @@
         config.lib.file.mkOutOfStoreSymlink
         config.programs.neovim.config;
 
-    programs.git.extraConfig = {
-      diff.tool = "vimdiff";
-    };
+    programs.git.settings.diff.tool = "vimdiff";
   };
 }

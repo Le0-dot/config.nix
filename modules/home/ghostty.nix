@@ -17,7 +17,7 @@
       {
         modifiers = [ "SUPER" ];
         key = "RETURN";
-        action = "ghostty";
+        action = "ghostty +new-window";
       }
     ];
   };
