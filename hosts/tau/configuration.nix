@@ -11,7 +11,7 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
 
-    flake.nixosModules.containers.default
+    flake.nixosModules.containers
     flake.nixosModules.samba
 
     ./hardware-configuration.nix
