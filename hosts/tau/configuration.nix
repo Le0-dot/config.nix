@@ -13,6 +13,7 @@
 
     flake.nixosModules.containers
     flake.nixosModules.samba
+    flake.nixosModules.tailscale
 
     ./hardware-configuration.nix
     ./disk-config.nix
@@ -52,6 +53,18 @@
         "--advertise-tags=tag:nix"
         "--ssh"
       ];
+      services = {
+        enable = true;
+        settings = {
+          services = {
+            "svc:audiobookshelf-test" = {
+              endpoints = {
+                "tcp:443" = "http://127.0.0.1:13378";
+              };
+            };
+          };
+        };
+      };
     };
 
     services.samba = {
