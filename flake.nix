@@ -43,5 +43,18 @@
     };
   };
 
-  outputs = inputs: inputs.blueprint { inherit inputs; };
+  outputs =
+    inputs:
+    let
+      blueprint = inputs.blueprint { inherit inputs; };
+      containerModules = inputs.blueprint.lib.importDir ./modules/nixos/containers (
+        entries: builtins.mapAttrs (_: entry: entry.path) entries
+      );
+    in
+    blueprint
+    // {
+      nixosModules = blueprint.nixosModules // {
+        containers = containerModules;
+      };
+    };
 }

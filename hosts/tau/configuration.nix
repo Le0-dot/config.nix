@@ -12,12 +12,11 @@
     inputs.agenix.nixosModules.default
 
     flake.nixosModules.samba
+    flake.nixosModules.containers.audiobookshelf
 
     ./hardware-configuration.nix
     ./disk-config.nix
     ./secrets.nix
-
-    ./containers/audiobookshelf.nix
   ];
 
   config = {
