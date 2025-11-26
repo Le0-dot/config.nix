@@ -50,11 +50,16 @@
       containerModules = inputs.blueprint.lib.importDir ./modules/nixos/containers (
         entries: builtins.mapAttrs (_: entry: entry.path) entries
       );
+      containerDefault = {
+        imports = builtins.attrValues containerModules;
+      };
     in
     blueprint
     // {
       nixosModules = blueprint.nixosModules // {
-        containers = containerModules;
+        containers = containerModules // {
+          default = containerDefault;
+        };
       };
     };
 }
