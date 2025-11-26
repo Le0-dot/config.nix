@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   hostName,
   ...
@@ -46,13 +47,13 @@
 
     system.activationScripts.samba-users.text = ''
       while IFS=':' read -r name _; do
-        /run/current-system/sw/bin/pdbedit -x -u "$name"
-      done < <(/run/current-system/sw/bin/pdbedit -L)
+        ${lib.getBin pkgs.samba}/bin/pdbedit -x -u "$name"
+      done < <(${lib.getBin pkgs.samba}/bin/pdbedit -L)
     ''
     + builtins.concatStringsSep "\n" (
       builtins.map (
         user:
-        "cat ${user.password-file} ${user.password-file} | /run/current-system/sw/bin/smbpasswd -sa ${user.name}"
+        "cat ${user.password-file} ${user.password-file} | ${lib.getBin pkgs.samba}/bin/smbpasswd -sa ${user.name}"
       ) config.services.samba.users
     );
   };
