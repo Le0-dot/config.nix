@@ -52,6 +52,7 @@
       extraUpFlags = [
         "--advertise-tags=tag:nix"
         "--ssh"
+        "--accept-routes"
       ];
       services = {
         enable = true;

@@ -5,6 +5,20 @@
   ...
 }:
 
+let
+  notEmptyPorts = _container: { ports, ... }: ports != [ ];
+  getHostPort = ports: builtins.head (builtins.split ":" (builtins.head ports)); # Assume format is "hostPort:containerPort" and publish only first port
+  containerToService =
+    container:
+    { ports, ... }:
+    lib.attrsets.nameValuePair "svc:${container}" {
+      endpoints."tcp:443" = "https://127.0.0.1:${getHostPort ports}";
+    };
+  containerToServe =
+    container:
+    { ports, ... }:
+    "${lib.getExe pkgs.tailscale} serve --service=svc:${container} --https=443 ${getHostPort ports}";
+in
 {
   options.services.tailscale.services = {
     enable = lib.mkEnableOption "Tailscale Services";
@@ -43,34 +57,27 @@
 
   config = lib.mkIf config.services.tailscale.services.enable {
     services.tailscale.services.settings.services =
-      lib.mkIf config.services.tailscale.services.enableContainers
-        (
-          let
-            notEmptyPorts = _container: { ports, ... }: ports != [ ];
-            containerToService =
-              container:
-              { ports, ... }:
-              let
-                getHostPort = port: builtins.head (builtins.split ":" port); # Assume format is "hostPort:containerPort"
-                hostPort = getHostPort (builtins.head ports); # Publish only first port
-              in
-              lib.attrsets.nameValuePair "svc:${container}" {
-                endpoints."tcp:443" = "http://localhost:${hostPort}";
-              };
-          in
-          lib.attrsets.mapAttrs' containerToService (
-            lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
-          )
-        );
+      lib.mkIf config.services.tailscale.services.enableContainers (
+        lib.attrsets.mapAttrs' containerToService (
+          lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
+        )
+      );
 
-    system.activationScripts.tailscale-services =
-      let
-        configFile = pkgs.writeText "tailscale-services.json" (
-          builtins.toJSON config.services.tailscale.services.settings
-        );
-      in
-      ''
-        ${lib.getExe pkgs.tailscale} serve set-config --all ${configFile}
-      '';
+    # system.activationScripts.tailscale-serve-services =
+    #   let
+    #     configFile = pkgs.writeText "tailscale-service-config.json" (
+    #       builtins.toJSON config.services.tailscale.services.settings
+    #     );
+    #   in
+    #   ''
+    #     ${lib.getExe pkgs.tailscale} serve set-config --all ${configFile}
+    #   '';
+
+    system.activationScripts.tailscale-serve-service-containers = builtins.concatStringsSep "\n" (
+      [ "${lib.getExe pkgs.tailscale} serve reset" ]
+      ++ lib.attrsets.mapAttrsToList containerToServe (
+        lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
+      )
+    );
   };
 }
