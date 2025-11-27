@@ -55,15 +55,7 @@
       ];
       services = {
         enable = true;
-        settings = {
-          services = {
-            "svc:audiobookshelf-test" = {
-              endpoints = {
-                "tcp:443" = "http://127.0.0.1:13378";
-              };
-            };
-          };
-        };
+        enableContainers = true;
       };
     };
 
