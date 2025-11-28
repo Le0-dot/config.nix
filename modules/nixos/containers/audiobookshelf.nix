@@ -1,5 +1,5 @@
 {
-  virtualisation.oci-containers.containers.audiobookshelf-test = {
+  virtualisation.oci-containers.containers.audiobookshelf = {
     image = "ghcr.io/advplyr/audiobookshelf:latest";
     volumes = [
       "/root/audiobooks:/audiobooks"
