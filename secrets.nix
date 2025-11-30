@@ -1,6 +1,6 @@
 let
   tau = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOcRsZ9/yprfUJGcVfPdRMia6cVI+DuDdACmMLJrOoa6";
-  nu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIORiK/38+TFKHjB673TPmuaXmeBxcAxNZUavhPyFgvUg";
+  nu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGzpo0GHfNUByhSevVdLcrP48XP3cc6pE/IAGBSFCq5";
 
   systems = [
     tau
