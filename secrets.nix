@@ -1,6 +1,11 @@
 let
   tau = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOcRsZ9/yprfUJGcVfPdRMia6cVI+DuDdACmMLJrOoa6";
-  systems = [ tau ];
+  nu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIORiK/38+TFKHjB673TPmuaXmeBxcAxNZUavhPyFgvUg";
+
+  systems = [
+    tau
+    nu
+  ];
 
   local = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBWPb8bgtgpMQw1+TQElFUaGFy8YL6r1aRUZWCMXsu4q";
   users = [ local ];
