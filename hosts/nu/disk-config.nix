@@ -2,7 +2,7 @@
   disko.devices.disk = {
     main = {
       type = "disk";
-      device = "/dev/nvme0n1";
+      device = "/dev/disk/by-id/nvme-Lexar_SSD_NM620_512GB_QFB155R004190P110W";
       content = {
         type = "gpt";
         partitions = {
