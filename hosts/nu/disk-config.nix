@@ -1,3 +1,51 @@
 {
-  # TODO: https://github.com/tiredofit/nixos-config/blob/da4b765d8d496e821828d173705fcef010dae10f/deploy-templates/disko/efi-btrfs-swap-raid1.nix#L48
+  disko.devices.disk = {
+    main = {
+      type = "disk";
+      device = "/dev/nvme0n1";
+      content = {
+        type = "gpt";
+        partitions = {
+          boot = {
+            type = "EF02";
+            size = "1M";
+          };
+          ESP = {
+            type = "EF00";
+            size = "1G";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
+            };
+          };
+          root = {
+            size = "100%";
+            content = {
+              type = "btrfs";
+              extraArgs = [ "-f" ];
+              subvolumes = {
+                "/" = {
+                  mountpoint = "/";
+                  mountOptions = [
+                    "noatime"
+                    "ssd"
+                  ];
+                };
+                "/nix" = {
+                  mountpoint = "/nix";
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                    "ssd"
+                  ];
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
 }
