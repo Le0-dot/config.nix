@@ -64,7 +64,7 @@ in
           data_disk2
         ];
         subvolumes = {
-          "/data" = {
+          data = {
             mountpoint = "/srv/data";
             mountOptions = [
               "compress=zstd"
