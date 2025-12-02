@@ -73,9 +73,28 @@ in
     #     ${lib.getExe pkgs.tailscale} serve set-config --all ${configFile}
     #   '';
 
-    system.activationScripts.tailscale-serve-service-containers = builtins.concatStringsSep "\n" (
-      [ "${lib.getExe pkgs.tailscale} serve reset" ]
-      ++ lib.attrsets.mapAttrsToList containerToServe (
+    system.activationScripts.tailscale-serve-clear-container-services =
+      let
+        desired-services = builtins.concatStringsSep "\n" (
+          map (service: "svc:${service}") (
+            builtins.attrNames (
+              lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
+            )
+          )
+        );
+      in
+      ''
+        existing=$(${lib.getExe pkgs.tailscale} serve status -json | ${lib.getExe pkgs.jq} -r '.Services | keys[]')
+        desired="${desired-services}"
+
+        clear=$(comm -23 <(printf '%s\n' "$existing" | sort) <(printf '%s\n' "$desired" | sort))
+        for service in $clear; do
+          ${lib.getExe pkgs.tailscale} serve clear "$service"
+        done
+      '';
+
+    system.activationScripts.tailscale-serve-set-container-services = builtins.concatStringsSep "\n" (
+      lib.attrsets.mapAttrsToList containerToServe (
         lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
       )
     );
