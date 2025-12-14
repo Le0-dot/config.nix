@@ -11,13 +11,13 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
 
-    flake.nixosModules.containers
     flake.nixosModules.samba
     flake.nixosModules.tailscale
 
     ./hardware-configuration.nix
     ./disk-config.nix
     ./secrets.nix
+    ./containers/adguardhome.nix
   ];
 
   config = {
