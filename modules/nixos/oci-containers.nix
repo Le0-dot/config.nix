@@ -1,10 +1,4 @@
-# FIXME: REMOVE
-{
-  lib,
-  flake,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 
 let
   blockDeviceToOption =
@@ -13,11 +7,11 @@ let
       disk,
       partition,
       opts,
+      path,
     }:
     let
-      escapeValue = str: if lib.strings.hasInfix "," str then lib.strings.escapeNixString str else str; # FIXME
       volumeOpts = builtins.concatStringsSep "," (
-        lib.attrsets.mapAttrsToList (key: value: "volume-opt=${key}=${escapeValue value}") (
+        lib.attrsets.mapAttrsToList (key: value: "volume-opt=${key}=${value}") (
           {
             type =
               if partition == null then
@@ -30,13 +24,14 @@ let
               else
                 config.disko.devices.disk.${disk}.content.partitions.${partition}.device;
           }
-          // opts
+          // lib.attrsets.mapAttrs' (key: value: lib.attrsets.nameValuePair "o=${key}" value) opts
         )
       );
     in
-    ''
-      --mount="type=volume,dst=${destination},volume-driver=local,${volumeOpts}"
-    '';
+    [
+      "--mount"
+      "type=volume,dst=${destination},${volumeOpts},volume-subpath=${path}"
+    ];
 in
 {
   options.virtualisation.oci-containers.containers = lib.mkOption {
@@ -67,6 +62,11 @@ in
                       description = "Mount options for the block device.";
                       default = { };
                     };
+                    path = lib.mkOption {
+                      type = lib.types.str;
+                      description = "The path on the filesystem of the block device to mount.";
+                      default = "/";
+                    };
                   };
                 }
               );
@@ -76,7 +76,7 @@ in
           };
 
           config = {
-            extraOptions = map blockDeviceToOption config.blockDevices;
+            extraOptions = builtins.concatMap blockDeviceToOption config.blockDevices;
           };
         }
       )

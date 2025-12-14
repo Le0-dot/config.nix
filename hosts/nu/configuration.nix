@@ -13,10 +13,13 @@
 
     flake.nixosModules.tailscale
     flake.nixosModules.samba
+    flake.nixosModules.oci-containers
 
     ./hardware-configuration.nix
     ./disk-config.nix
     ./secrets.nix
+
+    ./containers/audiobookshelf.nix
   ];
 
   config = {
@@ -52,6 +55,10 @@
         "--advertise-tags=tag:nix"
         "--ssh"
       ];
+      services = {
+        enable = true;
+        enableContainers = true;
+      };
     };
   };
 }
