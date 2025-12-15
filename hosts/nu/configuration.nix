@@ -20,6 +20,7 @@
     ./secrets.nix
 
     ./containers/audiobookshelf.nix
+    ./containers/adguardhome.nix
   ];
 
   config = {
