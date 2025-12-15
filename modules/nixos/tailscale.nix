@@ -84,7 +84,7 @@ in
         );
       in
       ''
-        existing=$(${lib.getExe pkgs.tailscale} serve status -json | ${lib.getExe pkgs.jq} -r '.Services | keys[]')
+        existing=$(${lib.getExe pkgs.tailscale} serve status -json | ${lib.getExe pkgs.jq} -r '.Services // {} | keys[]')
         desired="${desired-services}"
 
         clear=$(comm -23 <(printf '%s\n' "$existing" | sort) <(printf '%s\n' "$desired" | sort))
