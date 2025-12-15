@@ -17,7 +17,6 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     ./secrets.nix
-    ./containers/adguardhome.nix
   ];
 
   config = {
