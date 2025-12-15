@@ -1,5 +1,5 @@
 let
-  tau = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOcRsZ9/yprfUJGcVfPdRMia6cVI+DuDdACmMLJrOoa6";
+  tau = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINRWhZjwHvBxQcp13586QYmTJoXuqzdDlaEcE0PBZ5vO";
   nu = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDmJel+wOrfb4ixnA5WNqR9wa9OnQzU74MODE73soDmf";
 
   systems = [
