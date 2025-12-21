@@ -1,4 +1,5 @@
 {
+  virtualisation.oci-containers.networks = [ "jellyfin" ];
   virtualisation.oci-containers.containers.jellyfin = {
     image = "docker.io/jellyfin/jellyfin:10.11.5";
     blockDevices = [
@@ -41,6 +42,6 @@
     ports = [
       "8096:8096"
     ];
-    # networks = [ "jellyfin" ]; # TODO
+    # networks = [ "jellyfin" ];
   };
 }

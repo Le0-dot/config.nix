@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   blockDeviceToOption =
@@ -32,8 +37,44 @@ let
       "--mount"
       "type=volume,dst=${destination},${volumeOpts},volume-subpath=${path}"
     ];
+
+  podmanNetworkService = network: {
+    "podman-network-${network}" = {
+      description = "Podman network ${network}";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        ${lib.getExe pkgs.podman} network create ${network} --ignore
+      '';
+    };
+  };
+  dockerNetworkService = network: {
+    "docker-network-${network}" = {
+      description = "Docker network ${network}";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+        ${lib.getExe pkgs.docker} network inspect ${network} || ${lib.getExe pkgs.docker} network create ${network}
+      '';
+    };
+  };
 in
 {
+  options.virtualisation.oci-containers.networks = lib.mkOption {
+    type = lib.types.listOf lib.types.str;
+    description = "Configuration options for OCI containers.";
+    default = [ ];
+  };
+
+  config.systemd.services = lib.mkMerge (
+    map (
+      if config.virtualisation.oci-containers.backend == "podman" then
+        podmanNetworkService
+      else
+        dockerNetworkService
+    ) config.virtualisation.oci-containers.networks
+  );
+
   options.virtualisation.oci-containers.containers = lib.mkOption {
     type = lib.types.attrsOf (
       lib.types.submodule (
