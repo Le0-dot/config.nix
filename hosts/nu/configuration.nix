@@ -21,6 +21,7 @@
 
     ./containers/audiobookshelf.nix
     ./containers/adguardhome.nix
+    ./containers/baikal.nix
   ];
 
   config = {
