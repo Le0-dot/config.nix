@@ -1,6 +1,6 @@
 {
   virtualisation.oci-containers.containers.adguardhome = {
-    image = "docker.io/adguard/adguardhome:latest";
+    image = "docker.io/adguard/adguardhome:v0.107.71";
     blockDevices = [
       {
         destination = "/opt/adguardhome/conf";
