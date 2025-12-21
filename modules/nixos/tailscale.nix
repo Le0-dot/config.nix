@@ -17,7 +17,7 @@ let
   containerToServe =
     container:
     { ports, ... }:
-    "${lib.getExe pkgs.tailscale} serve --service=svc:${container} --https=443 ${getHostPort ports}";
+    "${lib.getExe pkgs.tailscale} serve --service=svc:${container} --https=443 ${getHostPort ports} > /dev/null";
 in
 {
   options.services.tailscale.services = {
@@ -89,7 +89,7 @@ in
 
         clear=$(comm -23 <(printf '%s\n' "$existing" | sort) <(printf '%s\n' "$desired" | sort))
         for service in $clear; do
-          ${lib.getExe pkgs.tailscale} serve clear "$service"
+          ${lib.getExe pkgs.tailscale} serve clear "$service" > /dev/null
         done
       '';
 
