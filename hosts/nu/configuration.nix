@@ -23,6 +23,7 @@
     ./containers/adguardhome.nix
     ./containers/baikal.nix
     ./containers/jellyfin.nix
+    ./containers/komga.nix
   ];
 
   config = {
