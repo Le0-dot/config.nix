@@ -18,6 +18,10 @@ let
     container:
     { ports, ... }:
     "${lib.getExe pkgs.tailscale} serve --service=svc:${container} --https=443 ${getHostPort ports} > /dev/null";
+  podToServe =
+    pod:
+    { podConfig, ... }:
+    "${lib.getExe pkgs.tailscale} serve --service=svc:${pod} --https=443 ${getHostPort (podConfig.publishPorts)} > /dev/null";
 in
 {
   options.services.tailscale.services = {
@@ -97,6 +101,12 @@ in
       lib.attrsets.mapAttrsToList containerToServe (
         lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
       )
+    );
+
+    # TODO: Clear removed pods
+
+    system.activationScripts.tailscale-serve-pods = builtins.concatStringsSep "\n" (
+      lib.attrsets.mapAttrsToList podToServe config.virtualisation.quadlet.pods
     );
   };
 }

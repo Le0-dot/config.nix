@@ -25,7 +25,7 @@
   mountVolume =
     {
       volume,
-      subpath,
+      subpath ? "/",
       destination,
     }:
     "type=volume,source=${volume},subpath=${subpath},destination=${destination}";
