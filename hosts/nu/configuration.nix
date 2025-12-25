@@ -14,7 +14,6 @@
 
     flake.nixosModules.tailscale
     flake.nixosModules.samba
-    flake.nixosModules.oci-containers
 
     ./hardware-configuration.nix
     ./disk-config.nix
