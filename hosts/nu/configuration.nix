@@ -10,6 +10,7 @@
   imports = [
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
+    inputs.quadlet-nix.nixosModules.quadlet
 
     flake.nixosModules.tailscale
     flake.nixosModules.samba
@@ -24,6 +25,7 @@
     ./containers/baikal.nix
     ./containers/jellyfin.nix
     ./containers/komga.nix
+    ./containers/paperless-ngx.nix
   ];
 
   config = {
