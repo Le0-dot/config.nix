@@ -1,7 +1,9 @@
-{ config, ... }:
+{ config, flake, ... }:
 
 let
   tailnet = "spitz-mora.ts.net";
+  btrfsVolume = flake.lib.btrfsVolume config.disko;
+  mountVolume = flake.lib.mountVolume;
 in
 {
   virtualisation.quadlet =
@@ -12,18 +14,26 @@ in
       pods.paperless-ngx-pod.podConfig = {
         publishPorts = [ "8010:8000" ];
       };
-      volumes.paperless-ngx.volumeConfig = {
-        type = "btrfs";
-        device = "/dev/disk/by-id/nvme-Lexar_SSD_NM620_512GB_QFB155R004190P110W-part2";
-        options = "subvol=containers/paperless-ngx/active";
+      volumes.paperless-ngx = btrfsVolume {
+        disk = "main";
+        partition = "root";
+        subvol = "containers/paperless-ngx/active";
       };
       containers = {
         paperless-ngx.containerConfig = {
           image = "ghcr.io/paperless-ngx/paperless-ngx:2.20.3";
           pod = pods.paperless-ngx-pod.ref;
           mounts = [
-            "type=volume,source=${volumes.paperless-ngx.ref},destination=/usr/src/paperless/data,subpath=/data"
-            "type=volume,source=${volumes.paperless-ngx.ref},destination=/usr/src/paperless/media,subpath=/media"
+            (mountVolume {
+              volume = volumes.paperless-ngx.ref;
+              subpath = "/data";
+              destination = "/usr/src/paperless/data";
+            })
+            (mountVolume {
+              volume = volumes.paperless-ngx.ref;
+              subpath = "/media";
+              destination = "/usr/src/paperless/media";
+            })
           ];
           environments = {
             PAPERLESS_REDIS = "redis://localhost:6379";
@@ -34,7 +44,11 @@ in
           image = "docker.io/redis:8.4.0";
           pod = pods.paperless-ngx-pod.ref;
           mounts = [
-            "type=volume,source=${volumes.paperless-ngx.ref},destination=/data,subpath=/redis"
+            (mountVolume {
+              volume = volumes.paperless-ngx.ref;
+              subpath = "/redis";
+              destination = "/data";
+            })
           ];
         };
       };
