@@ -1,24 +1,38 @@
+{ config, flake, ... }:
+
+let
+  btrfsVolume = flake.lib.btrfsVolume config.disko;
+  mountVolume = flake.lib.mountVolume;
+in
 {
-  virtualisation.oci-containers.containers.baikal = {
-    image = "docker.io/ckulka/baikal:0.10.1-nginx";
-    blockDevices = [
-      {
-        destination = "/var/www/baikal/config";
+  virtualisation.quadlet =
+    let
+      inherit (config.virtualisation.quadlet) pods volumes;
+    in
+    {
+      pods.baikal.podConfig = {
+        publishPorts = [ "9080:80" ];
+      };
+      volumes.baikal = btrfsVolume {
         disk = "main";
         partition = "root";
-        opts.subvol = "containers/baikal/active";
-        path = "/config";
-      }
-      {
-        destination = "/var/www/baikal/Specific";
-        disk = "main";
-        partition = "root";
-        opts.subvol = "containers/baikal/active";
-        path = "/data";
-      }
-    ];
-    ports = [
-      "9080:80"
-    ];
-  };
+        subvol = "containers/baikal/active";
+      };
+      containers.baikal-main.containerConfig = {
+        image = "docker.io/ckulka/baikal:0.10.1-nginx";
+        pod = pods.baikal.ref;
+        mounts = [
+          (mountVolume {
+            volume = volumes.baikal.ref;
+            subpath = "/config";
+            destination = "/var/www/baikal/config";
+          })
+          (mountVolume {
+            volume = volumes.baikal.ref;
+            subpath = "/data";
+            destination = "/var/www/baikal/Specific";
+          })
+        ];
+      };
+    };
 }

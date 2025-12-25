@@ -1,47 +1,70 @@
+{ config, flake, ... }:
+
+let
+  btrfsVolume = flake.lib.btrfsVolume config.disko;
+  mountVolume = flake.lib.mountVolume;
+in
 {
-  virtualisation.oci-containers.networks = [ "jellyfin" ];
-  virtualisation.oci-containers.containers.jellyfin = {
-    image = "docker.io/jellyfin/jellyfin:10.11.5";
-    blockDevices = [
-      {
-        destination = "/config";
-        disk = "main";
-        partition = "root";
-        opts.subvol = "containers/jellyfin/active";
-        path = "/config";
-      }
-      {
-        destination = "/cache";
-        disk = "main";
-        partition = "root";
-        opts.subvol = "containers/jellyfin/active";
-        path = "/cache";
-      }
-      {
-        destination = "/media/movies";
-        disk = "data";
-        opts.subvol = "movies";
-      }
-      {
-        destination = "/media/shows";
-        disk = "data";
-        opts.subvol = "shows";
-      }
-      {
-        destination = "/media/anime";
-        disk = "data";
-        opts.subvol = "anime";
-      }
-      # { # TODO: use youtarr or similar to download youtube content
-      #   destination = "/media/youtube";
-      #   disk = "data";
-      #   opts.subvol = "youtube";
-      # }
-    ];
-    devices = [ "/dev/dri:/dev/dri" ];
-    ports = [
-      "8096:8096"
-    ];
-    # networks = [ "jellyfin" ];
-  };
+  virtualisation.quadlet =
+    let
+      inherit (config.virtualisation.quadlet) pods volumes;
+    in
+    {
+      pods.jellyfin.podConfig = {
+        publishPorts = [ "8096:8096" ];
+      };
+      volumes = {
+        jellyfin = btrfsVolume {
+          disk = "main";
+          partition = "root";
+          subvol = "containers/jellyfin/active";
+        };
+        movies = btrfsVolume {
+          disk = "data";
+          subvol = "movies";
+        };
+        shows = btrfsVolume {
+          disk = "data";
+          subvol = "shows";
+        };
+        anime = btrfsVolume {
+          disk = "data";
+          subvol = "anime";
+        };
+      };
+      containers.jellyfin-main.containerConfig = {
+        image = "docker.io/jellyfin/jellyfin:10.11.5";
+        pod = pods.jellyfin.ref;
+        mounts = [
+          (mountVolume {
+            volume = volumes.jellyfin.ref;
+            subpath = "/config";
+            destination = "/config";
+          })
+          (mountVolume {
+            volume = volumes.jellyfin.ref;
+            subpath = "/cache";
+            destination = "/cache";
+          })
+          (mountVolume {
+            volume = volumes.movies.ref;
+            destination = "/media/movies";
+          })
+          (mountVolume {
+            volume = volumes.shows.ref;
+            destination = "/media/shows";
+          })
+          (mountVolume {
+            volume = volumes.anime.ref;
+            destination = "/media/anime";
+          })
+          # TODO: use youtarr or similar to download youtube content
+          # (mountVolume {
+          #   volume = volumes.youtube.ref;
+          #   destination = "/media/youtube";
+          # })
+        ];
+        devices = [ "/dev/dri" ];
+      };
+    };
 }

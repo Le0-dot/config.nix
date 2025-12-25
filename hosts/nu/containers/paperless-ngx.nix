@@ -11,7 +11,7 @@ in
       inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      pods.paperless-ngx-pod.podConfig = {
+      pods.paperless-ngx.podConfig = {
         publishPorts = [ "8010:8000" ];
       };
       volumes.paperless-ngx = btrfsVolume {
@@ -20,9 +20,9 @@ in
         subvol = "containers/paperless-ngx/active";
       };
       containers = {
-        paperless-ngx.containerConfig = {
+        paperless-ngx-main.containerConfig = {
           image = "ghcr.io/paperless-ngx/paperless-ngx:2.20.3";
-          pod = pods.paperless-ngx-pod.ref;
+          pod = pods.paperless-ngx.ref;
           mounts = [
             (mountVolume {
               volume = volumes.paperless-ngx.ref;
@@ -42,7 +42,7 @@ in
         };
         paperless-ngx-redis.containerConfig = {
           image = "docker.io/redis:8.4.0";
-          pod = pods.paperless-ngx-pod.ref;
+          pod = pods.paperless-ngx.ref;
           mounts = [
             (mountVolume {
               volume = volumes.paperless-ngx.ref;

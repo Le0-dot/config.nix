@@ -1,26 +1,42 @@
+{ config, flake, ... }:
+
+let
+  btrfsVolume = flake.lib.btrfsVolume config.disko;
+  mountVolume = flake.lib.mountVolume;
+in
 {
-  virtualisation.oci-containers.containers.adguardhome = {
-    image = "docker.io/adguard/adguardhome:v0.107.71";
-    blockDevices = [
-      {
-        destination = "/opt/adguardhome/conf";
+  virtualisation.quadlet =
+    let
+      inherit (config.virtualisation.quadlet) pods volumes;
+    in
+    {
+      pods.adguardhome.podConfig = {
+        publishPorts = [
+          "3000:3000"
+          "53:53/udp"
+          "53:53/tcp"
+        ];
+      };
+      volumes.adguardhome = btrfsVolume {
         disk = "main";
         partition = "root";
-        opts.subvol = "containers/adguardhome/active";
-        path = "/config";
-      }
-      {
-        destination = "/opt/adguardhome/work";
-        disk = "main";
-        partition = "root";
-        opts.subvol = "containers/adguardhome/active";
-        path = "/data";
-      }
-    ];
-    ports = [
-      "3000:3000"
-      "53:53/udp"
-      "53:53/tcp"
-    ];
-  };
+        subvol = "containers/adguardhome/active";
+      };
+      containers.adguardhome-main.containerConfig = {
+        image = "docker.io/adguard/adguardhome:v0.107.71";
+        pod = pods.adguardhome.ref;
+        mounts = [
+          (mountVolume {
+            volume = volumes.adguardhome.ref;
+            subpath = "/config";
+            destination = "/opt/adguardhome/conf";
+          })
+          (mountVolume {
+            volume = volumes.adguardhome.ref;
+            subpath = "/data";
+            destination = "/opt/adguardhome/work";
+          })
+        ];
+      };
+    };
 }
