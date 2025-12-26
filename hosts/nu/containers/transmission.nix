@@ -10,7 +10,7 @@ in
       inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      pods.torrents.podConfig = {
+      pods.media.podConfig = {
         publishPorts = [
           "9091:9091"
           "51413:51413/tcp"
@@ -33,7 +33,7 @@ in
       };
       containers.transmission-main.containerConfig = {
         image = "lscr.io/linuxserver/transmission:4.0.6";
-        pod = pods.torrents.ref;
+        pod = pods.media.ref;
         mounts = [
           (mountVolume {
             volume = volumes.transmission.ref;

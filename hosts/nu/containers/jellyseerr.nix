@@ -11,34 +11,28 @@ in
     in
     {
       pods.media.podConfig = {
-        publishPorts = [
-          "9696:9696"
-        ];
+        publishPorts = [ "5055:5055" ];
         labels = {
-          "tailscale.service.prowlarr.https" = "9696";
+          "tailscale.service.jellyseerr.https" = "5055";
         };
       };
       volumes = {
-        prowlarr = btrfsVolume {
+        jellyseerr = btrfsVolume {
           disk = "main";
           partition = "root";
-          subvol = "containers/prowlarr/active";
+          subvol = "containers/jellyseerr/active";
         };
       };
-      containers.prowlarr-main.containerConfig = {
-        image = "lscr.io/linuxserver/prowlarr:2.3.0";
+      containers.jellyseerr-main.containerConfig = {
+        image = "ghcr.io/fallenbagel/jellyseerr:2.7.3";
         pod = pods.media.ref;
         mounts = [
           (mountVolume {
-            volume = volumes.prowlarr.ref;
+            volume = volumes.jellyseerr.ref;
             subpath = "/config";
-            destination = "/config";
+            destination = "/app/config";
           })
         ];
-        environments = {
-          PUID = "0";
-          PGID = "0";
-        };
       };
     };
 }

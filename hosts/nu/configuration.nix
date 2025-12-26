@@ -30,6 +30,7 @@
     ./containers/prowlarr.nix
     ./containers/radarr.nix
     ./containers/sonarr.nix
+    ./containers/jellyseerr.nix
   ];
 
   config = {

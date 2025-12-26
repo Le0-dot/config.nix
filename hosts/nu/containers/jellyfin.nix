@@ -10,7 +10,7 @@ in
       inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      pods.jellyfin.podConfig = {
+      pods.media.podConfig = {
         publishPorts = [ "8096:8096" ];
         labels = {
           "tailscale.service.jellyfin.https" = "8096";
@@ -37,7 +37,7 @@ in
       };
       containers.jellyfin-main.containerConfig = {
         image = "docker.io/jellyfin/jellyfin:10.11.5";
-        pod = pods.jellyfin.ref;
+        pod = pods.media.ref;
         mounts = [
           (mountVolume {
             volume = volumes.jellyfin.ref;

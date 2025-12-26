@@ -10,7 +10,7 @@ in
       inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      pods.torrents.podConfig = {
+      pods.media.podConfig = {
         publishPorts = [
           "7878:7878"
         ];
@@ -27,7 +27,7 @@ in
       };
       containers.radarr-main.containerConfig = {
         image = "lscr.io/linuxserver/radarr:6.0.4";
-        pod = pods.torrents.ref;
+        pod = pods.media.ref;
         mounts = [
           (mountVolume {
             volume = volumes.radarr.ref;

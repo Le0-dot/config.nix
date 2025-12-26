@@ -10,7 +10,7 @@ in
       inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      pods.torrents.podConfig = {
+      pods.media.podConfig = {
         publishPorts = [
           "8989:8989"
         ];
@@ -27,7 +27,7 @@ in
       };
       containers.sonarr-main.containerConfig = {
         image = "lscr.io/linuxserver/sonarr:4.0.16";
-        pod = pods.torrents.ref;
+        pod = pods.media.ref;
         mounts = [
           (mountVolume {
             volume = volumes.sonarr.ref;
