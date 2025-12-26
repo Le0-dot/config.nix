@@ -28,6 +28,7 @@
     ./containers/paperless-ngx.nix
     ./containers/transmission.nix
     ./containers/prowlarr.nix
+    ./containers/radarr.nix
   ];
 
   config = {
