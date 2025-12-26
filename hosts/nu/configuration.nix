@@ -27,6 +27,7 @@
     ./containers/komga.nix
     ./containers/paperless-ngx.nix
     ./containers/transmission.nix
+    ./containers/prowlarr.nix
   ];
 
   config = {
