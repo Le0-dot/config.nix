@@ -13,6 +13,9 @@ in
     {
       pods.paperless-ngx.podConfig = {
         publishPorts = [ "8010:8000" ];
+        labels = {
+          "tailscale.service.paperless-ngx.https" = "8010";
+        };
       };
       volumes.paperless-ngx = btrfsVolume {
         disk = "main";

@@ -12,6 +12,9 @@ in
     {
       pods.baikal.podConfig = {
         publishPorts = [ "9080:80" ];
+        labels = {
+          "tailscale.service.baikal.https" = "9080";
+        };
       };
       volumes.baikal = btrfsVolume {
         disk = "main";

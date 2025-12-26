@@ -12,6 +12,9 @@ in
     {
       pods.audiobookshelf.podConfig = {
         publishPorts = [ "13378:80" ];
+        labels = {
+          "tailscale.service.audiobookshelf.https" = "13378";
+        };
       };
       volumes = {
         audiobookshelf = btrfsVolume {

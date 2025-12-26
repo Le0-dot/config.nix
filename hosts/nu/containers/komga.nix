@@ -14,6 +14,9 @@ in
         publishPorts = [
           "25600:25600"
         ];
+        labels = {
+          "tailscale.service.komga.https" = "25600";
+        };
       };
       volumes = {
         komga = btrfsVolume {

@@ -16,6 +16,9 @@ in
           "53:53/udp"
           "53:53/tcp"
         ];
+        labels = {
+          "tailscale.service.adguardhome.https" = "3000";
+        };
       };
       volumes.adguardhome = btrfsVolume {
         disk = "main";
