@@ -26,6 +26,7 @@
     ./containers/jellyfin.nix
     ./containers/komga.nix
     ./containers/paperless-ngx.nix
+    ./containers/transmission.nix
   ];
 
   config = {
