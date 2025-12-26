@@ -1,4 +1,5 @@
 {
+  pkgs,
   flake,
   inputs,
   config,
@@ -52,6 +53,12 @@
       ];
     };
 
+    environment.systemPackages = [
+      pkgs.neovim
+      pkgs.curl
+      pkgs.jq
+    ];
+
     services.tailscale = {
       enable = true;
       authKeyFile = config.age.secrets.tailscale-key.path;
@@ -62,7 +69,7 @@
       ];
       services = {
         enable = true;
-        enableContainers = true;
+        enablePods = true;
       };
     };
   };

@@ -12,6 +12,9 @@ in
     {
       pods.jellyfin.podConfig = {
         publishPorts = [ "8096:8096" ];
+        labels = {
+          "tailscale.service.jellyfin.https" = "8096";
+        };
       };
       volumes = {
         jellyfin = btrfsVolume {

@@ -5,78 +5,13 @@
   ...
 }:
 
-let
-  notEmptyPorts = _container: { ports, ... }: ports != [ ];
-  getHostPort = ports: builtins.head (builtins.split ":" (builtins.head ports)); # Assume format is "hostPort:containerPort" and publish only first port
-  containerToService =
-    container:
-    { ports, ... }:
-    lib.attrsets.nameValuePair "svc:${container}" {
-      endpoints."tcp:443" = "https://127.0.0.1:${getHostPort ports}";
-    };
-  containerToServe =
-    container:
-    { ports, ... }:
-    "${lib.getExe pkgs.tailscale} serve --service=svc:${container} --https=443 ${getHostPort ports} > /dev/null";
-  podToServe =
-    pod:
-    { podConfig, ... }:
-    "${lib.getExe pkgs.tailscale} serve --service=svc:${pod} --https=443 ${getHostPort (podConfig.publishPorts)} > /dev/null";
-in
 {
   options.services.tailscale.services = {
     enable = lib.mkEnableOption "Tailscale Services";
-    enableContainers = lib.mkEnableOption "Tailscale Services for OCI containers";
-    settings = {
-      version = lib.mkOption {
-        type = lib.types.str;
-        description = "The Service configuration file format version.";
-        default = "0.0.1";
-      };
-      services = lib.mkOption {
-        type = lib.types.attrsOf (
-          lib.types.submodule {
-            options = {
-              endpoints = lib.mkOption {
-                type = lib.types.attrsOf lib.types.str;
-                description = "Contains one or more endpoint mappings for incoming traffic to local resources.";
-                default = { };
-              };
-              advertised = lib.mkOption {
-                type = lib.types.bool;
-                description = "Whether the service can accept new connections.";
-                default = true;
-              };
-            };
-          }
-        );
-        description =
-          "The root object that contains one or more Services. "
-          + "Service names must use the format svc:<service-name>. "
-          + "Each key is a service name, and each value is a service configuration object, which contains one or more endpoint mappings.";
-        default = { };
-      };
-    };
+    enablePods = lib.mkEnableOption "Tailscale Services for podman pods via labels";
   };
 
-  config = lib.mkIf config.services.tailscale.services.enable {
-    services.tailscale.services.settings.services =
-      lib.mkIf config.services.tailscale.services.enableContainers (
-        lib.attrsets.mapAttrs' containerToService (
-          lib.attrsets.filterAttrs notEmptyPorts config.virtualisation.oci-containers.containers
-        )
-      );
-
-    # system.activationScripts.tailscale-serve-services =
-    #   let
-    #     configFile = pkgs.writeText "tailscale-service-config.json" (
-    #       builtins.toJSON config.services.tailscale.services.settings
-    #     );
-    #   in
-    #   ''
-    #     ${lib.getExe pkgs.tailscale} serve set-config --all ${configFile}
-    #   '';
-
+  config = lib.mkIf config.services.tailscale.enable {
     # TODO: Clear removed pods
 
     # system.activationScripts.tailscale-serve-clear-container-services =
@@ -99,8 +34,14 @@ in
     #     done
     #   '';
 
-    system.activationScripts.tailscale-serve-pods = builtins.concatStringsSep "\n" (
-      lib.attrsets.mapAttrsToList podToServe config.virtualisation.quadlet.pods
-    );
+    system.activationScripts.tailscale-serve-pods = lib.mkIf config.services.tailscale.services.enablePods ''
+      pods=$(${lib.getExe pkgs.podman} pod ls --format "{{.Name}}")
+      filter='.[]["Labels"] | to_entries[] | (.key | capture("tailscale.service.(?<key>[a-z]+).https")) + {value} | [.key, .value] | join(" ")'
+      for pod in $pods; do
+        while read -r service port; do
+          ${lib.getExe pkgs.tailscale} serve --service=svc:$service --https=443 $port > /dev/null
+        done < <(${lib.getExe pkgs.podman} pod inspect "$pod" | ${lib.getExe pkgs.jq} -r "$filter")
+      done
+    '';
   };
 }

@@ -56,7 +56,7 @@
       ];
       services = {
         enable = true;
-        enableContainers = true;
+        enablePods = true;
       };
     };
 
