@@ -29,6 +29,7 @@
     ./containers/transmission.nix
     ./containers/prowlarr.nix
     ./containers/radarr.nix
+    ./containers/sonarr.nix
   ];
 
   config = {
