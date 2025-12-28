@@ -61,7 +61,10 @@ in
           data-disk-2
         ];
         subvolumes = {
-          snapshots = { };
+          snapshots = {
+            mountpoint = "/srv/.snapshots";
+            mountOptions = data-mount-options;
+          };
           downloads = {
             mountpoint = "/srv/downloads";
             mountOptions = data-mount-options;

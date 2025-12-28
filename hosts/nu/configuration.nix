@@ -31,6 +31,7 @@
     ./containers/radarr.nix
     ./containers/sonarr.nix
     ./containers/jellyseerr.nix
+    ./containers/immich.nix
   ];
 
   config = {

@@ -40,7 +40,7 @@
       for pod in $pods; do
         while read -r service port; do
           ${lib.getExe pkgs.tailscale} serve --service=svc:$service --https=443 $port
-        done < <(${lib.getExe pkgs.podman} pod inspect "$pod" | ${lib.getExe pkgs.jq} -r "$filter") > /dev/null
+        done < <(${lib.getExe pkgs.podman} pod inspect "$pod" | ${lib.getExe pkgs.jq} -r "$filter")
       done
     '';
   };
