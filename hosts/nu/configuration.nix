@@ -32,6 +32,7 @@
     ./containers/sonarr.nix
     ./containers/jellyseerr.nix
     ./containers/immich.nix
+    ./containers/homeassistant.nix
   ];
 
   config = {
