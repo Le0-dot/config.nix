@@ -35,8 +35,13 @@ in
           pod = pods.immich.ref;
           mounts = [
             (mountVolume {
-              volume = volumes.photos.ref;
+              volume = volumes.immich.ref;
+              subpath = "/data";
               destination = "/data";
+            })
+            (mountVolume {
+              volume = volumes.photos.ref;
+              destination = "/data/library/admin";
             })
           ];
           environments = {
