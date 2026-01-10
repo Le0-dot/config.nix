@@ -74,10 +74,7 @@
         "--advertise-tags=tag:nix"
         "--ssh"
       ];
-      services = {
-        enable = true;
-        enablePods = true;
-      };
+      services.enable = true;
     };
   };
 }

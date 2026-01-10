@@ -54,10 +54,7 @@
         "--ssh"
         "--accept-routes"
       ];
-      services = {
-        enable = true;
-        enablePods = true;
-      };
+      services.enable = true;
     };
 
     services.samba = {
