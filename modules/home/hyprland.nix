@@ -72,28 +72,28 @@ in
         ];
 
         windowrule = [
-          "bordersize 0, floating:0, onworkspace:w[tv1]"
-          "rounding 0, floating:0, onworkspace:w[tv1]"
-          "bordersize 0, floating:0, onworkspace:f[1]"
-          "rounding 0, floating:0, onworkspace:f[1]"
+          "match:workspace w[tv1], match:float false, border_size 0"
+          "match:workspace w[tv1], match:float false, rounding 0"
+          "match:workspace f[1], match:float false, border_size 0"
+          "match:workspace f[1], match:float false, rounding 0"
 
-          "tag +development, class:.*ghostty.*"
-          "tag +development, title:.*Monkeytype.*"
-          "tag +browser, class:google-chrome"
-          "tag +social, class:.*Slack.*"
-          "tag +video, title:.*Meet.*"
-          "tag +media, class:spotify"
-          "tag +media, title:.*Audiobookshelf.*"
+          "match:class .*ghostty.*, tag +development"
+          "match:title .*Monkeytype.*, tag +development"
+          "match:class google-chrome, tag +browser"
+          "match:class .*Slack.*, tag +social"
+          "match:title .*Meet.*, tag +video"
+          "match:class spotify, tag +media"
+          "match:title .*Audiobookshelf.*, tag +media"
 
-          "opaque 1, tag:video"
-          "nodim 1, tag:video"
-          "fullscreen, tag:video"
+          "match:tag video, opaque on"
+          "match:tag video, no_dim on"
+          "match:tag video, fullscreen on"
 
-          "workspace 1, tag:development"
-          "workspace 2, tag:browser"
-          "workspace 3, tag:social"
-          "workspace 4, tag:video"
-          "workspace 5, tag:media"
+          "match:tag development, workspace 1"
+          "match:tag browser, workspace 2"
+          "match:tag social, workspace 3"
+          "match:tag video, workspace 4"
+          "match:tag media, workspace 5"
         ];
 
         general = {
@@ -124,7 +124,6 @@ in
 
         misc.disable_hyprland_logo = true;
         misc.disable_splash_rendering = true;
-        misc.background_color = lib.mkForce "0x111111"; # Temporary
 
         dwindle.force_split = 2;
       };

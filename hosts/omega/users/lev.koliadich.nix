@@ -117,12 +117,6 @@
     };
     programs.gh.enable = true;
 
-    stylix.targets.yazi.enable = true;
-    programs.yazi = {
-      enable = true;
-      settings.mgr.show_hidden = true;
-    };
-
     wayland.windowManager.hyprland.enable = true;
     services.hyprpolkitagent.enable = true;
     services.hypridle.enable = true;
@@ -139,5 +133,7 @@
     services.dunst.enable = true;
     programs.tofi.enable = true;
     programs.ghostty.enable = true;
+
+    programs.opencode.enable = true;
   };
 }

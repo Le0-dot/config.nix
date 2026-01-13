@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   perSystem,
@@ -12,8 +11,11 @@
       package = perSystem.self.hyprpaper;
       settings = {
         ipc = true;
-        preload = [ "~/Pictures/Wallpaper.jpeg" ];
-        wallpaper = [ ",~/Pictures/Wallpaper.jpeg" ];
+        splash = false;
+        wallpaper = {
+          monitor = "";
+          path = "~/Pictures/Wallpaper.jpeg";
+        };
       };
     };
   };
