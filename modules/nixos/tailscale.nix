@@ -27,7 +27,7 @@
       in
       lib.attrsets.mapAttrs' (
         service: port:
-        lib.attrsets.nameValuePair "${service}-tailscale-service" {
+        lib.attrsets.nameValuePair "${service}-tailscale" {
           serviceConfig = {
             Type = "oneshot";
             RemainAfterExit = true;
@@ -37,14 +37,12 @@
             PROXY_PORT = port;
           };
           path = [ pkgs.tailscale ];
-          script = ''
-            tailscale serve --service=svc:$TAILSCALE_SERVICE --https=443 $PROXY_PORT
-          '';
-          preStop = ''
-            tailscale serve drain svc:$TAILSCALE_SERVICE
-            tailscale serve clear svc:$TAILSCALE_SERVICE
-          '';
-          wantedBy = [ "${service}-pod.service" ];
+          preStart = "until tailscale status; do sleep 10; done";
+          script = "tailscale serve --service=svc:$TAILSCALE_SERVICE --https=443 $PROXY_PORT";
+          preStop = "tailscale serve drain svc:$TAILSCALE_SERVICE";
+          postStop = "tailscale serve clear svc:$TAILSCALE_SERVICE";
+          upheldBy = [ "${service}-pod.service" ];
+          partOf = [ "${service}-pod.service" ];
           after = [ "tailscaled.service" ];
         }
       ) serivcePorts;
