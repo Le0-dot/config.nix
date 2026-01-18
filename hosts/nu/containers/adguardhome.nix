@@ -1,8 +1,9 @@
-{ config, flake, ... }:
+{ flake, config, ... }:
 
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  tailcaleIp = "100.83.204.23";
 in
 {
   virtualisation.quadlet =
@@ -10,14 +11,16 @@ in
       inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      pods.adguardhome.podConfig = {
-        publishPorts = [
-          "3000:3000"
-          "53:53/udp"
-          "53:53/tcp"
-        ];
-        labels = {
-          "tailscale.service.adguardhome.https" = "3000";
+      pods.adguardhome = {
+        podConfig = {
+          publishPorts = [
+            "3000:3000"
+            "${tailcaleIp}:53:53/udp"
+            "${tailcaleIp}:53:53/tcp"
+          ];
+          labels = {
+            "tailscale.service.adguardhome.https" = "3000";
+          };
         };
       };
       volumes.adguardhome = btrfsVolume {
