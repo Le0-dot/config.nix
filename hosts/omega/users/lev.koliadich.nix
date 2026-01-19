@@ -91,6 +91,7 @@
     programs.lazygit.enable = true;
     programs.fzf.enable = true;
     programs.uv.enable = true;
+    programs.ty.enable = true;
     programs.starship.enable = true;
     programs.zellij.enable = true;
 
