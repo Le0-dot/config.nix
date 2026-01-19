@@ -7,12 +7,16 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes;
+      inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      pods.media.podConfig = {
+      pods.prowlarr.podConfig = {
         publishPorts = [
           "9696:9696"
+        ];
+        networks = [
+          "podman"
+          networks.torrents.ref
         ];
         labels = {
           "tailscale.service.prowlarr.https" = "9696";
@@ -27,7 +31,7 @@ in
       };
       containers.prowlarr-main.containerConfig = {
         image = "lscr.io/linuxserver/prowlarr:2.3.0";
-        pod = pods.media.ref;
+        pod = pods.prowlarr.ref;
         mounts = [
           (mountVolume {
             volume = volumes.prowlarr.ref;

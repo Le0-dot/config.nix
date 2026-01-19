@@ -7,11 +7,16 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes;
+      inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      pods.media.podConfig = {
+      pods.jellyseerr.podConfig = {
         publishPorts = [ "5055:5055" ];
+        networks = [
+          "podman"
+          networks.jellyfin.ref
+          networks.torrents.ref
+        ];
         labels = {
           "tailscale.service.jellyseerr.https" = "5055";
         };
@@ -25,7 +30,7 @@ in
       };
       containers.jellyseerr-main.containerConfig = {
         image = "ghcr.io/fallenbagel/jellyseerr:2.7.3";
-        pod = pods.media.ref;
+        pod = pods.jellyseerr.ref;
         mounts = [
           (mountVolume {
             volume = volumes.jellyseerr.ref;

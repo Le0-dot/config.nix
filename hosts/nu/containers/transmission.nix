@@ -7,14 +7,19 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes;
+      inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      pods.media.podConfig = {
+      networks.torrents.networkConfig = { };
+      pods.transmission.podConfig = {
         publishPorts = [
           "9091:9091"
           "51413:51413/tcp"
           "51413:51413/udp"
+        ];
+        networks = [
+          "podman"
+          networks.torrents.ref
         ];
         labels = {
           "tailscale.service.transmission.https" = "9091";
@@ -33,7 +38,7 @@ in
       };
       containers.transmission-main.containerConfig = {
         image = "lscr.io/linuxserver/transmission:4.0.6";
-        pod = pods.media.ref;
+        pod = pods.transmission.ref;
         mounts = [
           (mountVolume {
             volume = volumes.transmission.ref;

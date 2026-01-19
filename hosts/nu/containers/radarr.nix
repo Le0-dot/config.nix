@@ -7,12 +7,16 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes;
+      inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      pods.media.podConfig = {
+      pods.radarr.podConfig = {
         publishPorts = [
           "7878:7878"
+        ];
+        networks = [
+          "podman"
+          networks.torrents.ref
         ];
         labels = {
           "tailscale.service.radarr.https" = "7878";
@@ -27,7 +31,7 @@ in
       };
       containers.radarr-main.containerConfig = {
         image = "lscr.io/linuxserver/radarr:6.0.4";
-        pod = pods.media.ref;
+        pod = pods.radarr.ref;
         mounts = [
           (mountVolume {
             volume = volumes.radarr.ref;

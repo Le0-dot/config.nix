@@ -7,12 +7,16 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes;
+      inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      pods.media.podConfig = {
+      pods.sonarr.podConfig = {
         publishPorts = [
           "8989:8989"
+        ];
+        networks = [
+          "podman"
+          networks.torrents.ref
         ];
         labels = {
           "tailscale.service.sonarr.https" = "8989";
@@ -27,7 +31,7 @@ in
       };
       containers.sonarr-main.containerConfig = {
         image = "lscr.io/linuxserver/sonarr:4.0.16";
-        pod = pods.media.ref;
+        pod = pods.sonarr.ref;
         mounts = [
           (mountVolume {
             volume = volumes.sonarr.ref;
