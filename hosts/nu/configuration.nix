@@ -33,6 +33,7 @@
     ./containers/jellyseerr.nix
     ./containers/immich.nix
     ./containers/homeassistant.nix
+    ./containers/bentopdf.nix
   ];
 
   config = {
