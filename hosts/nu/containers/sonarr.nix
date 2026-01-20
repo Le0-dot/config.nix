@@ -17,6 +17,7 @@ in
         networks = [
           "podman"
           networks.torrents.ref
+          networks.ntfy.ref
         ];
         labels = {
           "tailscale.service.sonarr.https" = "8989";
