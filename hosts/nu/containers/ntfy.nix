@@ -30,16 +30,20 @@ in
         image = "docker.io/binwiederhier/ntfy:latest";
         exec = [ "serve" ];
         pod = pods.ntfy.ref;
+        environments = {
+          "NTFY_BASE_URL" = "https://ntfy.spitz-more.ts.net";
+          "NTFY_CACHE_FILE" = "/var/lib/ntfy/cache.db";
+          "NTFY_AUTH_FILE" = "/var/lib/ntfy/auth.db";
+          "NTFY_ATTACHMENT_CACHE_DIR" = "/var/lib/ntfy/attachments";
+          "NTFY_AUTH_DEFAULT_ACCESS" = "write-only";
+          "NTFY_AUTH_USERS" = "le0:$$2a$$10$$64Ml8HSQjNNG80IIAmZSVenz75miMpGvx65V9ENETcbBS6vIDa8iu:admin";
+          "NTFY_ENABLE_LOGIN" = "true";
+        };
         mounts = [
           (mountVolume {
             volume = volumes.ntfy.ref;
-            subpath = "/config";
-            destination = "/etc/ntfy";
-          })
-          (mountVolume {
-            volume = volumes.ntfy.ref;
-            subpath = "/cache";
-            destination = "/var/cache/ntfy";
+            subpath = "/data";
+            destination = "/var/lib/ntfy";
           })
         ];
       };
