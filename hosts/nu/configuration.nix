@@ -34,6 +34,7 @@
     ./containers/immich.nix
     ./containers/homeassistant.nix
     ./containers/bentopdf.nix
+    ./containers/ntfy.nix
   ];
 
   config = {
