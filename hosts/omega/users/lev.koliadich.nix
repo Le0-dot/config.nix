@@ -56,7 +56,7 @@
       {
         modifiers = [ "SUPER" ];
         key = "P";
-        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e direnv exec {} nvim -c 'WithSession {}' +new-window";
+        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e direnv exec {} nvim -c 'WithSession {}/Session.vim' +new-window";
       }
     ];
 
