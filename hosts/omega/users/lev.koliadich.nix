@@ -93,7 +93,7 @@
     programs.uv.enable = true;
     programs.ty.enable = true;
     programs.starship.enable = true;
-    programs.zellij.enable = true;
+    programs.npm.enable = true;
 
     stylix.targets.bat.enable = true;
     programs.bat.enable = true;
