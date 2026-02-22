@@ -26,7 +26,7 @@ in
         };
         photos = btrfsVolume {
           disk = "data";
-          subvol = "photos";
+          subvol = "photos/active";
         };
       };
       containers = {

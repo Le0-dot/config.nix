@@ -26,7 +26,7 @@ in
         };
         comics = btrfsVolume {
           disk = "data";
-          subvol = "comics";
+          subvol = "comics/active";
         };
       };
       containers.komga-main.containerConfig = {

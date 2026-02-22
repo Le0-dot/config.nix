@@ -33,7 +33,7 @@ in
         };
         downloads = btrfsVolume {
           disk = "data";
-          subvol = "downloads";
+          subvol = "downloads/active";
         };
       };
       containers.transmission-main.containerConfig = {

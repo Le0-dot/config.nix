@@ -61,51 +61,47 @@ in
           data-disk-2
         ];
         subvolumes = {
-          snapshots = {
-            mountpoint = "/srv/.snapshots";
-            mountOptions = data-mount-options;
-          };
-          downloads = {
+          "downloads/active" = {
             mountpoint = "/srv/downloads";
             mountOptions = data-mount-options;
           };
-          movies = {
+          "movies/active" = {
             mountpoint = "/srv/movies";
             mountOptions = data-mount-options;
           };
-          shows = {
+          "shows/active" = {
             mountpoint = "/srv/shows";
             mountOptions = data-mount-options;
           };
-          anime = {
+          "anime/active" = {
             mountpoint = "/srv/anime";
             mountOptions = data-mount-options;
           };
-          youtube = {
+          "youtube/active" = {
             mountpoint = "/srv/youtube";
             mountOptions = data-mount-options;
           };
-          audiobooks = {
+          "audiobooks/active" = {
             mountpoint = "/srv/audiobooks";
             mountOptions = data-mount-options;
           };
-          books = {
+          "books/active" = {
             mountpoint = "/srv/books";
             mountOptions = data-mount-options;
           };
-          comics = {
+          "comics/active" = {
             mountpoint = "/srv/comics";
             mountOptions = data-mount-options;
           };
-          photos = {
+          "photos/active" = {
             mountpoint = "/srv/photos";
             mountOptions = data-mount-options;
           };
-          documents = {
+          "documents/active" = {
             mountpoint = "/srv/documents";
             mountOptions = data-mount-options;
           };
-          game-saves = {
+          "game-saves/active" = {
             mountpoint = "/srv/game-saves";
             mountOptions = data-mount-options;
           };

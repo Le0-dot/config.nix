@@ -29,15 +29,15 @@ in
         };
         movies = btrfsVolume {
           disk = "data";
-          subvol = "movies";
+          subvol = "movies/active";
         };
         shows = btrfsVolume {
           disk = "data";
-          subvol = "shows";
+          subvol = "shows/active";
         };
         anime = btrfsVolume {
           disk = "data";
-          subvol = "anime";
+          subvol = "anime/active";
         };
       };
       containers.jellyfin-main.containerConfig = {

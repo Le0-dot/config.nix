@@ -24,7 +24,7 @@ in
         };
         audiobooks = btrfsVolume {
           disk = "data";
-          subvol = "audiobooks";
+          subvol = "audiobooks/active";
         };
       };
       containers.audiobookshelf-main.containerConfig = {
