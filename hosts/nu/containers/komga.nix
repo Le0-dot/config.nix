@@ -3,6 +3,7 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -33,13 +34,21 @@ in
         image = "docker.io/gotson/komga:1.23.6";
         pod = pods.komga.ref;
         mounts = [
-          (mountVolume {
-            volume = volumes.komga.ref;
-            subpath = "/config";
+          # (mountVolume {
+          #   volume = volumes.komga.ref;
+          #   subpath = "/config";
+          #   destination = "/config";
+          # })
+          # (mountVolume {
+          #   volume = volumes.comics.ref;
+          #   destination = "/data";
+          # })
+          (mountBind {
+            source = "/srv/containers/komga/config";
             destination = "/config";
           })
-          (mountVolume {
-            volume = volumes.comics.ref;
+          (mountBind {
+            source = "/srv/comics";
             destination = "/data";
           })
         ];

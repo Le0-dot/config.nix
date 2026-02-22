@@ -3,6 +3,7 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -34,9 +35,13 @@ in
         image = "lscr.io/linuxserver/prowlarr:2.3.0";
         pod = pods.prowlarr.ref;
         mounts = [
-          (mountVolume {
-            volume = volumes.prowlarr.ref;
-            subpath = "/config";
+          # (mountVolume {
+          #   volume = volumes.prowlarr.ref;
+          #   subpath = "/config";
+          #   destination = "/config";
+          # })
+          (mountBind {
+            source = "/srv/containers/prowlarr/config";
             destination = "/config";
           })
         ];

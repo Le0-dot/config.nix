@@ -3,6 +3,7 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -25,14 +26,22 @@ in
         image = "docker.io/ckulka/baikal:0.10.1-nginx";
         pod = pods.baikal.ref;
         mounts = [
-          (mountVolume {
-            volume = volumes.baikal.ref;
-            subpath = "/config";
+          # (mountVolume {
+          #   volume = volumes.baikal.ref;
+          #   subpath = "/config";
+          #   destination = "/var/www/baikal/config";
+          # })
+          # (mountVolume {
+          #   volume = volumes.baikal.ref;
+          #   subpath = "/data";
+          #   destination = "/var/www/baikal/Specific";
+          # })
+          (mountBind {
+            source = "/srv/containers/baikal/config";
             destination = "/var/www/baikal/config";
           })
-          (mountVolume {
-            volume = volumes.baikal.ref;
-            subpath = "/data";
+          (mountBind {
+            source = "/srv/containers/baikal/data";
             destination = "/var/www/baikal/Specific";
           })
         ];

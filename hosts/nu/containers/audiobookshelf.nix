@@ -3,6 +3,7 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -31,18 +32,30 @@ in
         image = "ghcr.io/advplyr/audiobookshelf:2.31.0";
         pod = pods.audiobookshelf.ref;
         mounts = [
-          (mountVolume {
-            volume = volumes.audiobookshelf.ref;
-            subpath = "/config";
+          # (mountVolume {
+          #   volume = volumes.audiobookshelf.ref;
+          #   subpath = "/config";
+          #   destination = "/config";
+          # })
+          # (mountVolume {
+          #   volume = volumes.audiobookshelf.ref;
+          #   subpath = "/metadata";
+          #   destination = "/metadata";
+          # })
+          # (mountVolume {
+          #   volume = volumes.audiobooks.ref;
+          #   destination = "/audiobooks";
+          # })
+          (mountBind {
+            source = "/srv/containers/audiobookshelf/config";
             destination = "/config";
           })
-          (mountVolume {
-            volume = volumes.audiobookshelf.ref;
-            subpath = "/metadata";
+          (mountBind {
+            source = "/srv/containers/audiobookshelf/metadata";
             destination = "/metadata";
           })
-          (mountVolume {
-            volume = volumes.audiobooks.ref;
+          (mountBind {
+            source = "/srv/audiobooks";
             destination = "/audiobooks";
           })
         ];

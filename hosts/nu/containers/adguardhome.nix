@@ -8,6 +8,7 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
   envFile = "/run/containers/environment/tailscale-ip";
 in
 {
@@ -60,14 +61,22 @@ in
         image = "docker.io/adguard/adguardhome:v0.107.71";
         pod = pods.adguardhome.ref;
         mounts = [
-          (mountVolume {
-            volume = volumes.adguardhome.ref;
-            subpath = "/config";
+          # (mountVolume {
+          #   volume = volumes.adguardhome.ref;
+          #   subpath = "/config";
+          #   destination = "/opt/adguardhome/conf";
+          # })
+          # (mountVolume {
+          #   volume = volumes.adguardhome.ref;
+          #   subpath = "/data";
+          #   destination = "/opt/adguardhome/work";
+          # })
+          (mountBind {
+            source = "/srv/containers/adguardhome/config";
             destination = "/opt/adguardhome/conf";
           })
-          (mountVolume {
-            volume = volumes.adguardhome.ref;
-            subpath = "/data";
+          (mountBind {
+            source = "/srv/containers/adguardhome/data";
             destination = "/opt/adguardhome/work";
           })
         ];

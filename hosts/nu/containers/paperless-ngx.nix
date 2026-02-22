@@ -4,6 +4,7 @@ let
   tailnet = "spitz-mora.ts.net";
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -27,14 +28,22 @@ in
           image = "ghcr.io/paperless-ngx/paperless-ngx:2.20.3";
           pod = pods.paperless-ngx.ref;
           mounts = [
-            (mountVolume {
-              volume = volumes.paperless-ngx.ref;
-              subpath = "/data";
+            # (mountVolume {
+            #   volume = volumes.paperless-ngx.ref;
+            #   subpath = "/data";
+            #   destination = "/usr/src/paperless/data";
+            # })
+            # (mountVolume {
+            #   volume = volumes.paperless-ngx.ref;
+            #   subpath = "/media";
+            #   destination = "/usr/src/paperless/media";
+            # })
+            (mountBind {
+              source = "/srv/containers/paperless-ngx/data";
               destination = "/usr/src/paperless/data";
             })
-            (mountVolume {
-              volume = volumes.paperless-ngx.ref;
-              subpath = "/media";
+            (mountBind {
+              source = "/srv/containers/paperless-ngx/media";
               destination = "/usr/src/paperless/media";
             })
           ];
@@ -47,9 +56,13 @@ in
           image = "docker.io/redis:8.4.0";
           pod = pods.paperless-ngx.ref;
           mounts = [
-            (mountVolume {
-              volume = volumes.paperless-ngx.ref;
-              subpath = "/redis";
+            # (mountVolume {
+            #   volume = volumes.paperless-ngx.ref;
+            #   subpath = "/redis";
+            #   destination = "/data";
+            # })
+            (mountBind {
+              source = "/srv/containers/paperless-ngx/redis";
               destination = "/data";
             })
           ];

@@ -3,6 +3,7 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
+  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -34,21 +35,37 @@ in
         image = "lscr.io/linuxserver/sonarr:4.0.16";
         pod = pods.sonarr.ref;
         mounts = [
-          (mountVolume {
-            volume = volumes.sonarr.ref;
-            subpath = "/config";
+          # (mountVolume {
+          #   volume = volumes.sonarr.ref;
+          #   subpath = "/config";
+          #   destination = "/config";
+          # })
+          # (mountVolume {
+          #   volume = volumes.downloads.ref;
+          #   destination = "/downloads";
+          # })
+          # (mountVolume {
+          #   volume = volumes.shows.ref;
+          #   destination = "/data/shows";
+          # })
+          # (mountVolume {
+          #   volume = volumes.anime.ref;
+          #   destination = "/data/anime";
+          # })
+          (mountBind {
+            source = "/srv/containers/sonarr/config";
             destination = "/config";
           })
-          (mountVolume {
-            volume = volumes.downloads.ref;
+          (mountBind {
+            source = "/srv/downloads";
             destination = "/downloads";
           })
-          (mountVolume {
-            volume = volumes.shows.ref;
+          (mountBind {
+            source = "/srv/shows";
             destination = "/data/shows";
           })
-          (mountVolume {
-            volume = volumes.anime.ref;
+          (mountBind {
+            source = "/srv/anime";
             destination = "/data/anime";
           })
         ];
