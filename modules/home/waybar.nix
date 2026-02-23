@@ -154,8 +154,11 @@
             color: @base05;
         }
 
+        widget > * {
+            background: @base01;
+        }
+
         #workspaces {
-            background: @base02;
             border-radius: 1rem;
             margin: 5px;
             margin-left: 0.5rem;
@@ -181,7 +184,6 @@
         }
 
         .modules-right > widget > * {
-            background: @base02;
             padding: 0.5rem 0.5rem;
             margin: 5px 0;
         }
