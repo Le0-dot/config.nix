@@ -62,7 +62,7 @@
 
     stylix = {
       enable = true;
-      autoEnable = false; # Causes issues on ubuntu 24.04
+      autoEnable = false;
       targets = {
         gtk.enable = true;
         font-packages.enable = true;
@@ -86,14 +86,16 @@
     };
 
     programs.zsh.enable = true;
+    programs.starship.enable = true;
+    programs.fzf.enable = true;
     programs.atuin.enable = true;
     programs.direnv.enable = true;
     programs.lazygit.enable = true;
-    programs.fzf.enable = true;
+
     programs.uv.enable = true;
     programs.ty.enable = true;
-    programs.starship.enable = true;
     programs.npm.enable = true;
+    programs.opencode.enable = true;
 
     stylix.targets.bat.enable = true;
     programs.bat.enable = true;
@@ -134,7 +136,5 @@
     services.dunst.enable = true;
     programs.tofi.enable = true;
     programs.ghostty.enable = true;
-
-    programs.opencode.enable = true;
   };
 }
