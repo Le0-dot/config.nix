@@ -3,7 +3,6 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
-  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -33,13 +32,9 @@ in
         image = "ghcr.io/fallenbagel/jellyseerr:2.7.3";
         pod = pods.jellyseerr.ref;
         mounts = [
-          # (mountVolume {
-          #   volume = volumes.jellyseerr.ref;
-          #   subpath = "/config";
-          #   destination = "/app/config";
-          # })
-          (mountBind {
-            source = "/srv/containers/jellyseerr/config";
+          (mountVolume {
+            volume = volumes.jellyseerr.ref;
+            subpath = "/config";
             destination = "/app/config";
           })
         ];

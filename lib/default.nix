@@ -29,10 +29,4 @@
       destination,
     }:
     "type=volume,source=${volume},subpath=${subpath},destination=${destination}";
-  mountBind =
-    {
-      source,
-      destination,
-    }:
-    "type=bind,source=${source},destination=${destination}";
 }

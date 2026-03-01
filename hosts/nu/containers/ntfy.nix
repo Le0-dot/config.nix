@@ -3,7 +3,6 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
-  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -41,13 +40,9 @@ in
           "NTFY_ENABLE_LOGIN" = "true";
         };
         mounts = [
-          # (mountVolume {
-          #   volume = volumes.ntfy.ref;
-          #   subpath = "/data";
-          #   destination = "/var/lib/ntfy";
-          # })
-          (mountBind {
-            source = "/srv/containers/ntfy/data";
+          (mountVolume {
+            volume = volumes.ntfy.ref;
+            subpath = "/data";
             destination = "/var/lib/ntfy";
           })
         ];

@@ -3,7 +3,6 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
-  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -41,21 +40,13 @@ in
         image = "lscr.io/linuxserver/transmission:4.0.6";
         pod = pods.transmission.ref;
         mounts = [
-          # (mountVolume {
-          #   volume = volumes.transmission.ref;
-          #   subpath = "/config";
-          #   destination = "/config";
-          # })
-          # (mountVolume {
-          #   volume = volumes.downloads.ref;
-          #   destination = "/downloads";
-          # })
-          (mountBind {
-            source = "/srv/containers/transmission/config";
+          (mountVolume {
+            volume = volumes.transmission.ref;
+            subpath = "/config";
             destination = "/config";
           })
-          (mountBind {
-            source = "/srv/downloads";
+          (mountVolume {
+            volume = volumes.downloads.ref;
             destination = "/downloads";
           })
         ];

@@ -3,7 +3,6 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
-  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -35,29 +34,17 @@ in
         image = "lscr.io/linuxserver/radarr:6.0.4";
         pod = pods.radarr.ref;
         mounts = [
-          # (mountVolume {
-          #   volume = volumes.radarr.ref;
-          #   subpath = "/config";
-          #   destination = "/config";
-          # })
-          # (mountVolume {
-          #   volume = volumes.downloads.ref;
-          #   destination = "/downloads";
-          # })
-          # (mountVolume {
-          #   volume = volumes.movies.ref;
-          #   destination = "/data";
-          # })
-          (mountBind {
-            source = "/srv/containers/radarr/config";
+          (mountVolume {
+            volume = volumes.radarr.ref;
+            subpath = "/config";
             destination = "/config";
           })
-          (mountBind {
-            source = "/srv/downloads";
+          (mountVolume {
+            volume = volumes.downloads.ref;
             destination = "/downloads";
           })
-          (mountBind {
-            source = "/srv/movies";
+          (mountVolume {
+            volume = volumes.movies.ref;
             destination = "/data";
           })
         ];

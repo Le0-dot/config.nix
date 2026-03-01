@@ -3,7 +3,6 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
-  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -30,13 +29,9 @@ in
         image = "ghcr.io/home-assistant/home-assistant:stable";
         pod = pods.homeassistant.ref;
         mounts = [
-          # (mountVolume {
-          #   volume = volumes.homeassistant.ref;
-          #   subpath = "/config";
-          #   destination = "/config";
-          # })
-          (mountBind {
-            source = "/srv/containers/homeassistant/config";
+          (mountVolume {
+            volume = volumes.homeassistant.ref;
+            subpath = "/config";
             destination = "/config";
           })
         ];

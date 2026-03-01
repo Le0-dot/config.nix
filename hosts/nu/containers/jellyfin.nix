@@ -3,7 +3,6 @@
 let
   btrfsVolume = flake.lib.btrfsVolume config.disko;
   mountVolume = flake.lib.mountVolume;
-  mountBind = flake.lib.mountBind;
 in
 {
   virtualisation.quadlet =
@@ -45,46 +44,26 @@ in
         image = "docker.io/jellyfin/jellyfin:10.11.5";
         pod = pods.jellyfin.ref;
         mounts = [
-          # (mountVolume {
-          #   volume = volumes.jellyfin.ref;
-          #   subpath = "/config";
-          #   destination = "/config";
-          # })
-          # (mountVolume {
-          #   volume = volumes.jellyfin.ref;
-          #   subpath = "/cache";
-          #   destination = "/cache";
-          # })
-          # (mountVolume {
-          #   volume = volumes.movies.ref;
-          #   destination = "/media/movies";
-          # })
-          # (mountVolume {
-          #   volume = volumes.shows.ref;
-          #   destination = "/media/shows";
-          # })
-          # (mountVolume {
-          #   volume = volumes.anime.ref;
-          #   destination = "/media/anime";
-          # })
-          (mountBind {
-            source = "/srv/containers/jellyfin/config";
+          (mountVolume {
+            volume = volumes.jellyfin.ref;
+            subpath = "/config";
             destination = "/config";
           })
-          (mountBind {
-            source = "/srv/containers/jellyfin/cache";
+          (mountVolume {
+            volume = volumes.jellyfin.ref;
+            subpath = "/cache";
             destination = "/cache";
           })
-          (mountBind {
-            source = "srv/movies";
+          (mountVolume {
+            volume = volumes.movies.ref;
             destination = "/media/movies";
           })
-          (mountBind {
-            source = "srv/shows";
+          (mountVolume {
+            volume = volumes.shows.ref;
             destination = "/media/shows";
           })
-          (mountBind {
-            source = "srv/anime";
+          (mountVolume {
+            volume = volumes.anime.ref;
             destination = "/media/anime";
           })
           # TODO: use youtarr or similar to download youtube content
