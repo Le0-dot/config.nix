@@ -12,6 +12,7 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.quadlet-nix.nixosModules.quadlet
+    inputs.btr-backup.nixosModules.btr-backup
 
     flake.nixosModules.tailscale
     flake.nixosModules.samba
@@ -19,6 +20,7 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     ./secrets.nix
+    ./backup.nix
 
     ./containers/audiobookshelf.nix
     ./containers/adguardhome.nix

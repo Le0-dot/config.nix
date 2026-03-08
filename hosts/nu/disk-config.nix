@@ -2,6 +2,7 @@ let
   root-disk = "/dev/disk/by-id/nvme-Lexar_SSD_NM620_512GB_QFB155R004190P110W";
   data-disk-1 = "/dev/disk/by-id/nvme-ADATA_LEGEND_900_4N4221121212";
   data-disk-2 = "/dev/disk/by-id/nvme-CT2000P3PSSD8_2516E9B84F3A";
+  backup-disk = "/dev/disk/by-id/ata-WDC_WD30EFRX-68EUZN0_WD-WMC4N0DDEXJ2";
 
   data-mount-options = [
     "noatime"
@@ -106,6 +107,14 @@ in
             mountOptions = data-mount-options;
           };
         };
+      };
+    };
+    backup = {
+      type = "disk";
+      device = backup-disk;
+      content = {
+        type = "btrfs";
+        extraArgs = [ "-f" ];
       };
     };
   };
