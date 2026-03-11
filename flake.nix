@@ -44,7 +44,6 @@
 
     quadlet-nix = {
       url = "github:SEIAROTg/quadlet-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     btr-backup = {
