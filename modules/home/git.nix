@@ -6,6 +6,7 @@
       ignores = [
         "Session.vim"
         ".envrc"
+        "opencode.json"
       ];
       settings = {
         init.defaultBranch = "main";
