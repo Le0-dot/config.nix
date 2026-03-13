@@ -45,6 +45,8 @@
       "flakes"
     ];
 
+    nix.gc.automatic = true;
+
     system.stateVersion = "25.05";
 
     boot.loader.efi.canTouchEfiVariables = true;

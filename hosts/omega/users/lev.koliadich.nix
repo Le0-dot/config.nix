@@ -41,6 +41,8 @@
   ];
 
   config = {
+    nix.gc.automatic = true;
+
     home.stateVersion = "25.05";
     home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
     home.shellAliases = {
