@@ -18,7 +18,7 @@
     flake.homeModules.starship
     flake.homeModules.atuin
     flake.homeModules.neovim
-    flake.homeModules.zellij
+    flake.homeModules.television
 
     flake.homeModules.wm-common
 
@@ -93,6 +93,8 @@
     programs.atuin.enable = true;
     programs.direnv.enable = true;
     programs.lazygit.enable = true;
+    programs.fd.enable = true;
+    programs.television.enable = true;
 
     programs.uv.enable = true;
     programs.ty.enable = true;
