@@ -50,5 +50,29 @@
         syntax-theme = "Catppuccin Macchiato";
       };
     };
+
+    stylix.targets.lazygit.enable = config.programs.lazygit.enable;
+    programs.lazygit.settings = lib.mkIf config.programs.lazygit.enable {
+      gui = {
+        sidePanelWidth = 0.25;
+        showFileTree = false;
+        showCommandLog = false;
+        showBottomLine = false;
+        showPanelJumps = false;
+      };
+      git = {
+        pagers = [
+          { pager = "delta --paging=never"; }
+          { pager = "delta --paging=never --features=side-by-side"; }
+        ];
+        mainBranches = [
+          "main"
+          "develop"
+          "trunk"
+        ];
+        autoStageResolvedConflicts = false;
+      };
+      # os.editPresent = "nvim-remote";
+    };
   };
 }
