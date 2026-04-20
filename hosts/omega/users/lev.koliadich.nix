@@ -95,6 +95,7 @@
     programs.lazygit.enable = true;
     programs.fd.enable = true;
     programs.television.enable = true;
+    programs.ripgrep.enable = true;
 
     programs.uv.enable = true;
     programs.ty.enable = true;

@@ -20,6 +20,8 @@
       vimdiffAlias = true;
     };
 
+    home.packages = [ pkgs.tree-sitter ];
+
     home.sessionVariables.EDITOR = "${pkgs.neovim}/bin/nvim";
 
     home.file.".config/nvim".source =
