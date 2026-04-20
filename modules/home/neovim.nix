@@ -7,7 +7,7 @@
 
 {
   options.programs.neovim.config = lib.mkOption {
-    type = lib.types.str;
+    type = lib.types.path;
     description = "String with path to neovim configuration directory";
     example = "/home/user/neovim-config";
   };
