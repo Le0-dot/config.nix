@@ -22,9 +22,10 @@
 
     home.packages = [ pkgs.tree-sitter ];
 
-    home.sessionVariables.EDITOR = "${pkgs.neovim}/bin/nvim";
+    home.sessionVariables.EDITOR = lib.getExe pkgs.neovim;
 
-    home.file.".config/nvim".source =
+    xdg.configFile."nvim/init.lua".enable = lib.mkForce false;
+    xdg.configFile."nvim".source =
       lib.warn "Linking ${config.programs.neovim.config} to ${config.home.homeDirectory}/.config/nvim"
         config.lib.file.mkOutOfStoreSymlink
         config.programs.neovim.config;
