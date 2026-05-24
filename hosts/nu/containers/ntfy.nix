@@ -10,7 +10,9 @@ in
       inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      networks.ntfy.networkConfig = { };
+      networks.ntfy.networkConfig = {
+        internal = true;
+      };
       pods.ntfy.podConfig = {
         publishPorts = [ "8090:80" ];
         networks = [

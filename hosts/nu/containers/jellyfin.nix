@@ -10,7 +10,9 @@ in
       inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      networks.jellyfin.networkConfig = { };
+      networks.jellyfin.networkConfig = {
+        internal = true;
+      };
       pods.jellyfin.podConfig = {
         publishPorts = [ "8096:8096" ];
         labels = {

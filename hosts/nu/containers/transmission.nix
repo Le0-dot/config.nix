@@ -5,12 +5,22 @@ let
   mountVolume = flake.lib.mountVolume;
 in
 {
+  networking.firewall = {
+    allowedTCPPorts = [
+      9091
+      51413
+    ];
+    allowedUDPPorts = [ 51413 ];
+  };
+
   virtualisation.quadlet =
     let
       inherit (config.virtualisation.quadlet) pods volumes networks;
     in
     {
-      networks.torrents.networkConfig = { };
+      networks.torrents.networkConfig = {
+        internal = true;
+      };
       pods.transmission.podConfig = {
         publishPorts = [
           "9091:9091"
