@@ -7,18 +7,12 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      networks.ntfy.networkConfig = {
-        internal = true;
-      };
       pods.ntfy.podConfig = {
         publishPorts = [ "8090:80" ];
-        networks = [
-          "podman"
-          networks.ntfy.ref
-        ];
+        networks = [ "podman" ];
         labels = {
           "tailscale.service.ntfy.https" = "8090";
         };

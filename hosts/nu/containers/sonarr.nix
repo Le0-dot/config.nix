@@ -7,18 +7,14 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
       pods.sonarr.podConfig = {
         publishPorts = [
           "8989:8989"
         ];
-        networks = [
-          "podman"
-          networks.torrents.ref
-          networks.ntfy.ref
-        ];
+        networks = [ "podman" ];
         labels = {
           "tailscale.service.sonarr.https" = "8989";
         };

@@ -5,32 +5,18 @@ let
   mountVolume = flake.lib.mountVolume;
 in
 {
-  networking.firewall = {
-    allowedTCPPorts = [
-      9091
-      51413
-    ];
-    allowedUDPPorts = [ 51413 ];
-  };
-
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      networks.torrents.networkConfig = {
-        internal = true;
-      };
       pods.transmission.podConfig = {
         publishPorts = [
           "9091:9091"
           "51413:51413/tcp"
           "51413:51413/udp"
         ];
-        networks = [
-          "podman"
-          networks.torrents.ref
-        ];
+        networks = [ "podman" ];
         labels = {
           "tailscale.service.transmission.https" = "9091";
         };

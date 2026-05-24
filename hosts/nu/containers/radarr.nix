@@ -7,18 +7,14 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
       pods.radarr.podConfig = {
         publishPorts = [
           "7878:7878"
         ];
-        networks = [
-          "podman"
-          networks.torrents.ref
-          networks.ntfy.ref
-        ];
+        networks = [ "podman" ];
         labels = {
           "tailscale.service.radarr.https" = "7878";
         };

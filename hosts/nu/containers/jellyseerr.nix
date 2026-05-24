@@ -7,16 +7,12 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
       pods.jellyseerr.podConfig = {
         publishPorts = [ "5055:5055" ];
-        networks = [
-          "podman"
-          networks.jellyfin.ref
-          networks.torrents.ref
-        ];
+        networks = [ "podman" ];
         labels = {
           "tailscale.service.jellyseerr.https" = "5055";
         };

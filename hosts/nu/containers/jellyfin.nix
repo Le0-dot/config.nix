@@ -7,21 +7,15 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
-      networks.jellyfin.networkConfig = {
-        internal = true;
-      };
       pods.jellyfin.podConfig = {
         publishPorts = [ "8096:8096" ];
         labels = {
           "tailscale.service.jellyfin.https" = "8096";
         };
-        networks = [
-          "podman"
-          networks.jellyfin.ref
-        ];
+        networks = [ "podman" ];
       };
       volumes = {
         jellyfin = btrfsVolume {

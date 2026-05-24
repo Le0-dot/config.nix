@@ -7,18 +7,14 @@ in
 {
   virtualisation.quadlet =
     let
-      inherit (config.virtualisation.quadlet) pods volumes networks;
+      inherit (config.virtualisation.quadlet) pods volumes;
     in
     {
       pods.prowlarr.podConfig = {
         publishPorts = [
           "9696:9696"
         ];
-        networks = [
-          "podman"
-          networks.torrents.ref
-          networks.ntfy.ref
-        ];
+        networks = [ "podman" ];
         labels = {
           "tailscale.service.prowlarr.https" = "9696";
         };
