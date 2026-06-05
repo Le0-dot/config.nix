@@ -1,4 +1,5 @@
 {
+  pkgs,
   flake,
   inputs,
   config,
@@ -80,7 +81,7 @@
     };
 
     services.yggdrasil = {
-      enable = true;
+      enable = false;
       persistentKeys = true;
       settings = {
         Peers = [
@@ -94,5 +95,34 @@
         # PrivateKeyPath = ...; # TODO
       };
     };
+
+    services.garage = {
+      enable = true;
+      package = pkgs.garage_2;
+      settings = {
+        db_engine = "sqlite";
+        replication_factor = 1;
+        rpc_bind_addr = "[::]:3901";
+        s3_api = {
+          s3_region = "garage";
+          api_bind_addr = "[::]:3900";
+          root_domain = ".s3.garage";
+        };
+      };
+    };
+
+    systemd.services.garage = {
+      serviceConfig = {
+        LoadCredential = "garage-rpc-secret:${config.age.secrets.garage-rpc-secret.path}";
+        Environment = [
+          "GARAGE_RPC_SECRET_FILE=%d/garage-rpc-secret"
+          "GARAGE_ALLOW_WORLD_READABLE_SECRETS=true" # Safe since the file is only readable by service dynamic user
+        ];
+      };
+    };
+
+    environment.shellAliases.garage = "GARAGE_RPC_SECRET_FILE=${config.age.secrets.garage-rpc-secret.path} garage";
+
+    networking.firewall.allowedTCPPorts = [ 3900 ];
   };
 }
