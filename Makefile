@@ -19,13 +19,13 @@ system: check-non-nixos  ## Switch system-manager configuration
 	nix run "github:numtide/system-manager" -- switch --flake "$(PWD)#$(host)" --sudo
 
 build-os:  ## Build NixOS configuration
-	nixos-rebuild build --flake "$(PWD)#$(host)"
+	nix run nixpkgs#nixos-rebuild -- build --flake "$(PWD)#$(host)"
 
 os: check-nixos  ## Switch NixOS configuration
-	nixos-rebuild switch --flake "$(PWD)#$(host)"
+	nix run nixpkgs#nixos-rebuild -- switch --flake "$(PWD)#$(host)"
 
 remote-os:  ## Switch NixOS configuration on remote host
-	nixos-rebuild switch --flake "$(PWD)#$(host)" --target-host $(user)@$(host) --sudo
+	nix run nixpkgs#nixos-rebuild -- switch --flake "$(PWD)#$(host)" --target-host $(user)@$(host) --sudo
 
 anywhere:  ## Install NixOS via nixos-anywhere
 	nix run "github:nix-community/nixos-anywhere" -- \
