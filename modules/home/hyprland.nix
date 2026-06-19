@@ -42,6 +42,7 @@ in
       systemd.enable = true;
       systemd.enableXdgAutostart = true;
       systemd.variables = [ "--all" ];
+      configType = "hyprlang";
       settings = {
         "$mod" = "SUPER";
         bind = [
