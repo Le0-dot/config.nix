@@ -13,10 +13,10 @@ home:  ## Switch home-manager configuration
 	nix run "github:nix-community/home-manager" -- switch --flake "$(PWD)#$(user)@$(host)"
 
 build-system:  ## Build system-manager configuration
-	sudo -i nix run "github:numtide/system-manager" -- build --flake "$(PWD)#$(host)"
+	nix run "github:numtide/system-manager" -- build --flake "$(PWD)#$(host)" 
 
 system: check-non-nixos  ## Switch system-manager configuration
-	sudo -i nix run "github:numtide/system-manager" -- switch --flake "$(PWD)#$(host)"
+	nix run "github:numtide/system-manager" -- switch --flake "$(PWD)#$(host)" --sudo
 
 build-os:  ## Build NixOS configuration
 	nixos-rebuild build --flake "$(PWD)#$(host)"
