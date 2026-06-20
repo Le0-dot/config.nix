@@ -87,7 +87,12 @@
       };
     };
 
-    programs.zsh.enable = true;
+    programs.zsh = {
+      enable = true;
+      profileExtra = ''
+        source /etc/profile.d/*.sh
+      '';
+    };
     programs.starship.enable = true;
     programs.fzf.enable = true;
     programs.atuin.enable = true;
