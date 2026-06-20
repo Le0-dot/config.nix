@@ -22,12 +22,6 @@ let
 in
 {
   config = lib.mkIf config.wayland.windowManager.hyprland.enable {
-    home.packages = [
-      pkgs.wl-clipboard-rs
-      pkgs.networkmanagerapplet
-      (pkgs.writeShellScriptBin "start-desktop" "Hyprland")
-    ];
-
     home.pointerCursor = {
       gtk.enable = true;
       package = pkgs.adwaita-icon-theme;
@@ -39,9 +33,7 @@ in
     keybind.hyprland.enable = true;
 
     wayland.windowManager.hyprland = {
-      systemd.enable = true;
-      systemd.enableXdgAutostart = true;
-      systemd.variables = [ "--all" ];
+      systemd.enable = false;
       configType = "hyprlang";
       settings = {
         "$mod" = "SUPER";

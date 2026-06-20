@@ -28,12 +28,6 @@
         zstyle ':completion:*' menu no
         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
       '';
-      # TODO: replace with uwsm
-      loginExtra = ''
-        if [ -z "''${DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
-            start-desktop
-        fi
-      '';
     };
   };
 }

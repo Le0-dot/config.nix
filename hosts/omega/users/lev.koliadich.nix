@@ -90,7 +90,8 @@
     programs.zsh = {
       enable = true;
       profileExtra = ''
-        source /etc/profile.d/*.sh
+        [ -e /etc/profile.d/system-manager-path.sh ] && source /etc/profile.d/system-manager-path.sh
+        uwsm check may-start && uwsm start default
       '';
     };
     programs.starship.enable = true;
