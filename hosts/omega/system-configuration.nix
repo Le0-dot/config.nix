@@ -18,13 +18,13 @@
 
     programs.uwsm = {
       enable = true;
-      waylandCompositors = {
-        hyprland = {
-          prettyName = "Hyprland";
-          comment = "Start Hyprland with UWSM";
-          package = pkgs.hyprland;
-        };
-      };
+      # waylandCompositors = {
+      #   hyprland = {
+      #     prettyName = "Hyprland";
+      #     comment = "Start Hyprland with UWSM";
+      #     package = pkgs.hyprland;
+      #   };
+      # };
     };
   };
 }
