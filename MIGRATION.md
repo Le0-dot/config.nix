@@ -81,12 +81,15 @@ flake.nixosModules.samba
 
 Also remove `flake` from module function arguments where no longer needed.
 
-### A2. Create `modules/den.nix`
+### A2. Create `modules/den.nix` (glue only)
 
 > **Important:** Do NOT declare `den.homes` during the bridge phase. Den's
 > pipeline auto-generates `homeConfigurations` from `den.homes`, which
 > conflicts with the manually-built entry in `legacy.nix`. Add `den.homes`
 > only after the legacy bridge for that home is removed (Stage D).
+
+`den.nix` imports the den flake module and sets global defaults. Host/user
+declarations live in their own files (picked up by import-tree automatically).
 
 ```nix
 { inputs, den, lib, ... }: {
@@ -94,16 +97,57 @@ Also remove `flake` from module function arguments where no longer needed.
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
 
-  den.hosts.x86_64-linux.tau = { };
-  den.hosts.x86_64-linux.nu = { };
-
-  # omega is NOT declared as den.hosts (not NixOS) and NOT as den.homes
-  # (would conflict with legacy.nix bridge). Added in Stage D.
-
   den.default.includes = [
     den.batteries.hostname
     den.batteries.define-user
   ];
+
+  den.default.nixos.system.stateVersion = "25.05";
+  den.default.homeManager.home.stateVersion = "26.05";
+}
+```
+
+### A2.1. Create `modules/hosts/` (one file per host)
+
+Each host gets its own file declaring `den.hosts` and (later) its aspect:
+
+**`modules/hosts/tau.nix`**
+```nix
+{
+  den.hosts.x86_64-linux.tau = { };
+}
+```
+
+**`modules/hosts/nu.nix`**
+```nix
+{
+  den.hosts.x86_64-linux.nu = { };
+}
+```
+
+**`modules/hosts/omega.nix`**
+```nix
+# omega is non-NixOS (system-manager). Not declared as den.hosts
+# during the bridge phase. Added as a proper den host in Stage B.
+{ }
+```
+
+### A2.2. Create `modules/users/` (one file per user)
+
+User aspects live here. During the bridge phase these are placeholders
+(the actual HM config is still built by `legacy.nix`). Do NOT add users
+to host declarations until their legacy bridge entry is removed.
+
+**`modules/users/lev.koliadich.nix`**
+```nix
+{ den, ... }: {
+  den.aspects."lev.koliadich" = {
+    includes = [
+      den.batteries.define-user
+      den.batteries.primary-user
+      (den.batteries.user-shell "zsh")
+    ];
+  };
 }
 ```
 
@@ -288,11 +332,9 @@ Shared NixOS server config extracted from both tau and nu:
 ```nix
 { den, ... }: {
   den.aspects.server-base = {
-    includes = [ den.batteries.hostname ];
     nixos = { ... }: {
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
       nix.gc.automatic = true;
-      system.stateVersion = "25.05";
       boot.loader.efi.canTouchEfiVariables = true;
       boot.loader.systemd-boot = { enable = true; configurationLimit = 10; };
       services.openssh.enable = true;
@@ -331,10 +373,12 @@ Same pattern:
 }
 ```
 
-### C4. `modules/aspects/tau.nix`
+### C4. `modules/hosts/tau.nix` (expand with aspect)
 
 ```nix
 { den, inputs, ... }: {
+  den.hosts.x86_64-linux.tau = { };
+
   den.aspects.tau = {
     includes = [
       den.aspects.server-base
@@ -346,9 +390,9 @@ Same pattern:
         inputs.disko.nixosModules.disko
         inputs.agenix.nixosModules.default
         inputs.quadlet-nix.nixosModules.quadlet
-        ./hardware/tau-hardware.nix
-        ./hardware/tau-disk.nix
-        ./secrets/tau.nix
+        ../_hardware/tau-hardware.nix
+        ../_hardware/tau-disk.nix
+        ../_secrets/tau.nix
       ];
 
       services.tailscale = {
@@ -386,10 +430,12 @@ Delete the `flake.nixosConfigurations.tau` bridge entry. Now den produces it fro
 
 ## Stage D: Migrate omega (system-manager + standalone home)
 
-### D1. `modules/aspects/omega.nix`
+### D1. `modules/hosts/omega.nix` (expand with aspect)
 
 ```nix
 { den, inputs, ... }: {
+  den.hosts.x86_64-linux.omega = { };
+
   den.aspects.omega = {
     systemManager = { pkgs, ... }: {
       imports = [ inputs.nix-system-graphics.systemModules.default ];
@@ -415,7 +461,7 @@ Delete the `flake.nixosConfigurations.tau` bridge entry. Now den produces it fro
 
 ### D2. Home aspects (merged groupings)
 
-Each is an independent aspect file under `modules/aspects/users/`:
+Each is an independent aspect file under `modules/aspects/`:
 
 | File | Merges from | Key content |
 |------|-------------|-------------|
@@ -429,7 +475,7 @@ Each is an independent aspect file under `modules/aspects/users/`:
 | `kanshi.nix` | `modules/home/kanshi.nix` | Output management |
 | `television.nix` | `modules/home/television.nix` | File picker |
 
-Example — `modules/aspects/users/terminal.nix`:
+Example — `modules/aspects/terminal.nix`:
 
 ```nix
 { den, ... }: {
@@ -449,7 +495,7 @@ Example — `modules/aspects/users/terminal.nix`:
 }
 ```
 
-### D3. `modules/aspects/users/lev.koliadich.nix`
+### D3. `modules/users/lev.koliadich.nix` (expand with full aspect)
 
 ```nix
 { den, inputs, ... }: {
@@ -572,10 +618,12 @@ Move `hosts/nu/backup.nix` into an aspect:
 }
 ```
 
-### E3. `modules/aspects/nu.nix`
+### E3. `modules/hosts/nu.nix` (expand with aspect)
 
 ```nix
 { den, inputs, ... }: {
+  den.hosts.x86_64-linux.nu = { };
+
   den.aspects.nu = {
     includes = [
       den.aspects.server-base
@@ -605,9 +653,9 @@ Move `hosts/nu/backup.nix` into an aspect:
         inputs.agenix.nixosModules.default
         inputs.quadlet-nix.nixosModules.quadlet
         inputs.btr-backup.nixosModules.btr-backup
-        ./hardware/nu-hardware.nix
-        ./hardware/nu-disk.nix
-        ./secrets/nu.nix
+        ../_hardware/nu-hardware.nix
+        ../_hardware/nu-disk.nix
+        ../_secrets/nu.nix
       ];
 
       environment.systemPackages = [ pkgs.neovim pkgs.curl pkgs.jq ];
@@ -728,21 +776,21 @@ flake.systemConfigurations.omega = inputs.system-manager.lib.makeSystemConfig {
 
 ```
 modules/
-├── den.nix
-├── flake-outputs.nix
+├── den.nix                # glue: imports den, sets defaults
+├── flake-outputs.nix      # devShells, formatter
 ├── classes/
 │   └── system-manager.nix
-├── aspects/
+├── hosts/                 # one file per host (declaration + host aspect)
+│   ├── tau.nix
+│   ├── nu.nix
+│   └── omega.nix
+├── users/                 # one file per user (user aspect + includes)
+│   └── lev.koliadich.nix
+├── aspects/               # shared/reusable aspects (not tied to a single host/user)
 │   ├── server-base.nix
 │   ├── tailscale.nix
 │   ├── samba.nix
 │   ├── backup.nix
-│   ├── nu.nix
-│   ├── tau.nix
-│   ├── omega.nix
-│   ├── nixos-modules/
-│   │   ├── tailscale.nix      # existing module content (option declarations)
-│   │   └── samba.nix          # existing module content (option declarations)
 │   ├── containers/
 │   │   ├── jellyfin.nix
 │   │   ├── immich.nix
@@ -759,8 +807,10 @@ modules/
 │   │   ├── baikal.nix
 │   │   ├── bentopdf.nix
 │   │   └── ntfy.nix
-│   └── users/
-│       ├── lev.koliadich.nix
+│   ├── _nixos-modules/    # existing NixOS option modules (skipped by import-tree)
+│   │   ├── tailscale.nix
+│   │   └── samba.nix
+│   └── _home-aspects/     # reusable HM aspect fragments
 │       ├── git.nix
 │       ├── zsh.nix
 │       ├── neovim.nix
@@ -770,12 +820,12 @@ modules/
 │       ├── terminal.nix
 │       ├── kanshi.nix
 │       └── television.nix
-├── hardware/
+├── _hardware/             # hardware configs (skipped by import-tree, imported explicitly)
 │   ├── nu-hardware.nix
 │   ├── nu-disk.nix
 │   ├── tau-hardware.nix
 │   └── tau-disk.nix
-└── secrets/
+└── _secrets/              # agenix secrets (skipped by import-tree, imported explicitly)
     ├── nu.nix
     └── tau.nix
 ```
