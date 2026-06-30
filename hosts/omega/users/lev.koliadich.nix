@@ -115,6 +115,7 @@
     programs.ty.enable = true;
     programs.npm.enable = true;
     programs.opencode.enable = true;
+    programs.claude-code.enable = true;
 
     stylix.targets.bat.enable = true;
     programs.bat.enable = true;
