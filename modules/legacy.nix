@@ -21,14 +21,6 @@ let
   };
 in
 {
-  flake.nixosConfigurations.tau = inputs.nixpkgs.lib.nixosSystem {
-    modules = [ ../hosts/tau/configuration.nix ];
-    specialArgs = {
-      inherit inputs flake;
-      hostName = "tau";
-    };
-  };
-
   flake.nixosConfigurations.nu = inputs.nixpkgs.lib.nixosSystem {
     modules = [ ../hosts/nu/configuration.nix ];
     specialArgs = {

@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  hostName,
   ...
 }:
 
@@ -28,7 +27,7 @@
       settings = {
         global = {
           "workgroup" = "WORKGROUP";
-          "server string" = "${hostName} server";
+          "server string" = "${config.networking.hostName} server";
           "security" = "user";
           "server min protocol" = "SMB3";
           "guest account" = "nobody";
