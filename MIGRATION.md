@@ -269,57 +269,54 @@ nix eval '.#homeConfigurations."lev.koliadich@omega".config.home.stateVersion'  
 
 ### B1. Create `modules/classes/system-manager.nix`
 
-system-manager uses `system-manager.lib.makeSystemConfig { modules = [...]; }` to produce `systemConfigs.<name>`. The output goes to `flake.systemConfigurations.<name>`.
+system-manager uses `system-manager.lib.makeSystemConfig { modules = [...]; }`
+to produce system configs. Its module system is NixOS-module-compatible.
 
-The custom class approach:
-- Aspects define config under a `systemManager` key
-- A custom policy resolves this key and produces `flake.systemConfigurations`
-- Uses `den.batteries.forward` to wire the class into the host
+Den's `flake.*` output page documents `host.instantiate` and `host.intoAttr`
+overrides. The correct approach:
+- Declare omega as a den host
+- Override `instantiate` to call `makeSystemConfig` instead of `nixosSystem`
+- Override `intoAttr` to `[ "systemConfigurations" "omega" ]`
+- Use the `nixos` class for aspect content (system-manager modules ARE NixOS-style)
+
+This avoids needing `den.classes`, `den.lib.policy.route`, or `forward` — those
+are for routing content between classes, not for standalone module systems.
+
+`modules/classes/system-manager.nix` is a placeholder documenting this decision.
+The actual wiring lives in `modules/hosts/omega.nix` (activated in Stage D).
+
+### B2. Prepare `modules/hosts/omega.nix`
+
+During bridge phase, the host declaration is commented out (legacy.nix handles
+output). Stage D uncomments it:
 
 ```nix
-{ den, inputs, lib, ... }:
-let
-  # Only omega has system-manager; guard on host having the class
-  omega = den.den.hosts.x86_64-linux.omega;
-
-  # Resolve all systemManager modules from omega's aspect tree
-  systemManagerModules = den.lib.aspects.resolve "systemManager" (
-    den.aspects.${omega.aspect} { host = omega; }
-  );
-in {
-  # Register systemManager as a known class on omega
-  den.hosts.x86_64-linux.omega.class = "systemManager";
-
-  # Produce the flake output
-  flake.systemConfigurations.omega = inputs.system-manager.lib.makeSystemConfig {
-    modules = [ systemManagerModules ];
+{ inputs, ... }:
+{
+  den.hosts.x86_64-linux.omega = {
+    instantiate = { modules, ... }:
+      inputs.system-manager.lib.makeSystemConfig {
+        inherit modules;
+        extraSpecialArgs = { inherit inputs; };
+      };
+    intoAttr = [ "systemConfigurations" "omega" ];
   };
 }
 ```
 
-> **Important:** The exact API for `den.lib.aspects.resolve` needs validation against
-> den's current version. An alternative approach is to use the `From Flake to Den`
-> pattern where `omega.mainModule` collects all resolved config for that host, and we
-> pass it directly to `makeSystemConfig`.
->
-> Simpler fallback if `resolve` doesn't work for custom classes:
-> ```nix
-> flake.systemConfigurations.omega = inputs.system-manager.lib.makeSystemConfig {
->   modules = [
->     omega.mainModule  # den resolves systemManager class into this
->   ];
-> };
-> ```
+The aspect's `nixos` key feeds system-manager modules directly — no custom
+class resolution needed.
 
-### B2. Alternative: `den.batteries.forward` approach
+### B3. Standalone home-manager for omega
 
-If omega also has NixOS-like hosts, use forward. But since omega is purely
-system-manager (no nixos/darwin), the direct `makeSystemConfig` + `mainModule`
-approach is simpler. The forward battery is designed for routing a class *into*
-another class — here there's no parent NixOS to route into.
+omega's user gets a standalone HM config via `den.homes` (activated in Stage D):
 
-**Decision: use the `mainModule` approach.** omega's host class is `"systemManager"`,
-and den resolves aspects into `omega.mainModule`, which we feed to `makeSystemConfig`.
+```nix
+den.homes.x86_64-linux."lev.koliadich@omega" = { };
+```
+
+This produces `flake.homeConfigurations."lev.koliadich@omega"` activated via
+`home-manager switch`.
 
 ---
 
@@ -702,36 +699,45 @@ Move `hosts/nu/backup.nix` into an aspect:
 | `den.batteries.home-manager` | (auto-activated) HM integration | Auto when user has `homeManager` class |
 | `den.batteries.unfree` | Global `allowUnfree = true` | Host aspects or `den.default` |
 | `den.batteries.import-tree` | Bridge during migration only | `modules/legacy.nix` (temporary) |
-| `den.batteries.forward` | Custom class wiring | `system-manager` class |
+| `den.batteries.forward` | Custom class wiring | Not needed (instantiate override) |
 
 ---
 
 ## system-manager Class: Design Notes
 
-### Why a custom class is needed
+### Why `instantiate` override instead of custom class
 
-omega runs on a non-NixOS distro. It has no `nixos` or `darwin` class. Den's
-built-in pipeline only knows `nixos`, `darwin`, `homeManager`, `hjem`, `maid`.
-system-manager is a separate module system with its own `evalModules`.
+omega runs on a non-NixOS distro with system-manager. Initially the plan was
+to register a custom `systemManager` class and use `den.lib.aspects.resolve`
+or `forward`. But:
+
+1. system-manager's module system IS NixOS-module-compatible
+2. Den's `host.instantiate` and `host.intoAttr` overrides exist exactly for this
+3. No custom class registration, no `forward`, no `route` policy needed
 
 ### Architecture
 
 ```
 den.hosts.x86_64-linux.omega
-  ├── class = "systemManager"     # host's primary class
-  ├── aspect = "omega"            # den.aspects.omega
-  └── users."lev.koliadich"
-        └── classes = [ "homeManager" ]  # standalone HM via den.homes
+  ├── instantiate = makeSystemConfig  # overrides nixosSystem
+  ├── intoAttr = [ "systemConfigurations" "omega" ]
+  ├── aspect = "omega"                # den.aspects.omega
+  └── (no users on this host — HM is standalone via den.homes)
 ```
 
 ### How it produces output
 
-Den resolves `omega.mainModule` by collecting all `systemManager` class content
-from the omega aspect tree. This module is then passed to:
+Den resolves `omega.mainModule` from the `nixos` class content in the omega
+aspect tree, then calls our custom `instantiate`:
 
 ```nix
-flake.systemConfigurations.omega = inputs.system-manager.lib.makeSystemConfig {
-  modules = [ omega.mainModule ];
+den.hosts.x86_64-linux.omega = {
+  instantiate = { modules, ... }:
+    inputs.system-manager.lib.makeSystemConfig {
+      inherit modules;
+      extraSpecialArgs = { inherit inputs; };
+    };
+  intoAttr = [ "systemConfigurations" "omega" ];
 };
 ```
 
@@ -746,29 +752,6 @@ den.homes.x86_64-linux."lev.koliadich@omega" = {};
 
 This produces `flake.homeConfigurations."lev.koliadich@omega"` — a standalone
 home-manager configuration activated via `home-manager switch`.
-
-### Open question for implementation
-
-Den's pipeline assumes hosts have a class from `{nixos, darwin}` for the built-in
-`host-to-users` policy to fire. With a custom `systemManager` class, we may need
-to register the class explicitly:
-
-```nix
-den.classes.systemManager = {};
-```
-
-Or override the host's class resolution. This needs testing against den's actual
-implementation. If the pipeline doesn't resolve `systemManager` content into
-`mainModule` out of the box, we fall back to manually calling `den.lib.aspects.resolve`:
-
-```nix
-flake.systemConfigurations.omega = inputs.system-manager.lib.makeSystemConfig {
-  modules = [
-    (den.lib.aspects.resolve "systemManager"
-      (den.aspects.omega { host = den.den.hosts.x86_64-linux.omega; }))
-  ];
-};
-```
 
 ---
 
