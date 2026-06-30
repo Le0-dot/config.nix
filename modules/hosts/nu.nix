@@ -1,6 +1,6 @@
 { den, inputs, ... }:
 let
-  customLib = import ../../lib/default.nix { };
+  customLib = import ../_packages/lib.nix { };
 in
 {
   den.hosts.x86_64-linux.nu = { };
@@ -20,23 +20,22 @@ in
         ../_hardware/nu-hardware.nix
         ../_hardware/nu-disk.nix
         ../_secrets/nu.nix
-        # backup and containers still at original location (moved in Stage F)
-        ../../hosts/nu/backup.nix
-        ../../hosts/nu/containers/audiobookshelf.nix
-        ../../hosts/nu/containers/adguardhome.nix
-        ../../hosts/nu/containers/baikal.nix
-        ../../hosts/nu/containers/jellyfin.nix
-        ../../hosts/nu/containers/komga.nix
-        ../../hosts/nu/containers/paperless-ngx.nix
-        ../../hosts/nu/containers/transmission.nix
-        ../../hosts/nu/containers/prowlarr.nix
-        ../../hosts/nu/containers/radarr.nix
-        ../../hosts/nu/containers/sonarr.nix
-        ../../hosts/nu/containers/jellyseerr.nix
-        ../../hosts/nu/containers/immich.nix
-        ../../hosts/nu/containers/homeassistant.nix
-        ../../hosts/nu/containers/bentopdf.nix
-        ../../hosts/nu/containers/ntfy.nix
+        ../_containers/backup.nix
+        ../_containers/audiobookshelf.nix
+        ../_containers/adguardhome.nix
+        ../_containers/baikal.nix
+        ../_containers/jellyfin.nix
+        ../_containers/komga.nix
+        ../_containers/paperless-ngx.nix
+        ../_containers/transmission.nix
+        ../_containers/prowlarr.nix
+        ../_containers/radarr.nix
+        ../_containers/sonarr.nix
+        ../_containers/jellyseerr.nix
+        ../_containers/immich.nix
+        ../_containers/homeassistant.nix
+        ../_containers/bentopdf.nix
+        ../_containers/ntfy.nix
       ];
 
       # Provide flake.lib for container modules that use btrfsVolume/mountVolume

@@ -39,10 +39,10 @@
       # Provide perSystem.self.* for _home/ modules that reference custom packages
       _module.args.perSystem = {
         self = {
-          choose-repo = import ../../packages/choose-repo.nix { inherit pkgs; };
-          clipselect = import ../../packages/clipselect.nix { inherit pkgs; };
-          hyprlock = import ../../packages/hyprlock.nix { inherit pkgs; };
-          hyprpaper = import ../../packages/hyprpaper.nix { inherit pkgs; };
+          choose-repo = import ../_packages/choose-repo.nix { inherit pkgs; };
+          clipselect = import ../_packages/clipselect.nix { inherit pkgs; };
+          hyprlock = import ../_packages/hyprlock.nix { inherit pkgs; };
+          hyprpaper = import ../_packages/hyprpaper.nix { inherit pkgs; };
         };
       };
 
