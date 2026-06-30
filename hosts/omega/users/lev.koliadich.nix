@@ -1,6 +1,5 @@
 {
   pkgs,
-  flake,
   inputs,
   config,
   ...
@@ -11,25 +10,25 @@
     inputs.stylix.homeModules.stylix
     inputs.agenix.homeManagerModules.default
 
-    flake.homeModules.git
-    flake.homeModules.zsh
-    flake.homeModules.starship
-    flake.homeModules.atuin
-    flake.homeModules.neovim
-    flake.homeModules.television
-    flake.homeModules.wm-common
-    flake.homeModules.playerctl
-    flake.homeModules.cliphist
-    flake.homeModules.tofi
-    flake.homeModules.kanshi
-    flake.homeModules.wlogout
-    flake.homeModules.dunst
-    flake.homeModules.ghostty
-    flake.homeModules.hyprland
-    flake.homeModules.hyprlock
-    flake.homeModules.hypridle
-    flake.homeModules.hyprpaper
-    flake.homeModules.waybar
+    ../../../modules/_home/git.nix
+    ../../../modules/_home/zsh.nix
+    ../../../modules/_home/starship.nix
+    ../../../modules/_home/atuin.nix
+    ../../../modules/_home/neovim.nix
+    ../../../modules/_home/television.nix
+    ../../../modules/_home/wm-common.nix
+    ../../../modules/_home/playerctl.nix
+    ../../../modules/_home/cliphist.nix
+    ../../../modules/_home/tofi.nix
+    ../../../modules/_home/kanshi.nix
+    ../../../modules/_home/wlogout.nix
+    ../../../modules/_home/dunst.nix
+    ../../../modules/_home/ghostty.nix
+    ../../../modules/_home/hyprland.nix
+    ../../../modules/_home/hyprlock.nix
+    ../../../modules/_home/hypridle.nix
+    ../../../modules/_home/hyprpaper.nix
+    ../../../modules/_home/waybar.nix
   ];
 
   config = {

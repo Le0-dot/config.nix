@@ -1,6 +1,5 @@
 {
   pkgs,
-  flake,
   inputs,
   config,
   hostName,
@@ -13,8 +12,8 @@
     inputs.agenix.nixosModules.default
     inputs.quadlet-nix.nixosModules.quadlet
 
-    flake.nixosModules.samba
-    flake.nixosModules.tailscale
+    ../../modules/_nixos/samba.nix
+    ../../modules/_nixos/tailscale.nix
 
     ./hardware-configuration.nix
     ./disk-config.nix

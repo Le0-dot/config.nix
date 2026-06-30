@@ -1,15 +1,14 @@
 {
   pkgs,
   inputs,
-  flake,
   ...
 }:
 
 {
   imports = [
     inputs.nix-system-graphics.systemModules.default
-    flake.modules.system.hyprlock
-    flake.modules.system.uwsm
+    ../../modules/_system/hyprlock.nix
+    ../../modules/_system/uwsm.nix
   ];
 
   config = {

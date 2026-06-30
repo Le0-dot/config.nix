@@ -1,6 +1,5 @@
 {
   pkgs,
-  flake,
   inputs,
   config,
   hostName,
@@ -14,8 +13,8 @@
     inputs.quadlet-nix.nixosModules.quadlet
     inputs.btr-backup.nixosModules.btr-backup
 
-    flake.nixosModules.tailscale
-    flake.nixosModules.samba
+    ../../modules/_nixos/tailscale.nix
+    ../../modules/_nixos/samba.nix
 
     ./hardware-configuration.nix
     ./disk-config.nix

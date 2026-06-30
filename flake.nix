@@ -2,10 +2,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    blueprint = {
-      url = "github:numtide/blueprint";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    den.url = "github:denful/den";
+    import-tree.url = "github:denful/import-tree";
 
     system-manager = {
       url = "github:numtide/system-manager";
@@ -49,8 +47,8 @@
 
   outputs =
     inputs:
-    inputs.blueprint {
-      inherit inputs;
-      nixpkgs.config.allowUnfree = true;
-    };
+    (inputs.nixpkgs.lib.evalModules {
+      modules = [ (inputs.import-tree ./modules) ];
+      specialArgs.inputs = inputs;
+    }).config.flake;
 }
