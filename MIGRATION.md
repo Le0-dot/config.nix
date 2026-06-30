@@ -53,7 +53,40 @@ All config expressed as den aspects. Custom `systemManager` den class for omega.
 }
 ```
 
+### A1.1. Rename existing module dirs
+
+`import-tree` auto-imports all `.nix` files in `modules/`, but existing
+`modules/{home,nixos,system}/` are NixOS/HM modules that can't be imported
+into den's top-level `evalModules`. Rename with `_` prefix (import-tree skips
+paths containing `/_`):
+
+```
+modules/home/   -> modules/_home/
+modules/nixos/  -> modules/_nixos/
+modules/system/ -> modules/_system/
+```
+
+### A1.2. Update host file imports
+
+All `flake.homeModules.*`, `flake.nixosModules.*`, `flake.modules.system.*`
+references in host configs must be replaced with direct relative path imports
+to the renamed dirs:
+
+```nix
+# Before
+flake.nixosModules.samba
+# After
+../../modules/_nixos/samba.nix
+```
+
+Also remove `flake` from module function arguments where no longer needed.
+
 ### A2. Create `modules/den.nix`
+
+> **Important:** Do NOT declare `den.homes` during the bridge phase. Den's
+> pipeline auto-generates `homeConfigurations` from `den.homes`, which
+> conflicts with the manually-built entry in `legacy.nix`. Add `den.homes`
+> only after the legacy bridge for that home is removed (Stage D).
 
 ```nix
 { inputs, den, lib, ... }: {
@@ -61,15 +94,12 @@ All config expressed as den aspects. Custom `systemManager` den class for omega.
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
 
-  # NixOS hosts
-  den.hosts.x86_64-linux.tau = {};
-  den.hosts.x86_64-linux.nu  = {};
+  den.hosts.x86_64-linux.tau = { };
+  den.hosts.x86_64-linux.nu = { };
 
-  # omega: non-NixOS — standalone home + system-manager custom class
-  den.hosts.x86_64-linux.omega = {};
-  den.homes.x86_64-linux."lev.koliadich@omega" = {};
+  # omega is NOT declared as den.hosts (not NixOS) and NOT as den.homes
+  # (would conflict with legacy.nix bridge). Added in Stage D.
 
-  # Batteries applied globally
   den.default.includes = [
     den.batteries.hostname
     den.batteries.define-user
@@ -116,41 +146,78 @@ in {
 
 ### A4. Create `modules/legacy.nix` (temporary bridge)
 
-Uses `import-tree` to keep existing config working during migration. Hosts are loaded as plain NixOS modules via den's `mainModule` mechanism.
+Manually constructs flake outputs from existing host configs. Replicates
+blueprint's `specialArgs` (`flake.lib`, `perSystem.self`, `hostName`).
+
+> **Important:** `home-manager.lib.homeManagerConfiguration` requires explicit
+> `home.username`, `home.homeDirectory`, and `home.stateVersion`. Blueprint set
+> these automatically from filesystem conventions. The bridge must set them in
+> an inline module. Also, `pkgs` must be imported with `config.allowUnfree = true`
+> (passing `nixpkgs.config.allowUnfree` inside modules causes infinite recursion
+> when `pkgs` is also provided).
 
 ```nix
-{ den, inputs, lib, ... }:
+{ inputs, ... }:
 let
-  inherit (den.den.hosts.x86_64-linux) tau nu;
-in {
-  # Bridge: inject existing configuration.nix into host mainModules
-  flake.nixosConfigurations.tau = lib.nixosSystem {
-    modules = [ tau.mainModule ../hosts/tau/configuration.nix ];
-    specialArgs = { inherit inputs; flake = den.flake; hostName = "tau"; };
-  };
-  flake.nixosConfigurations.nu = lib.nixosSystem {
-    modules = [ nu.mainModule ../hosts/nu/configuration.nix ];
-    specialArgs = { inherit inputs; flake = den.flake; hostName = "nu"; };
-  };
-
-  # Bridge: system-manager (omega)
-  flake.systemConfigurations.omega =
-    inputs.system-manager.lib.makeSystemConfig {
-      modules = [ ../hosts/omega/system-configuration.nix ];
-      extraSpecialArgs = { inherit inputs; flake = den.flake; };
+  system = "x86_64-linux";
+  pkgs = inputs.nixpkgs.legacyPackages.${system};
+  customLib = import ../lib/default.nix { };
+  flake = { lib = customLib; };
+  perSystem = {
+    self = {
+      choose-repo = import ../packages/choose-repo.nix { inherit pkgs; };
+      clipselect = import ../packages/clipselect.nix { inherit pkgs; };
+      hyprlock = import ../packages/hyprlock.nix { inherit pkgs; };
+      hyprpaper = import ../packages/hyprpaper.nix { inherit pkgs; };
     };
+  };
+in {
+  flake.nixosConfigurations.tau = inputs.nixpkgs.lib.nixosSystem {
+    modules = [ ../hosts/tau/configuration.nix ];
+    specialArgs = { inherit inputs flake; hostName = "tau"; };
+  };
 
-  # Bridge: home-manager (omega)
+  flake.nixosConfigurations.nu = inputs.nixpkgs.lib.nixosSystem {
+    modules = [ ../hosts/nu/configuration.nix ];
+    specialArgs = { inherit inputs flake; hostName = "nu"; };
+  };
+
+  flake.systemConfigurations.omega = inputs.system-manager.lib.makeSystemConfig {
+    modules = [ ../hosts/omega/system-configuration.nix ];
+    extraSpecialArgs = { inherit inputs; };
+  };
+
   flake.homeConfigurations."lev.koliadich@omega" =
     inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-      modules = [ ../hosts/omega/users/lev.koliadich.nix ];
-      extraSpecialArgs = { inherit inputs; flake = den.flake; };
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      modules = [
+        ../hosts/omega/users/lev.koliadich.nix
+        {
+          home.username = "lev.koliadich";
+          home.homeDirectory = "/home/lev.koliadich";
+          home.stateVersion = "26.05";
+        }
+      ];
+      extraSpecialArgs = { inherit inputs perSystem; };
     };
 }
 ```
 
-**Checkpoint:** `nix flake check` passes, all three hosts buildable.
+### A5. Update flake.lock
+
+```
+nix flake lock
+```
+
+**Checkpoint:** All configs evaluate correctly:
+```
+nix eval .#nixosConfigurations.tau.config.networking.hostName   # "tau"
+nix eval .#nixosConfigurations.nu.config.networking.hostName    # "nu"
+nix eval '.#homeConfigurations."lev.koliadich@omega".config.home.stateVersion'  # "26.05"
+```
 
 ---
 
