@@ -13,9 +13,9 @@
         inputs.disko.nixosModules.disko
         inputs.agenix.nixosModules.default
         inputs.quadlet-nix.nixosModules.quadlet
-        ../_hardware/tau-hardware.nix
-        ../_hardware/tau-disk.nix
-        ../_secrets/tau.nix
+        ./_hardware.nix
+        ./_disk.nix
+        ./_secrets.nix
       ];
 
       users.users.le0.isNormalUser = true;
