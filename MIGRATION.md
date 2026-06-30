@@ -677,14 +677,19 @@ Move `hosts/nu/backup.nix` into an aspect:
 
 ## Stage F: Cleanup
 
-- Delete `modules/legacy.nix`
-- Delete `hosts/` directory
-- Delete `modules/home/`, `modules/nixos/`, `modules/system/`
-- Delete `packages/` directory
-- Delete `devshell.nix`, `formatter.nix` (moved into `modules/flake-outputs.nix`)
-- Update `Makefile` to use new flake output paths
-- Run `nix flake check`
-- Rebuild all three hosts to confirm
+Done:
+- [x] Delete `modules/legacy.nix`
+- [x] Delete `devshell.nix`, `formatter.nix` (replaced by `modules/flake-outputs.nix`)
+- [x] Update `Makefile` (removed hosts/ dependency, updated anywhere target)
+
+Deferred (still referenced by aspects via relative imports):
+- [ ] Delete `hosts/` — nu containers/backup still imported from there
+- [ ] Delete `modules/_home/`, `modules/_nixos/`, `modules/_system/` — still imported
+- [ ] Delete `packages/` — referenced by user aspect's `_module.args.perSystem`
+- [ ] Delete `lib/` — referenced by nu aspect's `_module.args.flake`
+
+These are inlined/moved in a future pass when individual container/HM modules
+are rewritten as proper den aspects.
 
 ---
 
