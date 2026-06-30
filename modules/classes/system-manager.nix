@@ -1,16 +1,14 @@
 # system-manager custom class for omega (non-NixOS host).
 #
-# Den's built-in pipeline produces nixosConfigurations/darwinConfigurations.
-# system-manager uses its own `makeSystemConfig` (a separate evalModules).
+# Den has BUILT-IN support for systemManager as a host class:
+#   - instantiate defaults to inputs.system-manager.lib.makeSystemConfig
+#   - intoAttr defaults to [ "systemConfigs" name ]
+#   - Aspects use the `systemManager` key (like `nixos` or `darwin`)
 #
-# Strategy: declare omega as a den host, override `instantiate` to call
-# `makeSystemConfig` instead of `nixosSystem`, and set `intoAttr` to
-# produce `flake.systemConfigurations.omega`.
+# Usage in modules/hosts/omega.nix:
+#   den.hosts.x86_64-linux.omega.class = "systemManager";
+#   den.aspects.omega.systemManager = { ... }: { ... };
 #
-# The aspect's `nixos` class content feeds into system-manager's module
-# system (which is NixOS-module-compatible). This avoids needing a truly
-# custom class — system-manager modules ARE NixOS-style modules.
-#
-# During bridge phase: omega.nix keeps this inert (no den.hosts entry).
-# Stage D activates it by adding den.hosts + removing legacy bridge.
+# The only override needed: `intoAttr` to match our desired output path
+# (we use "systemConfigurations" not the default "systemConfigs").
 { }

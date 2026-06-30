@@ -1,13 +1,12 @@
 # omega is a non-NixOS workstation managed by system-manager.
-# Uses `instantiate` override to call makeSystemConfig instead of nixosSystem.
+# Den has built-in support for class = "systemManager":
+#   instantiate defaults to inputs.system-manager.lib.makeSystemConfig
+#   intoAttr defaults to [ "systemConfigs" name ]
 { inputs, den, ... }:
 {
   den.hosts.x86_64-linux.omega = {
-    instantiate = { modules, ... }:
-      inputs.system-manager.lib.makeSystemConfig {
-        inherit modules;
-        specialArgs = { inherit inputs; };
-      };
+    class = "systemManager";
+    # Override intoAttr to match our existing output path
     intoAttr = [ "systemConfigurations" "omega" ];
   };
 
@@ -15,7 +14,7 @@
     excludes = [
       den.batteries.hostname # system-manager has no networking.hostName
     ];
-    nixos = { pkgs, ... }: {
+    systemManager = { pkgs, ... }: {
       imports = [
         inputs.nix-system-graphics.systemModules.default
         ../_system/uwsm.nix
