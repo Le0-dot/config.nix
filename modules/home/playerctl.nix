@@ -46,17 +46,6 @@ in
       playerctl-resume
     ];
 
-    keybind.binds = [
-      {
-        modifiers = [
-          "SUPER"
-          "CTRL"
-        ];
-        key = "SPACE";
-        action = "playerctl -a play-pause";
-      }
-    ];
-
     systemd.user.services = {
       playerctl-save = {
         Unit = {

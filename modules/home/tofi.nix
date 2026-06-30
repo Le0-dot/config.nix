@@ -6,8 +6,6 @@
 
 {
   config = lib.mkIf config.programs.tofi.enable {
-    wm.dmenu = "tofi";
-
     programs.tofi = {
       settings = {
         font = config.stylix.fonts.monospace.name;
@@ -34,15 +32,5 @@
         selection-color = "#${config.lib.stylix.colors.base0E}";
       };
     };
-
-    keybind.binds = [
-      {
-        modifiers = [
-          "SUPER"
-        ];
-        key = "SPACE";
-        action = "tofi-drun --drun-launch=true --padding-left=40%";
-      }
-    ];
   };
 }

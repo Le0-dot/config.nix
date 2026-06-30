@@ -1,17 +1,6 @@
-{ lib, ... }:
+{ ... }:
 
 {
-  options.wm = {
-    term = lib.mkOption {
-      type = lib.types.str;
-      description = "Application to run as default terminal emulator";
-    };
-    dmenu = lib.mkOption {
-      type = lib.types.str;
-      description = "Application to run as default dmenu compatible picker";
-    };
-  };
-
   config = {
     systemd.user.targets = {
       on-session-lock = {

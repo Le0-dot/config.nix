@@ -99,13 +99,5 @@
         }
       '';
     };
-
-    keybind.binds = [
-      {
-        modifiers = [ "SUPER" ];
-        key = "ESCAPE";
-        action = "wlogout -b 2 -L 480 -R 480";
-      }
-    ];
   };
 }

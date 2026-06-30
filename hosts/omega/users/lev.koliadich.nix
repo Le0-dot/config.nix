@@ -3,14 +3,12 @@
   flake,
   inputs,
   config,
-  perSystem,
   ...
 }:
 
 {
   imports = [
     inputs.stylix.homeModules.stylix
-    inputs.keybind.homeModules.keybind
     inputs.agenix.homeManagerModules.default
 
     flake.homeModules.git
@@ -19,11 +17,7 @@
     flake.homeModules.atuin
     flake.homeModules.neovim
     flake.homeModules.television
-
     flake.homeModules.wm-common
-
-    flake.homeModules.brightnessctl
-    flake.homeModules.wireplumber
     flake.homeModules.playerctl
     flake.homeModules.cliphist
     flake.homeModules.tofi
@@ -35,9 +29,7 @@
     flake.homeModules.hyprlock
     flake.homeModules.hypridle
     flake.homeModules.hyprpaper
-    flake.homeModules.hyprshot
     flake.homeModules.waybar
-    flake.homeModules.chrome
   ];
 
   config = {
@@ -48,19 +40,6 @@
     home.shellAliases = {
       cat = "bat -p";
     };
-
-    home.packages = [
-      perSystem.self.choose-repo
-      perSystem.self.clipselect
-    ];
-
-    keybind.binds = [
-      {
-        modifiers = [ "SUPER" ];
-        key = "P";
-        action = "choose-repo ${config.wm.dmenu} ~/projects 3 | xargs -I{} ${config.wm.term} -e direnv exec {} nvim -c 'WithSession {}/Session.vim' +new-window";
-      }
-    ];
 
     stylix = {
       enable = true;
@@ -149,8 +128,6 @@
     services.kanshi.enable = true;
     programs.waybar.enable = true;
     programs.wlogout.enable = true;
-    programs.brightnessctl.enable = true;
-    programs.wireplumber.enable = true;
     services.playerctld.enable = true;
     services.cliphist.enable = true;
     services.dunst.enable = true;
