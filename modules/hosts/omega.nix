@@ -1,14 +1,6 @@
-# omega is a non-NixOS workstation managed by system-manager.
-# Den has built-in support for class = "systemManager":
-#   instantiate defaults to inputs.system-manager.lib.makeSystemConfig
-#   intoAttr defaults to [ "systemConfigs" name ]
 { inputs, den, ... }:
 {
-  den.hosts.x86_64-linux.omega = {
-    class = "systemManager";
-    # Override intoAttr to match our existing output path
-    intoAttr = [ "systemConfigurations" "omega" ];
-  };
+  den.hosts.x86_64-linux.omega.class = "systemManager";
 
   den.aspects.omega = {
     excludes = [
