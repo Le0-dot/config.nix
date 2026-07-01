@@ -3,8 +3,6 @@ let
   customLib = import ../../_packages/lib.nix { };
 in
 {
-  den.hosts.x86_64-linux.nu = { };
-
   den.aspects.nu = {
     includes = [
       den.aspects.server-base
@@ -39,7 +37,9 @@ in
       ];
 
       # Provide flake.lib for container modules that use btrfsVolume/mountVolume
-      _module.args.flake = { lib = customLib; };
+      _module.args.flake = {
+        lib = customLib;
+      };
 
       environment.systemPackages = [
         pkgs.neovim

@@ -1,8 +1,6 @@
 # User aspect for lev.koliadich (standalone HM on omega).
 { den, inputs, ... }:
 {
-  den.homes.x86_64-linux."lev.koliadich@omega" = { };
-
   den.aspects."lev.koliadich" = {
     includes = [
       den.batteries.define-user
