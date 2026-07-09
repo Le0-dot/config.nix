@@ -4,6 +4,7 @@
 
     den.url = "github:denful/den";
     import-tree.url = "github:denful/import-tree";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     system-manager = {
       url = "github:numtide/system-manager";
@@ -43,12 +44,8 @@
       url = "github:Le0-dot/btr-backup";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
   };
 
-  outputs =
-    inputs:
-    (inputs.nixpkgs.lib.evalModules {
-      modules = [ (inputs.import-tree ./modules) ];
-      specialArgs.inputs = inputs;
-    }).config.flake;
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }

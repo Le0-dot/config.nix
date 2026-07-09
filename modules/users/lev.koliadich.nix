@@ -1,9 +1,7 @@
-# User aspect for lev.koliadich (standalone HM on omega).
 { den, inputs, ... }:
 {
   den.aspects."lev.koliadich" = {
     includes = [
-      den.batteries.define-user
       den.batteries.primary-user
       (den.batteries.user-shell "zsh")
     ];
@@ -138,5 +136,9 @@
       programs.tofi.enable = true;
       programs.ghostty.enable = true;
     };
+  };
+
+  den.aspects."lev.koliadich@omega" = {
+    homeManager = { lib, ... }: { programs.git.enable = lib.mkForce false; };
   };
 }
