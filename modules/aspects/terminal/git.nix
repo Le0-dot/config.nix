@@ -1,8 +1,7 @@
-{ lib, config, ... }:
-
 {
-  config = lib.mkIf config.programs.git.enable {
+  den.aspects.terminal.git.homeManager = {
     programs.git = {
+      enable = true;
       ignores = [
         "Session.vim"
         ".envrc"
@@ -52,8 +51,9 @@
       };
     };
 
-    stylix.targets.lazygit.enable = config.programs.lazygit.enable;
-    programs.lazygit.settings = lib.mkIf config.programs.lazygit.enable {
+    stylix.targets.lazygit.enable = true;
+    programs.lazygit.settings = {
+      eneable = true;
       gui = {
         sidePanelWidth = 0.25;
         showFileTree = false;

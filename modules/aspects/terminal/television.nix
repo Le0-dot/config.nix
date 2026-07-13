@@ -1,12 +1,7 @@
 {
-  lib,
-  config,
-  ...
-}:
-
-{
-  config = lib.mkIf config.programs.television.enable {
+  den.aspects.terminal.television.homeManager = {
     programs.television = {
+      enable = true;
       settings = {
         keybindings = {
           ctrl-d = "scroll_preview_half_page_down";

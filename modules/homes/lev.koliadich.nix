@@ -3,8 +3,16 @@
   den.aspects."lev.koliadich" = {
     includes = [
       den.batteries.primary-user
-      den.aspects.nix
       (den.batteries.user-shell "zsh")
+
+      den.aspects.nix
+
+      den.aspects.terminal.git
+      den.aspects.terminal.zsh
+      den.aspects.terminal.starship
+      den.aspects.terminal.atuin
+      den.aspects.terminal.neovim
+      den.aspects.terminal.television
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -12,12 +20,6 @@
         inputs.stylix.homeModules.stylix
         inputs.agenix.homeManagerModules.default
 
-        ../_home/git.nix
-        ../_home/zsh.nix
-        ../_home/starship.nix
-        ../_home/atuin.nix
-        ../_home/neovim.nix
-        ../_home/television.nix
         ../_home/wm-common.nix
         ../_home/playerctl.nix
         ../_home/cliphist.nix

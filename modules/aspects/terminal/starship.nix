@@ -1,10 +1,9 @@
-{ lib, config, ... }:
-
 {
-  config = lib.mkIf config.programs.starship.enable {
+  den.aspects.terminal.starship.homeManager = {
     stylix.targets.starship.enable = true;
 
     programs.starship = {
+      enable = true;
       settings = {
         format = " $directory$git_branch$git_status$character";
         add_newline = false;

@@ -1,13 +1,7 @@
 {
-  pkgs,
-  lib,
-  config,
-  ...
-}:
-
-{
-  config = lib.mkIf config.programs.zsh.enable {
+  den.aspects.terminal.zsh.homeManager = { pkgs, ... }: {
     programs.zsh = {
+      enable = true;
       defaultKeymap = "emacs";
       syntaxHighlighting.enable = true;
       autosuggestion.enable = true;
