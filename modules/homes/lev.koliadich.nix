@@ -8,7 +8,6 @@
       (den.aspects.terminal.neovim "projects/config.nvim")
       den.aspects.terminal
       den.aspects.terminal.git
-      den.aspects.terminal.starship
       den.aspects.terminal.television
     ];
 
