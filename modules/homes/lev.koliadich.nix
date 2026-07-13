@@ -5,10 +5,9 @@
       den.batteries.primary-user
       den.aspects.nix
 
-      (den.aspects.terminal.neovim "projects/config.nvim")
       den.aspects.terminal
-      den.aspects.terminal.git
       den.aspects.terminal.television
+      (den.aspects.terminal.neovim "projects/config.nvim")
     ];
 
     homeManager = { pkgs, config, ... }: {
