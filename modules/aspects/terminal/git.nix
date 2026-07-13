@@ -16,6 +16,7 @@
         rerere.enabled = true;
       };
     };
+    programs.gh.enable = true;
 
     programs.delta = {
       enable = true;

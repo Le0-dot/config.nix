@@ -7,12 +7,13 @@
 
       den.aspects.nix
 
-      den.aspects.terminal.git
-      den.aspects.terminal.zsh
-      den.aspects.terminal.starship
+      den.aspects.terminal
       den.aspects.terminal.atuin
+      den.aspects.terminal.git
       den.aspects.terminal.neovim
+      den.aspects.terminal.starship
       den.aspects.terminal.television
+      den.aspects.terminal.zsh
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -47,9 +48,6 @@
 
       nixpkgs.config.allowUnfree = true;
 
-      home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
-      home.shellAliases.cat = "bat -p";
-
       stylix = {
         enable = true;
         autoEnable = false;
@@ -70,7 +68,6 @@
       };
 
       programs.zsh = {
-        enable = true;
         envExtra = ''
           if [ -e /etc/profile.d/system-manager-path.sh ]; then
             . /etc/profile.d/system-manager-path.sh
@@ -85,43 +82,12 @@
         '';
       };
 
-      programs.starship.enable = true;
-      programs.fzf.enable = true;
-      programs.atuin.enable = true;
-      programs.direnv.enable = true;
-      programs.lazygit.enable = true;
-      programs.fd.enable = true;
-      programs.television.enable = true;
-      programs.ripgrep.enable = true;
+      programs.neovim.config = "${config.home.homeDirectory}/projects/config.nvim";
 
-      programs.uv.enable = true;
-      programs.ty.enable = true;
-      programs.npm.enable = true;
-      programs.opencode.enable = true;
-      programs.claude-code.enable = true;
-
-      stylix.targets.bat.enable = true;
-      programs.bat.enable = true;
-
-      programs.eza = {
-        enable = true;
-        colors = "always";
-        icons = "auto";
+      programs.git.settings.user = {
+        name = "Lev Koliadich";
+        email = "lkolyadich@gmail.com";
       };
-
-      programs.neovim = {
-        enable = true;
-        config = "${config.home.homeDirectory}/projects/config.nvim";
-      };
-
-      programs.git = {
-        enable = true;
-        settings.user = {
-          name = "Lev Koliadich";
-          email = "lkolyadich@gmail.com";
-        };
-      };
-      programs.gh.enable = true;
 
       wayland.windowManager.hyprland.enable = true;
       services.hyprpolkitagent.enable = true;
