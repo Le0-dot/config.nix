@@ -1,5 +1,9 @@
+{ den, ... }:
+
 {
   den.aspects.terminal = {
+    includes = [ (den.batteries.unfree [ "claude-code" ]) ];
+
     homeManager = { config, ... }: {
       programs.direnv.enable = true;
       programs.fd.enable = true;

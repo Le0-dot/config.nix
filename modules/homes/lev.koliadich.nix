@@ -46,8 +46,6 @@
         };
       };
 
-      nixpkgs.config.allowUnfree = true;
-
       stylix = {
         enable = true;
         autoEnable = false;
