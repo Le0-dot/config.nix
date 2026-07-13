@@ -2,7 +2,6 @@
 {
   den.aspects."lev.koliadich" = {
     includes = [
-      den.batteries.primary-user
       den.aspects.nix
       den.aspects.terminal
     ];
