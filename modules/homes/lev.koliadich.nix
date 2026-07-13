@@ -5,6 +5,7 @@
       den.aspects.nix
       den.aspects.terminal
       den.aspects.desktop.hyprland
+      den.aspects.desktop.tofi
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -14,7 +15,6 @@
         ../_home/wm-common.nix
         ../_home/playerctl.nix
         ../_home/cliphist.nix
-        ../_home/tofi.nix
         ../_home/kanshi.nix
         ../_home/wlogout.nix
         ../_home/dunst.nix

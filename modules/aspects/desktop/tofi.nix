@@ -1,12 +1,7 @@
 {
-  lib,
-  config,
-  ...
-}:
-
-{
-  config = lib.mkIf config.programs.tofi.enable {
+  den.aspects.desktop.tofi.homeManager = { pkgs, config, ... }: {
     programs.tofi = {
+      enable = true;
       settings = {
         font = config.stylix.fonts.monospace.name;
         font-size = "14";
