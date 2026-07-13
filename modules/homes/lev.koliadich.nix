@@ -3,17 +3,14 @@
   den.aspects."lev.koliadich" = {
     includes = [
       den.batteries.primary-user
-      (den.batteries.user-shell "zsh")
-
       den.aspects.nix
 
+      (den.aspects.terminal.neovim "projects/config.nvim")
       den.aspects.terminal
       den.aspects.terminal.atuin
       den.aspects.terminal.git
-      (den.aspects.terminal.neovim "projects/config.nvim")
       den.aspects.terminal.starship
       den.aspects.terminal.television
-      den.aspects.terminal.zsh
     ];
 
     homeManager = { pkgs, config, ... }: {
