@@ -4,10 +4,7 @@
     includes = [
       den.batteries.primary-user
       den.aspects.nix
-
       den.aspects.terminal
-      den.aspects.terminal.television
-      (den.aspects.terminal.neovim "projects/config.nvim")
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -97,6 +94,9 @@
   };
 
   den.aspects."lev.koliadich@omega" = {
-    homeManager = { lib, ... }: { programs.git.enable = lib.mkForce false; };
+    includes = [
+      den.aspects.terminal.television
+      (den.aspects.terminal.neovim "projects/config.nvim")
+    ];
   };
 }
