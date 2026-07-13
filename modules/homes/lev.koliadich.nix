@@ -3,6 +3,7 @@
   den.aspects."lev.koliadich" = {
     includes = [
       den.batteries.primary-user
+      den.aspects.nix
       (den.batteries.user-shell "zsh")
     ];
 
@@ -42,7 +43,6 @@
         };
       };
 
-      nix.gc.automatic = true;
       nixpkgs.config.allowUnfree = true;
 
       home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
