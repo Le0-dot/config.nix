@@ -1,19 +1,13 @@
 {
-  den.aspects.terminal.neovim.homeManager =
-    {
-      lib,
-      pkgs,
-      config,
-      ...
-    }:
-    {
-      options.programs.neovim.config = lib.mkOption {
-        type = lib.types.path;
-        description = "String with path to neovim configuration directory";
-        example = "/home/user/neovim-config";
-      };
-
-      config = {
+  den.aspects.terminal.neovim = configPath: {
+    homeManager =
+      {
+        lib,
+        pkgs,
+        config,
+        ...
+      }:
+      {
         programs.neovim = {
           enable = true;
           withNodeJs = true;
@@ -28,11 +22,14 @@
 
         xdg.configFile."nvim/init.lua".enable = lib.mkForce false;
         xdg.configFile."nvim".source =
-          lib.warn "Linking ${config.programs.neovim.config} to ${config.home.homeDirectory}/.config/nvim"
+          let
+            configAbsolutePath = builtins.toPath (config.home.homeDirectory + "/" + configPath);
+          in
+          lib.warn "Linking ${configAbsolutePath} to ${config.home.homeDirectory}/.config/nvim"
             config.lib.file.mkOutOfStoreSymlink
-            config.programs.neovim.config;
+            configAbsolutePath;
 
         programs.git.settings.diff.tool = "vimdiff";
       };
-    };
+  };
 }

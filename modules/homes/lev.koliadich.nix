@@ -10,7 +10,7 @@
       den.aspects.terminal
       den.aspects.terminal.atuin
       den.aspects.terminal.git
-      den.aspects.terminal.neovim
+      (den.aspects.terminal.neovim "projects/config.nvim")
       den.aspects.terminal.starship
       den.aspects.terminal.television
       den.aspects.terminal.zsh
@@ -81,8 +81,6 @@
           fi
         '';
       };
-
-      programs.neovim.config = "${config.home.homeDirectory}/projects/config.nvim";
 
       programs.git.settings.user = {
         name = "Lev Koliadich";

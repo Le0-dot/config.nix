@@ -16,7 +16,7 @@
         icons = "auto";
       };
 
-      home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
+      xdg.localBinInPath = true;
 
       programs.uv.enable = true;
       programs.ty.enable = true;
