@@ -4,11 +4,11 @@
     includes = [
       den.aspects.nix
       den.aspects.terminal
+      den.aspects.desktop.hyprland
     ];
 
     homeManager = { pkgs, config, ... }: {
       imports = [
-        inputs.stylix.homeModules.stylix
         inputs.agenix.homeManagerModules.default
 
         ../_home/wm-common.nix
@@ -19,7 +19,6 @@
         ../_home/wlogout.nix
         ../_home/dunst.nix
         ../_home/ghostty.nix
-        ../_home/hyprland.nix
         ../_home/hyprlock.nix
         ../_home/hypridle.nix
         ../_home/hyprpaper.nix
