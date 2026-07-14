@@ -7,6 +7,7 @@
         "Session.vim"
         ".envrc"
         "opencode.json"
+        ".claude/settings.local.json"
       ];
       settings = {
         init.defaultBranch = "main";
