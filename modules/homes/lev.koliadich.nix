@@ -19,9 +19,6 @@
         ../_home/wlogout.nix
         ../_home/dunst.nix
         ../_home/ghostty.nix
-        ../_home/hyprlock.nix
-        ../_home/hypridle.nix
-        ../_home/hyprpaper.nix
         ../_home/waybar.nix
       ];
 

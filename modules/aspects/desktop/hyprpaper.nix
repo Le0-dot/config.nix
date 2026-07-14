@@ -1,14 +1,9 @@
 {
-  lib,
-  config,
-  perSystem,
-  ...
-}:
-
-{
-  config = lib.mkIf config.services.hyprpaper.enable {
+  den.aspects.desktop.hyprpaper.homeManager = {
+    # stylix.targets.hyprpaper.enable = true; # TODO Use stylix to set wallpaper
     services.hyprpaper = {
-      package = perSystem.self.hyprpaper;
+      enable = true;
+      # package = perSystem.self.hyprpaper; # FIXME
       settings = {
         ipc = true;
         splash = false;

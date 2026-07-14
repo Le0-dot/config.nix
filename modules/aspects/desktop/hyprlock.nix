@@ -1,16 +1,9 @@
 {
-  lib,
-  config,
-  perSystem,
-  ...
-}:
-
-{
-  config = lib.mkIf config.programs.hyprlock.enable {
+  den.aspects.desktop.hyprlock.homeManger = { lib, config, ... }: {
     stylix.targets.hyprlock.enable = true;
-
     programs.hyprlock = {
-      package = perSystem.self.hyprlock;
+      enable = true;
+      # package = perSystem.self.hyprlock; # FIXME
       settings = {
         general.hide_cursor = true;
         auth.fingerprint.enabled = true;
