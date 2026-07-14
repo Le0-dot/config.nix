@@ -96,6 +96,8 @@
     programs.opencode.enable = true;
     programs.claude-code.enable = true;
 
+    home.packages = [ pkgs.openspec ];
+
     stylix.targets.bat.enable = true;
     programs.bat.enable = true;
 
