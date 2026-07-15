@@ -83,6 +83,7 @@
     };
     programs.starship.enable = true;
     programs.fzf.enable = true;
+    programs.fzf.historyWidget.zsh.command = "";
     programs.atuin.enable = true;
     programs.direnv.enable = true;
     programs.lazygit.enable = true;
