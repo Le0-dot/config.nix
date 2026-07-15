@@ -6,6 +6,11 @@
       den.aspects.terminal
       den.aspects.desktop.hyprland
       den.aspects.desktop.tofi
+      den.aspects.desktop.dunst
+      den.aspects.desktop.ghostty
+      den.aspects.desktop.kanshi
+      den.aspects.desktop.waybar
+      den.aspects.desktop.wlogout
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -15,11 +20,6 @@
         ../_home/wm-common.nix
         ../_home/playerctl.nix
         ../_home/cliphist.nix
-        ../_home/kanshi.nix
-        ../_home/wlogout.nix
-        ../_home/dunst.nix
-        ../_home/ghostty.nix
-        ../_home/waybar.nix
       ];
 
       # Provide perSystem.self.* for _home/ modules that reference custom packages
@@ -71,20 +71,8 @@
         email = "lkolyadich@gmail.com";
       };
 
-      wayland.windowManager.hyprland.enable = true;
-      services.hyprpolkitagent.enable = true;
-      services.hypridle.enable = true;
-      programs.hyprlock.enable = true;
-      services.hyprpaper.enable = true;
-      programs.hyprshot.enable = true;
-      services.kanshi.enable = true;
-      programs.waybar.enable = true;
-      programs.wlogout.enable = true;
       services.playerctld.enable = true;
       services.cliphist.enable = true;
-      services.dunst.enable = true;
-      programs.tofi.enable = true;
-      programs.ghostty.enable = true;
     };
   };
 

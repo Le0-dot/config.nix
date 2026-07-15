@@ -15,6 +15,7 @@
     ];
 
     programs.hyprshot.enable = true;
+    services.hyprpolkitagent.enable = true;
 
     stylix.targets.hyprland.enable = true;
     wayland.windowManager.hyprland = {
