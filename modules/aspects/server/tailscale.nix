@@ -3,6 +3,6 @@
 { den, ... }:
 {
   den.aspects.tailscale = {
-    nixos = ../_nixos/tailscale.nix;
+    nixos = ../../_nixos/tailscale.nix;
   };
 }

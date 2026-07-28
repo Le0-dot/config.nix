@@ -4,6 +4,6 @@
 { den, ... }:
 {
   den.aspects.samba = {
-    nixos = ../_nixos/samba.nix;
+    nixos = ../../_nixos/samba.nix;
   };
 }

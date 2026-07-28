@@ -11,8 +11,6 @@
 
       nixpkgs.hostPlatform = "x86_64-linux";
       system-graphics.enable = true;
-
-      programs.uwsm.enable = true;
     };
   };
 }
