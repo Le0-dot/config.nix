@@ -8,7 +8,6 @@
       imports = [
         inputs.nix-system-graphics.systemModules.default
         ../_system/uwsm.nix
-        ../_system/hyprlock.nix
       ];
 
       nixpkgs.hostPlatform = "x86_64-linux";
