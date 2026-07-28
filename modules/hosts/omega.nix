@@ -7,7 +7,6 @@
     systemManager = { pkgs, ... }: {
       imports = [
         inputs.nix-system-graphics.systemModules.default
-        ../_system/uwsm.nix
       ];
 
       nixpkgs.hostPlatform = "x86_64-linux";
