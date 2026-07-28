@@ -21,16 +21,6 @@
         ../_home/playerctl.nix
       ];
 
-      # Provide perSystem.self.* for _home/ modules that reference custom packages
-      _module.args.perSystem = {
-        self = {
-          choose-repo = import ../_packages/choose-repo.nix { inherit pkgs; };
-          clipselect = import ../_packages/clipselect.nix { inherit pkgs; };
-          hyprlock = import ../_packages/hyprlock.nix { inherit pkgs; };
-          hyprpaper = import ../_packages/hyprpaper.nix { inherit pkgs; };
-        };
-      };
-
       stylix = {
         enable = true;
         autoEnable = false;
