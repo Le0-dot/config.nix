@@ -39,7 +39,7 @@ hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("tofi-drun --drun-launch=true --padding
 hl.bind("SUPER + P",
     hl.dsp.exec_cmd(
         "choose-repo tofi ~/projects 3 | xargs -I{} ghostty -e direnv exec {} nvim -c 'WithSession {}/Session.vim' +new-window"))
-hl.bind("SUPER + CTRL + V", hl.dsp.exec_cmd("clipselect tofi"))
+hl.bind("SUPER + CTRL + V", hl.dsp.exec_cmd("clipselect"))
 hl.bind("SUPER + CTRL + SPACE", hl.dsp.exec_cmd("playerctl -a play-pause"))
 
 hl.bind("Print", hl.dsp.exec_cmd("hyprshot -m region"))

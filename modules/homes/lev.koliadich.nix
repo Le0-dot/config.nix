@@ -19,7 +19,6 @@
 
         ../_home/wm-common.nix
         ../_home/playerctl.nix
-        ../_home/cliphist.nix
       ];
 
       # Provide perSystem.self.* for _home/ modules that reference custom packages

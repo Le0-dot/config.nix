@@ -1,30 +1,34 @@
+{ den, ... }:
 {
-  den.aspects.desktop.hyprland.homeManager = { pkgs, ... }: {
-    home.pointerCursor = {
-      gtk.enable = true;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-      size = 24;
-    };
+  den.aspects.desktop.hyprland = {
+    includes = [ den.aspects.desktop.tofi ];
 
-    home.packages = [
-      pkgs.wireplumber
-      pkgs.brightnessctl
-      # perSystem.self.choose-repo
-      # perSystem.self.clipselect
-    ];
+    homeManager = { pkgs, ... }: {
+      home.pointerCursor = {
+        gtk.enable = true;
+        package = pkgs.adwaita-icon-theme;
+        name = "Adwaita";
+        size = 24;
+      };
 
-    programs.hyprshot.enable = true;
-    services.hyprpolkitagent.enable = true;
+      home.packages = [
+        pkgs.wireplumber
+        pkgs.brightnessctl
+        # perSystem.self.choose-repo
+      ];
 
-    stylix.targets.hyprland.enable = true;
-    wayland.windowManager.hyprland = {
-      enable = true;
-      systemd.enable = false;
-      extraLuaFiles = {
-        config.content = ./config.lua;
-        rules.content = ./rules.lua;
-        binds.content = ./binds.lua;
+      programs.hyprshot.enable = true;
+      services.hyprpolkitagent.enable = true;
+
+      stylix.targets.hyprland.enable = true;
+      wayland.windowManager.hyprland = {
+        enable = true;
+        systemd.enable = false;
+        extraLuaFiles = {
+          config.content = ./config.lua;
+          rules.content = ./rules.lua;
+          binds.content = ./binds.lua;
+        };
       };
     };
   };
