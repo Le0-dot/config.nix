@@ -1,7 +1,4 @@
 { den, inputs, ... }:
-let
-  customLib = import ../../_packages/lib.nix { };
-in
 {
   den.aspects.nu = {
     includes = [
@@ -35,11 +32,6 @@ in
         ../../_containers/bentopdf.nix
         ../../_containers/ntfy.nix
       ];
-
-      # Provide flake.lib for container modules that use btrfsVolume/mountVolume
-      _module.args.flake = {
-        lib = customLib;
-      };
 
       environment.systemPackages = [
         pkgs.neovim
