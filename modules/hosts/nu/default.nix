@@ -1,4 +1,9 @@
-{ den, inputs, ... }:
+{
+  den,
+  self,
+  inputs,
+  ...
+}:
 {
   den.aspects.nu = {
     includes = [
@@ -32,6 +37,8 @@
         ../../_containers/bentopdf.nix
         ../../_containers/ntfy.nix
       ];
+
+      _module.args.flake = self;
 
       environment.systemPackages = [
         pkgs.neovim
