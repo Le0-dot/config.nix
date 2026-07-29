@@ -10,13 +10,26 @@
   systems = lib.systems.flakeExposed;
 
   den.default = {
-    nixos.system.stateVersion = lib.mkDefault "25.05";
-    homeManager.home.stateVersion = lib.mkDefault "26.05";
-    homeManager.imports = [ inputs.stylix.homeModules.stylix ];
     includes = [
       den.batteries.define-user
       den.policies.include-username-aspect
     ];
+    nixos = {
+      system.stateVersion = lib.mkDefault "25.05";
+      imports = [
+        inputs.disko.nixosModules.disko
+        inputs.agenix.nixosModules.default
+        inputs.quadlet-nix.nixosModules.quadlet
+        inputs.btr-backup.nixosModules.btr-backup
+      ];
+    };
+    homeManager = {
+      home.stateVersion = lib.mkDefault "26.05";
+      imports = [
+        inputs.stylix.homeModules.stylix
+        inputs.agenix.homeManagerModules.default
+      ];
+    };
   };
 
   den.hosts.x86_64-linux.nu.users."lev.koliadich" = { };

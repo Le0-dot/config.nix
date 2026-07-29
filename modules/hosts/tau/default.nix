@@ -1,4 +1,4 @@
-{ den, inputs, ... }:
+{ den, ... }:
 {
   den.aspects.tau = {
     includes = [
@@ -8,9 +8,6 @@
     ];
     nixos = { config, pkgs, ... }: {
       imports = [
-        inputs.disko.nixosModules.disko
-        inputs.agenix.nixosModules.default
-        inputs.quadlet-nix.nixosModules.quadlet
         ./_hardware.nix
         ./_disk.nix
         ./_secrets.nix
