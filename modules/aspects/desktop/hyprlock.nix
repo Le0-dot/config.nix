@@ -21,11 +21,8 @@
           enable = true;
           package = pkgs.writeShellApplication {
             name = "hyprlock";
-            runtimeInputs = [
-              pkgs.coreutils
-              pkgs.hyprlock
-            ];
-            text = "env LD_PRELOAD=${pkgs.sssd}/lib/libnss_sss.so.2 hyprlock $@";
+            runtimeInputs = [ pkgs.hyprlock ];
+            text = ''exec env LD_PRELOAD=${pkgs.sssd}/lib/libnss_sss.so.2 hyprlock "$@"'';
           };
           settings = {
             general.hide_cursor = true;
