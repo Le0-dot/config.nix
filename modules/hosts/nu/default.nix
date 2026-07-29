@@ -1,4 +1,9 @@
-{ den, self, ... }:
+{
+  den,
+  self,
+  inputs,
+  ...
+}:
 {
   den.aspects.nu = {
     includes = [
@@ -9,6 +14,8 @@
     ];
     nixos = { config, pkgs, ... }: {
       imports = [
+        inputs.quadlet-nix.nixosModules.quadlet
+        inputs.btr-backup.nixosModules.btr-backup
         ./_hardware.nix
         ./_disk.nix
         ./_secrets.nix
