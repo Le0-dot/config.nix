@@ -14,11 +14,11 @@
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
         fonts = {
           serif = {
-            package = pkgs.fira-sans;
+            # package = pkgs.fira-sans;
             name = "FiraSans";
           };
           sansSerif = {
-            package = pkgs.fira-sans;
+            # package = pkgs.fira-sans;
             name = "FiraSans";
           };
           monospace = {
