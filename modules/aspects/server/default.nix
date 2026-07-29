@@ -1,6 +1,7 @@
 {
   den.aspects.server = {
     nixos = { ... }: {
+      environment.enableAllTerminfo = true;
       services.openssh.enable = true;
       users = {
         mutableUsers = false;
