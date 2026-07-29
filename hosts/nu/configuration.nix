@@ -66,6 +66,8 @@
       ];
     };
 
+    environment.enableAllTerminfo = true;
+
     environment.systemPackages = [
       pkgs.neovim
       pkgs.curl

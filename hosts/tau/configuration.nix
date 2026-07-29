@@ -49,6 +49,8 @@
       users.le0.isNormalUser = true;
     };
 
+    environment.enableAllTerminfo = true;
+
     services.tailscale = {
       enable = true;
       authKeyFile = config.age.secrets.tailscale-key.path;
