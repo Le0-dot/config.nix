@@ -2,39 +2,35 @@
   den.aspects.desktop.tofi = {
     homeManager =
       { pkgs, config, ... }:
-      let
-        clip-select = pkgs.writeShellApplication {
-          name = "clip-select";
-          runtimeInputs = [
-            pkgs.tofi
-            pkgs.cliphist
-            pkgs.wl-clipboard-rs
-          ];
-          text = ''
-            cliphist list | tofi | cliphist decode | wl-copy
-          '';
-        };
-        repo-select = pkgs.writeShellApplication {
-          name = "repo-select";
-          runtimeInputs = [
-            pkgs.fd
-            pkgs.git
-            pkgs.gawk
-            pkgs.tofi
-          ];
-          text = ''
-            [ "$#" -ne 1 ] && echo "Set search directory argument" && exit 1
-
-            repos=$(fd --hidden --max-depth 3 --glob '**/.git' "$1" --exec echo '{//}')
-            choice=$(echo "$repos" | awk 'BEGIN { FS="/" } { print $NF }' | tofi)
-            echo "$repos" | awk -v dir="$choice" 'BEGIN { FS="/" } $NF == dir { print $0 }'
-          '';
-        };
-      in
       {
         home.packages = [
-          clip-select
-          repo-select
+          (pkgs.writeShellApplication {
+            name = "clip-select";
+            runtimeInputs = [
+              pkgs.tofi
+              pkgs.cliphist
+              pkgs.wl-clipboard-rs
+            ];
+            text = ''
+              cliphist list | tofi | cliphist decode | wl-copy
+            '';
+          })
+          (pkgs.writeShellApplication {
+            name = "repo-select";
+            runtimeInputs = [
+              pkgs.fd
+              pkgs.git
+              pkgs.gawk
+              pkgs.tofi
+            ];
+            text = ''
+              [ "$#" -ne 1 ] && echo "Set search directory argument" && exit 1
+
+              repos=$(fd --hidden --max-depth 3 --glob '**/.git' "$1" --exec echo '{//}')
+              choice=$(echo "$repos" | awk 'BEGIN { FS="/" } { print $NF }' | tofi)
+              echo "$repos" | awk -v dir="$choice" 'BEGIN { FS="/" } $NF == dir { print $0 }'
+            '';
+          })
         ];
 
         programs.tofi = {
