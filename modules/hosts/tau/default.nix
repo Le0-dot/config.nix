@@ -2,6 +2,7 @@
 {
   den.aspects.tau = {
     includes = [
+      den.aspects.bootloader
       den.aspects.server-base
       den.aspects.tailscale
       den.aspects.samba
