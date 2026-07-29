@@ -6,7 +6,6 @@
         runtimeInputs = [
           pkgs.nixfmt
           pkgs.deadnix
-          pkgs.keep-sorted
         ];
         settings = {
           on-unmatched = "info";
@@ -24,10 +23,6 @@
                 "--no-lambda-pattern-names"
               ];
               includes = [ "*.nix" ];
-            };
-            keep-sorted = {
-              command = "keep-sorted";
-              includes = [ "*" ];
             };
           };
         };
