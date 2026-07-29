@@ -4,13 +4,6 @@
     includes = [
       den.aspects.nix
       den.aspects.terminal
-      den.aspects.desktop.hyprland
-      den.aspects.desktop.tofi
-      den.aspects.desktop.dunst
-      den.aspects.desktop.ghostty
-      den.aspects.desktop.kanshi
-      den.aspects.desktop.waybar
-      den.aspects.desktop.wlogout
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -67,6 +60,7 @@
 
   den.aspects."lev.koliadich@omega" = {
     includes = [
+      den.aspects.desktop
       den.aspects.terminal.television
       (den.aspects.terminal.neovim "projects/config.nvim")
     ];
