@@ -1,10 +1,12 @@
 {
-  nixos = {
-    boot.loader = {
-      efi.canTouchEfiVariables = true;
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 10;
+  den.aspects.bootloader = {
+    nixos = {
+      boot.loader = {
+        efi.canTouchEfiVariables = true;
+        systemd-boot = {
+          enable = true;
+          configurationLimit = 10;
+        };
       };
     };
   };
