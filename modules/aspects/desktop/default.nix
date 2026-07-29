@@ -35,7 +35,7 @@
       wayland.windowManager.hyprland = {
         enable = true;
         systemd.enable = false;
-        extraLuaFiles.hyprland.content = ./hyprland.lua;
+        extraLuaFiles.config.content = ./hyprland.lua;
       };
     };
   };
