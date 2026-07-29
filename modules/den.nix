@@ -14,6 +14,7 @@
       den.batteries.define-user
       den.policies.include-username-aspect
       den.aspects.nix
+      den.aspects.stylix
     ];
     nixos = {
       system.stateVersion = lib.mkDefault "25.05";
@@ -26,10 +27,7 @@
     };
     homeManager = {
       home.stateVersion = lib.mkDefault "26.05";
-      imports = [
-        inputs.stylix.homeModules.stylix
-        inputs.agenix.homeManagerModules.default
-      ];
+      imports = [ inputs.agenix.homeManagerModules.default ];
     };
   };
 
