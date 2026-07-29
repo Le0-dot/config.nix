@@ -13,6 +13,7 @@
     includes = [
       den.batteries.define-user
       den.policies.include-username-aspect
+      den.aspects.nix
     ];
     nixos = {
       system.stateVersion = lib.mkDefault "25.05";
