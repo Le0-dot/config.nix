@@ -70,9 +70,9 @@
         # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
 
         age.secrets = {
-          tailscale-key.file = ../../../secrets/tailscale-key.age;
-          le0-password.file = ../../../secrets/le0-password.age;
-          garage-rpc-secret.file = ../../../secrets/garage-rpc-secret.age;
+          tailscale-key.file = ../../secrets/tailscale-key.age;
+          le0-password.file = ../../secrets/le0-password.age;
+          garage-rpc-secret.file = ../../secrets/garage-rpc-secret.age;
         };
 
         users.users.le0.isNormalUser = true;
