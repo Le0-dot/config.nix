@@ -183,7 +183,7 @@
         # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
 
         age.secrets = {
-          tailscale-key.file = ../../../secrets/tailscale-key.age;
+          tailscale-key.file = ../../secrets/tailscale-key.age;
         };
 
         environment.systemPackages = [
