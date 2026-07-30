@@ -39,9 +39,7 @@
         imports = [
           inputs.nixpkgs.nixosModules.notDetected
           inputs.btr-backup.nixosModules.btr-backup
-          ./_hardware.nix
           ./_disk.nix
-          ./_secrets.nix
           ./_backup.nix
         ];
 
@@ -64,6 +62,10 @@
         networking.useDHCP = lib.mkDefault true;
         # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
         # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
+
+        age.secrets = {
+          tailscale-key.file = ../../../secrets/tailscale-key.age;
+        };
 
         environment.systemPackages = [
           pkgs.neovim
