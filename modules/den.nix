@@ -11,21 +11,26 @@
 
   den.default = {
     includes = [
+      den.batteries.hostname
       den.batteries.define-user
       den.policies.include-username-aspect
       den.aspects.nix
       den.aspects.stylix
     ];
     nixos = {
-      system.stateVersion = lib.mkDefault "25.05";
       imports = [
         inputs.disko.nixosModules.disko
         inputs.agenix.nixosModules.default
       ];
+      system.stateVersion = lib.mkDefault "25.05";
+    };
+    systemManager = {
+      imports = [ inputs.nix-system-graphics.systemModules.default ];
+      system-graphics.enable = true;
     };
     homeManager = {
-      home.stateVersion = lib.mkDefault "26.05";
       imports = [ inputs.agenix.homeManagerModules.default ];
+      home.stateVersion = lib.mkDefault "26.05";
     };
   };
 
