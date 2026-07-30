@@ -21,6 +21,7 @@
       imports = [
         inputs.disko.nixosModules.disko
         inputs.agenix.nixosModules.default
+        inputs.quadlet-nix.nixosModules.quadlet
       ];
       system.stateVersion = lib.mkDefault "25.05";
     };
