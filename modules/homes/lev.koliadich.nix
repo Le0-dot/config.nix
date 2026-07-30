@@ -42,6 +42,7 @@
   den.aspects."lev.koliadich@omega" = {
     includes = [
       den.aspects.desktop
+      den.aspects.desktop.ghostty
       den.aspects.terminal.television
       (den.aspects.terminal.neovim "projects/config.nvim")
     ];
