@@ -23,16 +23,15 @@
             no-center = true;
             output = "eDP-1";
             margin-bottom = 5;
-            modules-left =
-              if config.wayland.windowManager.hyprland.enable then [ "hyprland/workspaces" ] else [ ];
+            modules-left = [ "hyprland/workspaces" ];
             modules-right = [
               "tray"
               "wireplumber"
               "backlight"
               "battery"
-            ]
-            ++ (if config.wayland.windowManager.hyprland.enable then [ "hyprland/language" ] else [ ])
-            ++ [ "clock" ];
+              "hyprland/language"
+              "clock"
+            ];
 
             "hyprland/workspaces" = {
               format = "{icon}";
