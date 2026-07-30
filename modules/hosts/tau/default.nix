@@ -1,4 +1,4 @@
-{ den, ... }:
+{ den, inputs, ... }:
 {
   den.aspects.tau = {
     includes = [
@@ -9,7 +9,7 @@
     ];
     nixos = { config, pkgs, ... }: {
       imports = [
-        ./_hardware.nix
+        (import ./_hardware.nix inputs)
         ./_disk.nix
         ./_secrets.nix
       ];
