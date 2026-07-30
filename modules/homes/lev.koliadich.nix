@@ -34,7 +34,6 @@
         email = "lkolyadich@gmail.com";
       };
 
-      services.playerctld.enable = true;
       services.cliphist.enable = true;
     };
   };
