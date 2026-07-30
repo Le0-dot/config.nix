@@ -12,8 +12,6 @@
         addCss = false;
       };
 
-      home.packages = [ pkgs.pwvucontrol ];
-
       programs.waybar = {
         enable = true;
         systemd.enable = true;
