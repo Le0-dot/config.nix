@@ -1,0 +1,44 @@
+{ self, ... }:
+{
+  den.aspects.server.containers.jellyseerr = {
+    nixos =
+      { config, ... }:
+      let
+        btrfsVolume = self.lib.btrfsVolume config.disko;
+        mountVolume = self.lib.mountVolume;
+      in
+      {
+        virtualisation.quadlet =
+          let
+            inherit (config.virtualisation.quadlet) pods volumes;
+          in
+          {
+            pods.jellyseerr.podConfig = {
+              publishPorts = [ "5055:5055" ];
+              networks = [ "podman" ];
+              labels = {
+                "tailscale.service.jellyseerr.https" = "5055";
+              };
+            };
+            volumes = {
+              jellyseerr = btrfsVolume {
+                disk = "main";
+                partition = "root";
+                subvol = "containers/jellyseerr/active";
+              };
+            };
+            containers.jellyseerr-main.containerConfig = {
+              image = "ghcr.io/fallenbagel/jellyseerr:2.7.3";
+              pod = pods.jellyseerr.ref;
+              mounts = [
+                (mountVolume {
+                  volume = volumes.jellyseerr.ref;
+                  subpath = "/config";
+                  destination = "/app/config";
+                })
+              ];
+            };
+          };
+      };
+  };
+}

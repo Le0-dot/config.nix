@@ -11,6 +11,22 @@
       den.aspects.server
       den.aspects.tailscale
       den.aspects.samba
+
+      den.aspects.server.containers.adguardhome
+      den.aspects.server.containers.audiobookshelf
+      den.aspects.server.containers.baikal
+      den.aspects.server.containers.bentopdf
+      den.aspects.server.containers.homeassistant
+      den.aspects.server.containers.immich
+      den.aspects.server.containers.jellyfin
+      den.aspects.server.containers.jellyseerr
+      den.aspects.server.containers.komga
+      den.aspects.server.containers.ntfy
+      den.aspects.server.containers.paperless-ngx
+      den.aspects.server.containers.prowlarr
+      den.aspects.server.containers.radarr
+      den.aspects.server.containers.sonarr
+      den.aspects.server.containers.transmission
     ];
     nixos = { config, pkgs, ... }: {
       imports = [
@@ -19,22 +35,7 @@
         ./_hardware.nix
         ./_disk.nix
         ./_secrets.nix
-        ../../_containers/backup.nix
-        ../../_containers/audiobookshelf.nix
-        ../../_containers/adguardhome.nix
-        ../../_containers/baikal.nix
-        ../../_containers/jellyfin.nix
-        ../../_containers/komga.nix
-        ../../_containers/paperless-ngx.nix
-        ../../_containers/transmission.nix
-        ../../_containers/prowlarr.nix
-        ../../_containers/radarr.nix
-        ../../_containers/sonarr.nix
-        ../../_containers/jellyseerr.nix
-        ../../_containers/immich.nix
-        ../../_containers/homeassistant.nix
-        ../../_containers/bentopdf.nix
-        ../../_containers/ntfy.nix
+        ./_backup.nix
       ];
 
       _module.args.flake = self;

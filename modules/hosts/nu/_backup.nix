@@ -1,5 +1,4 @@
 { pkgs, config, ... }:
-
 let
   ntfyTopic = "http://localhost:8090/backup";
 in
