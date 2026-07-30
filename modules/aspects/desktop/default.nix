@@ -41,7 +41,7 @@
         enable = true;
         settings = {
           general = {
-            lock_cmd = "systemctl --user start session-lock.service";
+            lock_cmd = "hyprlock";
             after_sleep_cmd = "hyprctl dispatch dpms on";
           };
           listener = [
