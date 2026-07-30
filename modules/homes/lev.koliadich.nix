@@ -1,4 +1,4 @@
-{ den, inputs, ... }:
+{ den, ... }:
 {
   den.aspects."lev.koliadich" = {
     includes = [
@@ -7,13 +7,6 @@
     ];
 
     homeManager = { pkgs, config, ... }: {
-      imports = [
-        inputs.agenix.homeManagerModules.default
-
-        ../_home/wm-common.nix
-        ../_home/playerctl.nix
-      ];
-
       programs.zsh = {
         envExtra = ''
           if [ -e /etc/profile.d/system-manager-path.sh ]; then
