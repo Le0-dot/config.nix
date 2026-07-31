@@ -1,4 +1,4 @@
-host := $(shell [ -e "$PWD/hosts/$HOST" ] && echo "$HOST" || echo omega)
+host := $(or $(HOST),omega)
 user := $(USER)
 distr := $(shell grep '^NAME' /etc/os-release | sed 's/NAME=//')
 
@@ -30,7 +30,7 @@ remote-os:  ## Switch NixOS configuration on remote host
 anywhere:  ## Install NixOS via nixos-anywhere
 	nix run "github:nix-community/nixos-anywhere" -- \
 		--flake "$(PWD)#$(host)" \
-		--generate-hardware-config nixos-generate-config ./hosts/$(host)/hardware-configuration.nix \
+		--generate-hardware-config nixos-generate-config ./modules/_hardware/$(host)-hardware.nix \
 		--target-host $(user)@$(host)
 
 check-nixos:
