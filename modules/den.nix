@@ -14,6 +14,7 @@
       den.batteries.hostname
       den.batteries.define-user
       den.policies.include-username-aspect
+      den.policies.home-to-host
       den.aspects.nix
       den.aspects.stylix
     ];
@@ -41,7 +42,5 @@
 
   # den.homes.x86_64-linux."lev.koliadich@nu" = { };
   # den.homes.x86_64-linux."lev.koliadich@tau" = { };
-  den.homes.x86_64-linux."lev.koliadich@omega" = {
-    host = den.hosts.x86_64-linux.omega;
-  };
+  den.homes.x86_64-linux."lev.koliadich@omega" = { };
 }
