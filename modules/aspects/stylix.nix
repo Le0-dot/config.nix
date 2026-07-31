@@ -15,11 +15,11 @@
         fonts = {
           serif = {
             # package = pkgs.fira-sans;
-            name = "FiraSans";
+            name = "Fira Sans";
           };
           sansSerif = {
             # package = pkgs.fira-sans;
-            name = "FiraSans";
+            name = "Fira Sans";
           };
           monospace = {
             package = pkgs.nerd-fonts.fira-code;

@@ -33,6 +33,7 @@
           })
         ];
 
+        services.cliphist.enable = true;
         programs.tofi = {
           enable = true;
           settings = {

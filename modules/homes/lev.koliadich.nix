@@ -6,7 +6,22 @@
       den.aspects.terminal
     ];
 
-    homeManager = { pkgs, config, ... }: {
+    homeManager = {
+      programs.git.settings.user = {
+        name = "Lev Koliadich";
+        email = "lkolyadich@gmail.com";
+      };
+    };
+  };
+
+  den.aspects."lev.koliadich@omega" = {
+    includes = [
+      den.aspects.desktop
+      den.aspects.desktop.ghostty
+      den.aspects.terminal.television
+      (den.aspects.terminal.neovim "projects/config.nvim")
+    ];
+    homeManager = {
       programs.zsh = {
         envExtra = ''
           if [ -e /etc/profile.d/system-manager-path.sh ]; then
@@ -21,22 +36,6 @@
           fi
         '';
       };
-
-      programs.git.settings.user = {
-        name = "Lev Koliadich";
-        email = "lkolyadich@gmail.com";
-      };
-
-      services.cliphist.enable = true;
     };
-  };
-
-  den.aspects."lev.koliadich@omega" = {
-    includes = [
-      den.aspects.desktop
-      den.aspects.desktop.ghostty
-      den.aspects.terminal.television
-      (den.aspects.terminal.neovim "projects/config.nvim")
-    ];
   };
 }

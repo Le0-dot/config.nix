@@ -8,11 +8,12 @@
     ];
 
     homeManager = { pkgs, config, ... }: {
-      xdg.localBinInPath = true;
+      home.sessionPath = [ "${config.home.homeDirectory}/.local/bin" ];
 
       programs.direnv.enable = true;
       programs.fd.enable = true;
       programs.fzf.enable = true;
+      programs.fzf.historyWidget.zsh.command = "";
       programs.ripgrep.enable = true;
 
       stylix.targets.bat.enable = true;
@@ -30,6 +31,8 @@
       programs.npm.enable = true;
       programs.opencode.enable = true;
       programs.claude-code.enable = true;
+
+      home.packages = [ pkgs.openspec ];
 
       programs.zsh = {
         defaultKeymap = "emacs";
@@ -139,28 +142,29 @@
       };
 
       stylix.targets.lazygit.enable = true;
-      programs.lazygit.settings = {
-        eneable = true;
-        gui = {
-          sidePanelWidth = 0.25;
-          showFileTree = false;
-          showCommandLog = false;
-          showBottomLine = false;
-          showPanelJumps = false;
+      programs.lazygit = {
+        enable = true;
+        settings = {
+          gui = {
+            sidePanelWidth = 0.25;
+            showFileTree = false;
+            showCommandLog = false;
+            showBottomLine = false;
+            showPanelJumps = false;
+          };
+          git = {
+            pagers = [
+              { pager = "delta --paging=never"; }
+              { pager = "delta --paging=never --features=side-by-side"; }
+            ];
+            mainBranches = [
+              "main"
+              "develop"
+              "trunk"
+            ];
+            autoStageResolvedConflicts = false;
+          };
         };
-        git = {
-          pagers = [
-            { pager = "delta --paging=never"; }
-            { pager = "delta --paging=never --features=side-by-side"; }
-          ];
-          mainBranches = [
-            "main"
-            "develop"
-            "trunk"
-          ];
-          autoStageResolvedConflicts = false;
-        };
-        # os.editPresent = "nvim-remote";
       };
     };
   };
