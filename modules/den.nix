@@ -41,5 +41,7 @@
 
   # den.homes.x86_64-linux."lev.koliadich@nu" = { };
   # den.homes.x86_64-linux."lev.koliadich@tau" = { };
-  den.homes.x86_64-linux."lev.koliadich@omega" = { };
+  den.homes.x86_64-linux."lev.koliadich@omega" = {
+    host = den.hosts.x86_64-linux.omega;
+  };
 }
