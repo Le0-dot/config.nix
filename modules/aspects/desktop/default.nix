@@ -49,17 +49,16 @@
         };
 
         services.hyprpolkitagent.enable = true;
-        # services.pipewire = {
-        #   enable = true;
-        #   wireplumber.enable = true;
-        # };
+        services.pipewire = {
+          enable = true;
+          wireplumber.enable = true;
+        };
         services.playerctld.enable = true;
 
         programs.hyprshot.enable = true;
         home.packages = [
           pkgs.brightnessctl
           pkgs.pwvucontrol
-          pkgs.wireplumber
         ];
 
         stylix.targets.hyprland.enable = true;
