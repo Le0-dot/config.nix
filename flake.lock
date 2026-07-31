@@ -143,11 +143,11 @@
         "pyproject": "pyproject"
       },
       "locked": {
-        "lastModified": 1772987942,
-        "narHash": "sha256-TBTLgauvj81K3o9k3Bzv30d1I2bAzQLuOrmGizJcfaY=",
+        "lastModified": 1785494113,
+        "narHash": "sha256-3GAufSX53BLXYkbujXq2Gzd/lUMnqBIugcJHFT08ffI=",
         "owner": "Le0-dot",
         "repo": "btr-backup",
-        "rev": "d3d4d23fe9cbdb217d80f727f21d0f1c0b843c3d",
+        "rev": "45d319fb5d225c57fc770eaab8bc5a2e3d454e14",
         "type": "github"
       },
       "original": {
