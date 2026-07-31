@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.audiobookshelf = {
+  den.aspects.nu.audiobookshelf = {
     nixos =
       { config, ... }:
       let

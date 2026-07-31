@@ -1,5 +1,5 @@
 {
-  den.aspects.server.containers.bentopdf = {
+  den.aspects.nu.bentopdf = {
     nixos =
       { config, ... }:
       {

@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.jellyfin = {
+  den.aspects.nu.jellyfin = {
     nixos =
       { config, ... }:
       let

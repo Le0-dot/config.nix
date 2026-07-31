@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.baikal = {
+  den.aspects.nu.baikal = {
     nixos =
       { config, ... }:
       let

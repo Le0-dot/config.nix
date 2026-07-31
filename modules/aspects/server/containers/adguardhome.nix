@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.adguardhome = {
+  den.aspects.nu.adguardhome = {
     nixos =
       { pkgs, config, ... }:
       let

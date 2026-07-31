@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.immich = {
+  den.aspects.nu.immich = {
     nixos =
       { config, ... }:
       let

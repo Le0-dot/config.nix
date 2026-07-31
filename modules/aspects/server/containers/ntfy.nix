@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.ntfy = {
+  den.aspects.nu.ntfy = {
     nixos =
       { config, ... }:
       let

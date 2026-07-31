@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.sonarr = {
+  den.aspects.nu.sonarr = {
     nixos =
       { config, ... }:
       let

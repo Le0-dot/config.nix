@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.radarr = {
+  den.aspects.nu.radarr = {
     nixos =
       { config, ... }:
       let

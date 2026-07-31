@@ -1,9 +1,4 @@
-{
-  den,
-  self,
-  inputs,
-  ...
-}:
+{ den, inputs, ... }:
 {
   den.aspects.nu = {
     includes = [
@@ -12,21 +7,21 @@
       den.aspects.tailscale
       den.aspects.samba
 
-      den.aspects.server.containers.adguardhome
-      den.aspects.server.containers.audiobookshelf
-      den.aspects.server.containers.baikal
-      den.aspects.server.containers.bentopdf
-      den.aspects.server.containers.homeassistant
-      den.aspects.server.containers.immich
-      den.aspects.server.containers.jellyfin
-      den.aspects.server.containers.jellyseerr
-      den.aspects.server.containers.komga
-      den.aspects.server.containers.ntfy
-      den.aspects.server.containers.paperless-ngx
-      den.aspects.server.containers.prowlarr
-      den.aspects.server.containers.radarr
-      den.aspects.server.containers.sonarr
-      den.aspects.server.containers.transmission
+      den.aspects.nu.adguardhome
+      den.aspects.nu.audiobookshelf
+      den.aspects.nu.baikal
+      den.aspects.nu.bentopdf
+      den.aspects.nu.homeassistant
+      den.aspects.nu.immich
+      den.aspects.nu.jellyfin
+      den.aspects.nu.jellyseerr
+      den.aspects.nu.komga
+      den.aspects.nu.ntfy
+      den.aspects.nu.paperless-ngx
+      den.aspects.nu.prowlarr
+      den.aspects.nu.radarr
+      den.aspects.nu.sonarr
+      den.aspects.nu.transmission
     ];
     nixos =
       {

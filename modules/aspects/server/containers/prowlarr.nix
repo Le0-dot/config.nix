@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.prowlarr = {
+  den.aspects.nu.prowlarr = {
     nixos =
       { config, ... }:
       let

@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.komga = {
+  den.aspects.nu.komga = {
     nixos =
       { config, ... }:
       let

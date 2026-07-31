@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.transmission = {
+  den.aspects.nu.transmission = {
     nixos =
       { config, ... }:
       let

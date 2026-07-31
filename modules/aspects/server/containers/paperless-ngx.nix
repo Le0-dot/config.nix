@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.paperless-ngx = {
+  den.aspects.nu.paperless-ngx = {
     nixos =
       { config, ... }:
       let

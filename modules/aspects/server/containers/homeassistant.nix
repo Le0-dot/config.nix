@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.homeassistant = {
+  den.aspects.nu.homeassistant = {
     nixos =
       { config, ... }:
       let

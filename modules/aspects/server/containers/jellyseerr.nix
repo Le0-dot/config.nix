@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  den.aspects.server.containers.jellyseerr = {
+  den.aspects.nu.jellyseerr = {
     nixos =
       { config, ... }:
       let
