@@ -9,12 +9,14 @@
 
   systems = lib.systems.flakeExposed;
 
+  den.schema.user.classes = [ "homeManager" ];
+
   den.default = {
     includes = [
-      den.batteries.hostname
+      # den.batteries.hostname
       den.batteries.define-user
-      den.policies.include-username-aspect
-      den.policies.home-to-host
+      den.policies.system-manager-users-defaults
+      den.policies.host-specific-user-aspect
       den.aspects.nix
       den.aspects.stylix
     ];
@@ -38,9 +40,8 @@
 
   den.hosts.x86_64-linux.nu = { };
   den.hosts.x86_64-linux.tau = { };
-  den.hosts.x86_64-linux.omega.class = "systemManager";
-
-  # den.homes.x86_64-linux."lev.koliadich@nu" = { };
-  # den.homes.x86_64-linux."lev.koliadich@tau" = { };
-  den.homes.x86_64-linux."lev.koliadich@omega" = { };
+  den.hosts.x86_64-linux.omega = {
+    class = "systemManager";
+    users."lev.koliadich" = { };
+  };
 }

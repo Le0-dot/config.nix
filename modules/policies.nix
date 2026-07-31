@@ -1,23 +1,19 @@
 { den, lib, ... }:
-let
-  inherit (den.lib.policy) include;
-in
 {
   den.policies = {
-    include-username-aspect =
-      { home, ... }:
-      lib.optional (den.aspects ? ${home.userName}) (include den.aspects.${home.userName});
-    home-to-host =
+    system-manager-users-defaults =
       { host, ... }:
+      den.lib.policy.include {
+        systemManager.users.users = lib.mapAttrs (name: _: {
+          enable = lib.mkDefault false;
+          isNormalUser = lib.mkDefault true;
+        }) host.users;
+      };
+    host-specific-user-aspect =
+      { host, user, ... }:
       let
-        allHomes = lib.concatMap builtins.attrValues (builtins.attrValues den.homes);
+        aspect = "${user.name}@${host.name}";
       in
-      lib.concatMap (
-        home:
-        lib.optional (home.hostName == host.name) (include [
-          den.aspects.${home.userName}
-          den.aspects."${home.userName}@${home.hostName}"
-        ])
-      ) allHomes;
+      lib.optional (den.aspects ? aspect) (den.lib.policy.include den.aspects.${aspect});
   };
 }
