@@ -13,7 +13,6 @@
     includes = [
       # den.batteries.hostname
       den.batteries.define-user
-      den.policies.system-manager-users-defaults
       den.policies.host-specific-user-aspect
       den.aspects.nix
       den.aspects.stylix
