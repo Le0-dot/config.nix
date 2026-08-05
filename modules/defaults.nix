@@ -7,7 +7,6 @@
 {
   den.default = {
     includes = [
-      # den.batteries.hostname
       den.aspects.nix
       den.aspects.stylix
       den.aspects.nix-system-graphics
