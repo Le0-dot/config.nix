@@ -11,9 +11,6 @@
       };
     host-specific-user-aspect =
       { host, user, ... }:
-      let
-        aspect = "${user.name}@${host.name}";
-      in
-      lib.optional (den.aspects ? aspect) (den.lib.policy.include den.aspects.${aspect});
+      den.lib.policy.include (den.aspects."${user.name}@${host.name}" or { });
   };
 }
