@@ -1,4 +1,9 @@
-{ den, inputs, ... }:
+{
+  den,
+  self,
+  inputs,
+  ...
+}:
 {
   den.aspects.nu = {
     includes = [
@@ -424,6 +429,14 @@
               onFailure = [ "data-remove-failure-notify.service" ];
             };
           };
+      };
+    checks =
+      { pkgs, ... }:
+      let
+        config = self.nixosConfigurations.nu.config;
+      in
+      {
+        assert-nu-build = config.system.build.toplevel;
       };
   };
 }

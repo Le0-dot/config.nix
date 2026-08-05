@@ -1,4 +1,9 @@
-{ den, inputs, ... }:
+{
+  den,
+  self,
+  inputs,
+  ...
+}:
 {
   den.aspects.tau = {
     includes = [
@@ -149,6 +154,14 @@
         environment.shellAliases.garage = "GARAGE_RPC_SECRET_FILE=${config.age.secrets.garage-rpc-secret.path} garage";
 
         networking.firewall.allowedTCPPorts = [ 3900 ];
+      };
+    checks =
+      { pkgs, ... }:
+      let
+        config = self.nixosConfigurations.tau.config;
+      in
+      {
+        assert-tau-build = config.system.build.toplevel;
       };
   };
 }
