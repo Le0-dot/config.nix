@@ -1,13 +1,16 @@
 { den, lib, ... }:
 {
-  den.policies.system-manager-users-defaults =
+  den.policies.system-manager-define-user =
     { host, user, ... }:
     den.lib.policy.include {
       systemManager.users.users.${user.name} = {
         enable = lib.mkDefault false;
-        isNormalUser = lib.mkDefault true;
+        isNormalUser = true;
       };
     };
 
-  den.schema.host.includes = [ den.policies.system-manager-users-defaults ];
+  den.default.includes = [
+    den.batteries.define-user
+    den.policies.system-manager-define-user
+  ];
 }
