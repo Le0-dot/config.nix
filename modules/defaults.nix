@@ -10,6 +10,7 @@
       # den.batteries.hostname
       den.aspects.nix
       den.aspects.stylix
+      den.aspects.nix-system-graphics
     ];
     nixos = {
       imports = [
@@ -18,10 +19,6 @@
         inputs.quadlet-nix.nixosModules.quadlet
       ];
       system.stateVersion = lib.mkDefault "25.05";
-    };
-    systemManager = {
-      imports = [ inputs.nix-system-graphics.systemModules.default ];
-      system-graphics.enable = true;
     };
     homeManager = {
       imports = [ inputs.agenix.homeManagerModules.default ];
