@@ -96,7 +96,7 @@ hl.bind("SUPER + ESCAPE", hl.dsp.exec_cmd("wlogout -b 2 -L 480 -R 480"))
 hl.bind("SUPER + SPACE", hl.dsp.exec_cmd("tofi-drun --drun-launch=true --padding-left=40%"))
 hl.bind("SUPER + P",
     hl.dsp.exec_cmd(
-        "repo-select ~/projects | xargs -I{} ghostty -e direnv exec {} nvim -c 'WithSession {}/Session.vim' +new-window"))
+        "repo-select ~/projects | xargs -I{} ghostty --working-directory={} -e direnv exec . nvim -c 'WithSession Session.vim'"))
 hl.bind("SUPER + CTRL + V", hl.dsp.exec_cmd("clip-select"))
 hl.bind("SUPER + CTRL + SPACE", hl.dsp.exec_cmd("playerctl -a play-pause"))
 
