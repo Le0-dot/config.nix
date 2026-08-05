@@ -1,6 +1,5 @@
 {
   den,
-  lib,
   config,
   inputs,
   ...
@@ -20,13 +19,15 @@ let
     className = "homeManager";
     ctxName = "hm";
     optionPath = "home-manager";
-    supportedOses = lib.attrNames homeManagerModules;
+    supportedOses = builtins.attrNames homeManagerModules;
     getModule = { host, ... }: homeManagerModules.${host.class};
     forwardPathFn = { user, ... }: userHostPath user.userName;
     schemaIncludes = config.den.schema.hm-host.includes or [ ];
   };
 in
 {
+  den.schema.user.classes = [ "homeManager" ];
+
   disabledModules = [ "${inputs.den}/modules/aspects/batteries/home-manager.nix" ];
 
   den.schema.host.imports = [ result.hostConf ];

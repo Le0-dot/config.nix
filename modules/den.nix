@@ -9,8 +9,6 @@
 
   systems = lib.systems.flakeExposed;
 
-  den.schema.user.classes = [ "homeManager" ];
-
   den.default = {
     includes = [
       # den.batteries.hostname
