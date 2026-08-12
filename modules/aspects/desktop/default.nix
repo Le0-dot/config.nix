@@ -3,7 +3,6 @@
   den.aspects.desktop = {
     includes = [
       den.aspects.desktop.uwsm
-      den.aspects.desktop.kanshi # TODO convert kashi config to pure hyprland lua config
       den.aspects.desktop.tofi
       den.aspects.desktop.dunst
       den.aspects.desktop.waybar
