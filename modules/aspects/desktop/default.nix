@@ -163,11 +163,17 @@
         "/share/xdg-desktop-portal"
       ];
 
-      environment.etc."pam.d/hyprlock".text = ''
-        auth sufficient ${pkgs.fprintd}/lib/security/pam_fprintd.so max_tries=3
-        auth sufficient ${pkgs.sssd}/lib/security/pam_sss.so try_first_pass
-        auth required ${pkgs.linux-pam}/lib/security/pam_deny.so
-      '';
+      environment.etc = {
+        "systemd/user/xdg-desktop-portal.service".source =
+          "${pkgs.xdg-desktop-portal}/share/systemd/user/xdg-desktop-portal.service";
+        "systemd/user/xdg-desktop-portal-hyprland.service".source =
+          "${pkgs.xdg-desktop-portal-hyprland}/share/systemd/user/xdg-desktop-portal-hyprland.service";
+        "pam.d/hyprlock".text = ''
+          auth sufficient ${pkgs.fprintd}/lib/security/pam_fprintd.so max_tries=3
+          auth sufficient ${pkgs.sssd}/lib/security/pam_sss.so try_first_pass
+          auth required ${pkgs.linux-pam}/lib/security/pam_deny.so
+        '';
+      };
     };
   };
 }
