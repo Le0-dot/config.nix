@@ -17,20 +17,14 @@
           profile.name = "docked";
           profile.outputs = [
             {
-              criteria = "$BUILTIN";
-              position = "960,1080";
-            }
-            {
               criteria = "*";
               position = "0,0";
-              mode = "1920x1080@60";
+              mode = "3440x1440@60";
               scale = 1.0;
             }
             {
-              criteria = "**";
-              position = "1920,0";
-              mode = "1920x1080@60";
-              scale = 1.0;
+              criteria = "$BUILTIN";
+              position = "760,1440";
             }
           ];
         }
