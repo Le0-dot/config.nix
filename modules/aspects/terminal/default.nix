@@ -102,6 +102,7 @@
           core.rebase = true;
           pull.rebase = true;
           rerere.enabled = true;
+          push.autoSetupRemote = true;
         };
       };
 
@@ -138,32 +139,6 @@
           map-styles = "bold purple => syntax #5c517c, bold blue => syntax #47557b, bold cyan => syntax #4a6475, bold yellow => syntax #6a635d";
           # Should match the name of the bat theme;
           syntax-theme = "Catppuccin Macchiato";
-        };
-      };
-
-      stylix.targets.lazygit.enable = true;
-      programs.lazygit = {
-        enable = true;
-        settings = {
-          gui = {
-            sidePanelWidth = 0.25;
-            showFileTree = false;
-            showCommandLog = false;
-            showBottomLine = false;
-            showPanelJumps = false;
-          };
-          git = {
-            pagers = [
-              { pager = "delta --paging=never"; }
-              { pager = "delta --paging=never --features=side-by-side"; }
-            ];
-            mainBranches = [
-              "main"
-              "develop"
-              "trunk"
-            ];
-            autoStageResolvedConflicts = false;
-          };
         };
       };
     };
