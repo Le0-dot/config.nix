@@ -1,6 +1,7 @@
 {
   den,
   lib,
+  self,
   inputs,
   ...
 }:
@@ -18,6 +19,7 @@
         inputs.quadlet-nix.nixosModules.quadlet
       ];
       system.stateVersion = lib.mkDefault "25.05";
+      system.configurationRevision = self.rev or null;
     };
     homeManager = {
       imports = [ inputs.agenix.homeManagerModules.default ];
