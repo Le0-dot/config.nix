@@ -1,5 +1,4 @@
 { den, ... }:
-
 {
   den.aspects.terminal = {
     includes = [

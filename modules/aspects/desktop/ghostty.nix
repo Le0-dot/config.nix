@@ -34,10 +34,8 @@
               "alt+j=goto_split:down"
               "alt+k=goto_split:up"
               "alt+l=goto_split:right"
-              # "alt+g=ignore"
-              # "chain=new_tab"
-              # "chain=next_tab"
-              # "chain=text:lazygit"
+              "alt+u=scroll_page_fractional:-0.5"
+              "alt+d=scroll_page_fractional:0.5"
             ];
           };
         };
