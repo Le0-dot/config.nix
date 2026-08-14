@@ -1,9 +1,4 @@
-{
-  den,
-  self,
-  inputs,
-  ...
-}:
+{ den, inputs, ... }:
 {
   den.aspects.tau = {
     includes = [

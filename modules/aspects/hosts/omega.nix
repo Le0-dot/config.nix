@@ -1,7 +1,6 @@
-{ den, self, ... }:
+{ self, ... }:
 {
   den.aspects.omega = {
-    excludes = [ den.batteries.hostname ];
     systemManager = {
       nixpkgs.config.allowUnfree = true;
       home-manager = {
