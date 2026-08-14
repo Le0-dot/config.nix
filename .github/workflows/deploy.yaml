@@ -9,6 +9,11 @@ on:
         description: 'User on the NixOS host'
         required: true
         default: root
+      boot:
+        description: 'Whether to boot or switch'
+        required: true
+        type: boolean
+        default: false
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,8 +26,16 @@ jobs:
         oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
         tags: tag:ci
         ping: ${{ github.event.inputs.host }}
+    - name: Configure ssh for host
+      run: |
+        mkdir -p ~/.ssh
+        cat >> ~/.ssh/config <<EOF
+        Host ${{ github.event.inputs.host }}
+            User ${{ github.event.inputs.user }}
+            StrictHostKeyChecking no
+        EOF
     - name: Connect to host to save its key
-      run: ssh -o StrictHostKeyChecking=no ${{ github.event.inputs.user }}@${{ github.event.inputs.host }} "exit"
+      run: ssh ${{ github.event.inputs.host }} "exit"
     - name: Check out git repository
       uses: actions/checkout@v5
     - name: Install nix
@@ -30,4 +43,9 @@ jobs:
     - name: Enter nix shell
       uses: nicknovitski/nix-develop@v1
     - name: Deploy NixOS flake onto remote system
-      run: make remote-os user=${{ github.event.inputs.user }} host=${{ github.event.inputs.host }}
+      run: |
+        if ${{ github.event.inputs.boot }}; then
+          nix run ".#remote-boot-${{ github.event.inputs.host }}"
+        else
+          nix run ".#remote-switch-${{ github.event.inputs.host }}"
+        fi
