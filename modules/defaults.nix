@@ -14,7 +14,6 @@
     ];
     nixos = {
       imports = [
-        inputs.disko.nixosModules.disko
         inputs.agenix.nixosModules.default
         inputs.quadlet-nix.nixosModules.quadlet
       ];
