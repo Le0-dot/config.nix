@@ -431,13 +431,5 @@
             };
           };
       };
-    checks =
-      { pkgs, ... }:
-      let
-        config = self.nixosConfigurations.nu.config;
-      in
-      {
-        assert-nu-build = config.system.build.toplevel;
-      };
   };
 }

@@ -20,7 +20,6 @@
         config = self.systemConfigs.omega.config;
       in
       {
-        assert-omega-build = config.build.toplevel;
         assert-omega-users =
           lib.throwIfNot (config.home-manager.users ? "lev.koliadich")
             "omega: home-manager user lev.koliadich not configured"

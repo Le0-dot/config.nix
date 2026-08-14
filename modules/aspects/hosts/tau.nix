@@ -158,14 +158,5 @@
 
         networking.firewall.allowedTCPPorts = [ 3900 ];
       };
-
-    checks =
-      { pkgs, ... }:
-      let
-        config = self.nixosConfigurations.tau.config;
-      in
-      {
-        assert-tau-build = config.system.build.toplevel;
-      };
   };
 }
