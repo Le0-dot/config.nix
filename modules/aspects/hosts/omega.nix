@@ -14,17 +14,6 @@
         "d /etc/profiles/per-user 0755 root root -"
       ];
     };
-    packages =
-      { pkgs, ... }:
-      {
-        switch-omega = pkgs.writeShellApplication {
-          name = "switch-omega";
-          runtimeInputs = [ pkgs.system-manager ];
-          text = ''
-            system-manager switch --flake ${self}#omega --sudo
-          '';
-        };
-      };
     checks =
       { lib, pkgs, ... }:
       let
