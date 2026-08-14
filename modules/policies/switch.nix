@@ -34,6 +34,13 @@
               nixos-rebuild boot --flake ${self}#${host.hostName} --target-host ${host.hostName} --sudo "$@"
             '';
           };
+          "remote-install-${host.hostName}" = pkgs.writeShellApplication {
+            name = "remote-install-${host.hostName}";
+            runtimeInputs = [ pkgs.nixos-anywhere ];
+            text = ''
+              	nixos-anywhere --flake ${self}#${host.hostName} --target-host ${host.hostName} "$@"
+            '';
+          };
         };
     };
 
