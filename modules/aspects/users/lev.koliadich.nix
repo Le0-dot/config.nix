@@ -24,7 +24,10 @@
     homeManager =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.tilt ];
+        home.packages = [
+          pkgs.tilt
+          pkgs.kubectl
+        ];
         programs.zsh = {
           envExtra = ''
             if [ -e /etc/profile.d/system-manager-path.sh ]; then
