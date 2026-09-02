@@ -26,7 +26,8 @@
       {
         home.packages = [
           pkgs.tilt
-          pkgs.kubectl
+          pkgs.minikube
+          pkgs.kubernetes-helm
         ];
         programs.zsh = {
           envExtra = ''
