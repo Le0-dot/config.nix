@@ -100,6 +100,7 @@
           core.autocrlf = false;
           core.rebase = true;
           pull.rebase = true;
+          rebase.autosquash = true;
           rerere.enabled = true;
           push.autoSetupRemote = true;
         };
