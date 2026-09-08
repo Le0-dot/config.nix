@@ -40,7 +40,7 @@
               };
             };
             containers.jellyfin-main.containerConfig = {
-              image = "docker.io/jellyfin/jellyfin:10.11.5";
+              image = "docker.io/jellyfin/jellyfin:12.0";
               pod = pods.jellyfin.ref;
               mounts = [
                 (mountVolume {
