@@ -40,8 +40,6 @@ jobs:
       uses: actions/checkout@v5
     - name: Install nix
       uses: cachix/install-nix-action@v31
-    - name: Enter nix shell
-      uses: nicknovitski/nix-develop@v1
     - name: Deploy NixOS flake onto remote system
       run: |
         if ${{ github.event.inputs.boot }}; then
