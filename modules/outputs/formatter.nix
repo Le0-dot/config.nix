@@ -6,6 +6,7 @@
         runtimeInputs = [
           pkgs.nixfmt
           pkgs.deadnix
+          pkgs.kdePackages.qtdeclarative
         ];
         settings = {
           on-unmatched = "info";
@@ -23,6 +24,11 @@
                 "--no-lambda-pattern-names"
               ];
               includes = [ "*.nix" ];
+            };
+            qmlformat = {
+              command = "qmlformat";
+              options = [ "--inplace" ];
+              includes = [ "*.qml" ];
             };
           };
         };
