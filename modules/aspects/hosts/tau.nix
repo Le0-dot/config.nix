@@ -80,6 +80,8 @@
 
         users.users.le0.isNormalUser = true;
 
+        virtualisation.podman.enable = true;
+
         services.tailscale = {
           enable = true;
           authKeyFile = config.age.secrets.tailscale-key.path;
