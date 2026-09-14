@@ -1,0 +1,6 @@
+singleton Audio 1.0 Audio.qml
+singleton Backlight 1.0 Backlight.qml
+singleton Theme 1.0 Theme.qml
+singleton Battery 1.0 Battery.qml
+singleton Datetime 1.0 Datetime.qml
+singleton HyprlandLayout 1.0 HyprlandLayout.qml
