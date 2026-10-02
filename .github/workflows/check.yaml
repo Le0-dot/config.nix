@@ -1,0 +1,12 @@
+name: "Run checks for nix flake"
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install nix
+      uses: cachix/install-nix-action@v31
+    - name: Check out git repository
+      uses: actions/checkout@v5
+    - name: Run checks
+      run: nix flake check
