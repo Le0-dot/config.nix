@@ -36,6 +36,7 @@
               "alt+l=goto_split:right"
               "alt+u=scroll_page_fractional:-0.5"
               "alt+d=scroll_page_fractional:0.5"
+              "ctrl+shift+/=start_search"
             ];
           };
         };
