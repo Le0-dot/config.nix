@@ -1,7 +1,7 @@
 {
   den.aspects.server = {
-    nixos = { ... }: {
-      environment.enableAllTerminfo = true;
+    nixos = { pkgs, ... }: {
+      environment.systemPackages = [ pkgs.ghostty.terminfo ];
       services.openssh.enable = true;
       users = {
         mutableUsers = false;
