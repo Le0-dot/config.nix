@@ -27,7 +27,7 @@
 
         virtualisation.quadlet =
           let
-            inherit (config.virtualisation.quadlet) pods volumes;
+            inherit (config.virtualisation.quadlet) pods volumes images;
           in
           {
             pods.adguardhome = {
@@ -49,13 +49,15 @@
                 };
               };
             };
+
+            images.adguardhome.imageConfig.image = "docker.io/adguard/adguardhome:v0.107.71";
             volumes.adguardhome = btrfsVolume {
               disk = "main";
               partition = "root";
               subvol = "containers/adguardhome/active";
             };
             containers.adguardhome-main.containerConfig = {
-              image = "docker.io/adguard/adguardhome:v0.107.71";
+              image = images.adguardhome.ref;
               pod = pods.adguardhome.ref;
               mounts = [
                 (mountVolume {
