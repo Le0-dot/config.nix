@@ -26,7 +26,7 @@
             text = ''
               [ "$#" -ne 1 ] && echo "Set search directory argument" && exit 1
 
-              repos=$(fd --hidden --max-depth 3 --glob '**/.git' "$1" --exec echo '{//}')
+              repos=$(fd --hidden --max-depth 3 --glob .git "$1" --exec echo '{//}')
               choice=$(echo "$repos" | awk 'BEGIN { FS="/" } { print $NF }' | tofi)
               echo "$repos" | awk -v dir="$choice" 'BEGIN { FS="/" } $NF == dir { print $0 }'
             '';
