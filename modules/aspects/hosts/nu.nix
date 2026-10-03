@@ -112,6 +112,10 @@
                 mountpoint = "/srv/audiobooks";
                 mountOptions = data-mount-options;
               };
+              "audiobooks-testing/active" = {
+                mountpoint = "/srv/audiobooks-testing";
+                mountOptions = data-mount-options;
+              };
               "books/active" = {
                 mountpoint = "/srv/books";
                 mountOptions = data-mount-options;
