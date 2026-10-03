@@ -180,6 +180,7 @@
 
         age.secrets = {
           tailscale-key.file = ../../../secrets/tailscale-key.age;
+          le0-password.file = ../../../secrets/le0-password.age;
         };
 
         environment.systemPackages = [
@@ -188,6 +189,8 @@
           pkgs.jq
         ];
 
+        users.users.le0.isNormalUser = true;
+
         services.tailscale = {
           enable = true;
           authKeyFile = config.age.secrets.tailscale-key.path;
@@ -195,8 +198,28 @@
           extraUpFlags = [
             "--advertise-tags=tag:nix"
             "--ssh"
+            "--accept-routes"
           ];
           services.enable = true;
+        };
+
+        services.samba = {
+          enable = true;
+          users = [
+            rec {
+              name = "le0";
+              password-file = config.age.secrets."${name}-password".path;
+            }
+          ];
+          settings = {
+            "public" = {
+              "path" = "/srv";
+              "public" = "no";
+              "browseable" = "yes";
+              "read only" = "no";
+              "force user" = "root";
+            };
+          };
         };
 
         services.btr-backup = {
