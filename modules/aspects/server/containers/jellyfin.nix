@@ -38,10 +38,6 @@
                 disk = "data";
                 subvol = "anime/active";
               };
-              audiobooks-testing = btrfsVolume {
-                disk = "data";
-                subvol = "audiobooks-testing/active";
-              };
             };
             containers.jellyfin-main.containerConfig = {
               image = "docker.io/jellyfin/jellyfin:12.0";
@@ -74,10 +70,6 @@
                 #   volume = volumes.youtube.ref;
                 #   destination = "/media/youtube";
                 # })
-                (mountVolume {
-                  volume = volumes.audiobooks-testing.ref;
-                  destination = "/media/audiobooks";
-                })
               ];
               devices = [ "/dev/dri" ];
             };
