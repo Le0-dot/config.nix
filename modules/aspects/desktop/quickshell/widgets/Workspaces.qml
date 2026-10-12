@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Hyprland
 
-import ".."
+import "../services"
 
 Rectangle {
     implicitWidth: layout.implicitWidth + Theme.font.pixelSize / 2

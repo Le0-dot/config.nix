@@ -2,11 +2,11 @@
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Bluetooth
-import Quickshell.Services.SystemTray
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
 
+import "services"
 import "widgets"
 
 PanelWindow {
@@ -21,21 +21,6 @@ PanelWindow {
 
     implicitHeight: 44
 
-    component Pill: Rectangle {
-        default required property Item content
-
-        implicitHeight: parent.height
-        implicitWidth: content.implicitWidth + Theme.font.pixelSize * 2
-        radius: Theme.font.pixelSize * 2
-        color: Theme.surface0
-        clip: true
-        onContentChanged: {
-            content.parent = this;
-            content.anchors.centerIn = this;
-            content.visible = true;
-        }
-    }
-
     Item {
         anchors {
             fill: parent
@@ -44,21 +29,45 @@ PanelWindow {
 
         Workspaces {
             anchors {
-                right: clock.left
+                right: center.left
                 rightMargin: 8
                 verticalCenter: parent.verticalCenter
             }
         }
 
-        Pill {
-            id: clock
+        Item {
+            id: center
+
+            property bool pinned: false
+            readonly property bool showTray: hover.hovered || pinned
 
             anchors.centerIn: parent
+            height: parent.height
+            width: showTray ? tray.implicitWidth : clock.implicitWidth
 
-            Text {
-                font: Theme.font
-                text: Datetime.time
-                color: Theme.blue
+            Behavior on width {
+                NumberAnimation {
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+
+            HoverHandler {
+                id: hover
+            }
+
+            Clock {
+                id: clock
+
+                visible: !center.showTray
+            }
+
+            Tray {
+                id: tray
+
+                visible: center.showTray
+                onMenuOpened: center.pinned = true
+                onMenuClosed: center.pinned = false
             }
         }
 
@@ -66,7 +75,7 @@ PanelWindow {
             id: status
 
             anchors {
-                left: clock.right
+                left: center.right
                 leftMargin: 8
                 verticalCenter: parent.verticalCenter
             }
@@ -184,52 +193,6 @@ PanelWindow {
                     font: Theme.font
                     color: Theme.teal
                     text: HyprlandLayout.short
-                }
-            }
-        }
-
-        Pill {
-            id: tray
-
-            anchors {
-                right: parent.right
-                verticalCenter: parent.verticalCenter
-            }
-
-            Row {
-                spacing: 16 / 2
-
-                Repeater {
-                    model: SystemTray.items
-
-                    Item {
-                        id: trayItem
-                        implicitHeight: Theme.font.pixelSize
-                        implicitWidth: implicitHeight
-
-                        Image {
-                            anchors.centerIn: parent
-                            source: modelData.icon
-                            width: parent.width
-                            height: width
-                            smooth: true
-                            fillMode: Image.PreserveAspectFit
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.LeftButton | Qt.RightButton
-                            hoverEnabled: true
-                            onClicked: event => {
-                                if (event.button === Qt.RightButton && modelData.hasMenu) {
-                                    const p = mapToItem(panel.contentItem, event.x, event.y);
-                                    modelData.display(panel, p.x, p.y);
-                                } else {
-                                    modelData.activate();
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
