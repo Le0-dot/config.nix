@@ -5,7 +5,6 @@
       den.aspects.desktop.uwsm
       den.aspects.desktop.tofi
       den.aspects.desktop.dunst
-      den.aspects.desktop.waybar
       den.aspects.desktop.wlogout
     ];
 
@@ -65,6 +64,13 @@
           enable = true;
           systemd.enable = false;
           extraLuaFiles.config.content = ./hyprland.lua;
+        };
+
+        programs.quickshell = {
+          enable = true;
+          systemd.enable = true;
+          configs.default = ./quickshell;
+          activeConfig = "default";
         };
 
         services.hypridle = {
