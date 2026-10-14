@@ -28,13 +28,13 @@ Rectangle {
                     id: workspace
 
                     readonly property bool focused: modelData === Hyprland.focusedMonitor.activeWorkspace.id
-                    readonly property bool exists: Hyprland.workspaces.values.some(w => w.id === modelData)
+                    readonly property bool occupied: Hyprland.toplevels.values.some(w => w.workspace?.id === modelData)
 
                     anchors.centerIn: parent
                     implicitHeight: Theme.font.pixelSize / 2
                     implicitWidth: focused ? height * 4 : height
                     radius: height / 2
-                    color: focused ? Theme.mauve : (exists ? Theme.blue : Theme.subtext1)
+                    color: focused ? Theme.mauve : (occupied ? Theme.blue : Theme.subtext1)
 
                     Behavior on implicitWidth {
                         NumberAnimation {
