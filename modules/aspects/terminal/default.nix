@@ -103,6 +103,10 @@
           rebase.autosquash = true;
           rerere.enabled = true;
           push.autoSetupRemote = true;
+          alias = {
+            fixup-first = "!git commit --fixup=$(git rev-list --max-count-oldest=1 $(git merge-base origin/HEAD HEAD)..HEAD) \"$@\"";
+            autosquash = "!git rebase --autosquash --autostash $(git merge-base origin/HEAD HEAD)";
+          };
         };
       };
 
