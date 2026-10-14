@@ -28,8 +28,6 @@
           lib.warn "Linking ${configAbsolutePath} to ${config.home.homeDirectory}/.config/nvim"
             config.lib.file.mkOutOfStoreSymlink
             configAbsolutePath;
-
-        programs.git.settings.diff.tool = "vimdiff";
       };
   };
 }
