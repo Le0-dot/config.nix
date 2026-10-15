@@ -97,8 +97,24 @@
         ];
         settings = {
           alias = {
-            fixup-first = "!git commit --fixup=$(git rev-list --max-count-oldest=1 $(git merge-base origin/HEAD HEAD)..HEAD) \"$@\"";
-            autosquash = "!git rebase --autosquash --autostash $(git merge-base origin/HEAD HEAD)";
+            amend = "commit --amend --no-edit";
+            fixup = ''
+              !script() {
+                commit=$(git rev-parse --verify --quiet "''${@:-HEAD}^{commit}") || {
+                  echo 'fixup: usage: git fixup [<commit>]' >&2
+                  exit 1
+                }
+                git commit --fixup="$commit" --edit
+              }; script'';
+            autosquash = ''
+              !script() {
+                commit=$(git rev-parse --verify --quiet "''${@:-origin/HEAD}^{commit}") || {
+                  echo 'autosquash: usage: git autosquash [<revision>]' >&2 
+                  exit 1
+                }
+                base=$(git merge-base "$commit" HEAD)
+                git rebase --autosquash --autostash "$base"
+              }; script'';
           };
           init.defaultBranch = "main";
           interactive.singleKey = true;
