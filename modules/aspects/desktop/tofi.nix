@@ -25,10 +25,10 @@
             ];
             text = ''
               [ "$#" -ne 1 ] && echo "Set search directory argument" && exit 1
+              [ ! -d "$1" ] && echo "$1 is not a directory" && exit 1
 
-              repos=$(fd --hidden --max-depth 3 --glob .git "$1" --exec echo '{//}')
-              choice=$(echo "$repos" | awk 'BEGIN { FS="/" } { print $NF }' | tofi)
-              echo "$repos" | awk -v dir="$choice" 'BEGIN { FS="/" } $NF == dir { print $0 }'
+              choice=$(fd --base-directory "$1" --format '{//}' --max-depth 3 --hidden --exact .git | tofi)
+              echo "''${1%/}/$choice"
             '';
           })
         ];
