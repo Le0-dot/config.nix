@@ -21,6 +21,8 @@
       den.aspects.terminal.television
       (den.aspects.terminal.neovim "projects/config.nvim")
       den.aspects.tailscale
+
+      (den.batteries.unfree [ "claude-code" ])
     ];
     homeManager =
       { pkgs, ... }:
@@ -29,7 +31,14 @@
           pkgs.tilt
           pkgs.minikube
           pkgs.kubernetes-helm
+          pkgs.openspec
         ];
+
+        programs.uv.enable = true;
+        programs.ty.enable = true;
+        programs.npm.enable = true;
+        programs.claude-code.enable = true;
+
         programs.zsh = {
           envExtra = ''
             if [ -e /etc/profile.d/system-manager-path.sh ]; then

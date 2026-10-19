@@ -3,7 +3,6 @@
   den.aspects.terminal = {
     includes = [
       (den.batteries.user-shell "zsh")
-      (den.batteries.unfree [ "claude-code" ])
     ];
 
     homeManager = { pkgs, config, ... }: {
@@ -24,14 +23,6 @@
         colors = "always";
         icons = "auto";
       };
-
-      programs.uv.enable = true;
-      programs.ty.enable = true;
-      programs.npm.enable = true;
-      programs.opencode.enable = true;
-      programs.claude-code.enable = true;
-
-      home.packages = [ pkgs.openspec ];
 
       programs.zsh = {
         defaultKeymap = "emacs";

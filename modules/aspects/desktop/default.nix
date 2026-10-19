@@ -57,6 +57,7 @@
         home.packages = [
           pkgs.brightnessctl
           pkgs.pwvucontrol
+          pkgs.wl-clipboard-rs
         ];
 
         stylix.targets.hyprland.enable = true;
