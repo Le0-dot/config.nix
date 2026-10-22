@@ -26,8 +26,6 @@ let
   };
 in
 {
-  den.schema.user.classes = [ "homeManager" ];
-
   disabledModules = [ "${inputs.den}/modules/aspects/batteries/home-manager.nix" ];
 
   den.schema.host.imports = [ result.hostConf ];
