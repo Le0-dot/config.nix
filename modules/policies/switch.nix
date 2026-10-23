@@ -17,7 +17,7 @@
             name = "remote-switch-${host.hostName}";
             runtimeInputs = [ pkgs.nixos-rebuild ];
             text = ''
-              nixos-rebuild switch --flake ${self}#${host.hostName} --target-host ${host.hostName} --sudo "$@"
+              nixos-rebuild switch --flake ${self}#${host.hostName} --build-host ${host.hostName} --target-host ${host.hostName} --sudo "$@"
             '';
           };
           "boot-${host.hostName}" = pkgs.writeShellApplication {
@@ -31,7 +31,7 @@
             name = "remote-boot-${host.hostName}";
             runtimeInputs = [ pkgs.nixos-rebuild ];
             text = ''
-              nixos-rebuild boot --flake ${self}#${host.hostName} --target-host ${host.hostName} --sudo "$@"
+              nixos-rebuild boot --flake ${self}#${host.hostName} --build-host ${host.hostName} --target-host ${host.hostName} --sudo "$@"
             '';
           };
           "remote-install-${host.hostName}" = pkgs.writeShellApplication {
