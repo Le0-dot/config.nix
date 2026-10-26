@@ -24,10 +24,11 @@
               pkgs.tofi
             ];
             text = ''
-              [ "$#" -ne 1 ] && echo "Set search directory argument" && exit 1
-              [ ! -d "$1" ] && echo "$1 is not a directory" && exit 1
+              [ "$#" -ne 1 ] && echo "Set search directory argument" >&2 && exit 1
+              [ ! -d "$1" ] && echo "$1 is not a directory" >&2 && exit 1
 
               choice=$(fd --base-directory "$1" --format '{//}' --max-depth 3 --hidden --exact .git | tofi)
+              [ -z "$choice" ] && echo "nothing was chosen" >&2 && exit 1
               echo "''${1%/}/$choice"
             '';
           })
