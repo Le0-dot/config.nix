@@ -3,6 +3,7 @@
     nixos = { pkgs, ... }: {
       environment.systemPackages = [ pkgs.ghostty.terminfo ];
       services.openssh.enable = true;
+      security.polkit.enable = true;
       users = {
         mutableUsers = false;
         users.root.openssh.authorizedKeys.keys = [

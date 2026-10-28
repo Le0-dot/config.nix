@@ -4,6 +4,7 @@
     includes = [
       den.aspects.bootloader
       den.aspects.server
+      den.aspects.auto-upgrade
       den.aspects.tailscale
       den.aspects.samba
 
