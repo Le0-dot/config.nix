@@ -14,4 +14,5 @@ in
   "secrets/tailscale-key.age".publicKeys = all;
   "secrets/le0-password.age".publicKeys = all;
   "secrets/garage-rpc-secret.age".publicKeys = all;
+  "secrets/sparkyfitness.age".publicKeys = all;
 }

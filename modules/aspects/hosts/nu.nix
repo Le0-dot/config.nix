@@ -22,6 +22,7 @@
       den.aspects.nu.prowlarr
       den.aspects.nu.radarr
       den.aspects.nu.sonarr
+      den.aspects.nu.sparkyfitness
       den.aspects.nu.transmission
     ];
 
@@ -186,6 +187,7 @@
         age.secrets = {
           tailscale-key.file = ../../../secrets/tailscale-key.age;
           le0-password.file = ../../../secrets/le0-password.age;
+          sparkyfitness.file = ../../../secrets/sparkyfitness.age;
         };
 
         environment.systemPackages = [
