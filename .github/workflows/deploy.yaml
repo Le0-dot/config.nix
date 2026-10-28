@@ -6,11 +6,6 @@ on:
         description: 'NixOS host to deploy to'
         type: string
         required: true
-      user:
-        description: 'User on the NixOS host'
-        type: string
-        required: true
-        default: root
     secrets:
       TS_OAUTH_CLIENT_ID:
         required: true
@@ -22,11 +17,11 @@ on:
         description: 'NixOS host to deploy to'
         type: string
         required: true
-      user:
-        description: 'User on the NixOS host'
-        type: string
+    secrets:
+      TS_OAUTH_CLIENT_ID:
         required: true
-        default: root
+      TS_OAUTH_SECRET:
+        required: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -44,14 +39,8 @@ jobs:
         mkdir -p ~/.ssh
         cat >> ~/.ssh/config <<EOF
         Host ${{ inputs.host }}
-            User ${{ inputs.user }}
+            User ci
             StrictHostKeyChecking no
         EOF
-    - name: Connect to host to save its key
-      run: ssh ${{ inputs.host }} "exit"
-    - name: Check out git repository
-      uses: actions/checkout@v5
-    - name: Install nix
-      uses: cachix/install-nix-action@v31
-    - name: Deploy NixOS flake onto remote system
-      run: nix run ".#remote-switch-${{ inputs.host }}"
+    - name: Trigger nixos-upgrade.service
+      run: ssh ${{ inputs.host }} "systemctl start nixos-upgrade.service"
