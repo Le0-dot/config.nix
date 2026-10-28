@@ -11,11 +11,6 @@ on:
         type: string
         required: true
         default: root
-      boot:
-        description: 'Whether to boot or switch'
-        type: boolean
-        required: true
-        default: false
     secrets:
       TS_OAUTH_CLIENT_ID:
         required: true
@@ -32,11 +27,6 @@ on:
         type: string
         required: true
         default: root
-      boot:
-        description: 'Whether to boot or switch'
-        type: boolean
-        required: true
-        default: false
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -64,9 +54,4 @@ jobs:
     - name: Install nix
       uses: cachix/install-nix-action@v31
     - name: Deploy NixOS flake onto remote system
-      run: |
-        if ${{ inputs.boot }}; then
-          nix run ".#remote-boot-${{ inputs.host }}"
-        else
-          nix run ".#remote-switch-${{ inputs.host }}"
-        fi
+      run: nix run ".#remote-switch-${{ inputs.host }}"

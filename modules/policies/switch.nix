@@ -20,20 +20,6 @@
               nixos-rebuild switch --flake ${self}#${host.hostName} --build-host ${host.hostName} --target-host ${host.hostName} --sudo "$@"
             '';
           };
-          "boot-${host.hostName}" = pkgs.writeShellApplication {
-            name = "boot-${host.hostName}";
-            runtimeInputs = [ pkgs.nixos-rebuild ];
-            text = ''
-              nixos-rebuild boot --flake ${self}#${host.hostName} --sudo "$@"
-            '';
-          };
-          "remote-boot-${host.hostName}" = pkgs.writeShellApplication {
-            name = "remote-boot-${host.hostName}";
-            runtimeInputs = [ pkgs.nixos-rebuild ];
-            text = ''
-              nixos-rebuild boot --flake ${self}#${host.hostName} --build-host ${host.hostName} --target-host ${host.hostName} --sudo "$@"
-            '';
-          };
           "remote-install-${host.hostName}" = pkgs.writeShellApplication {
             name = "remote-install-${host.hostName}";
             runtimeInputs = [ pkgs.nixos-anywhere ];
