@@ -24,6 +24,27 @@
           ];
         }
       ];
+
+      # Test unit to check that ci can start a single service without sudo
+      systemd.services.ci-test = {
+        description = "No-op unit for testing ci polkit access";
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = lib.getExe' pkgs.coreutils "true";
+        };
+      };
+
+      security.polkit.enable = true;
+      security.polkit.extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          if (action.id == "org.freedesktop.systemd1.manage-units" &&
+              action.lookup("unit") == "ci-test.service" &&
+              action.lookup("verb") == "start" &&
+              subject.user == "ci") {
+            return polkit.Result.YES;
+          }
+        });
+      '';
     };
   };
 }
