@@ -1,4 +1,4 @@
-name: Deploy on merge
+name: "Deploy all servers on merge"
 on:
   pull_request:
     types: [closed]

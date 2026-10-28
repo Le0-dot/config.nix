@@ -17,16 +17,10 @@ on:
         description: 'NixOS host to deploy to'
         type: string
         required: true
-    secrets:
-      TS_OAUTH_CLIENT_ID:
-        required: true
-      TS_OAUTH_SECRET:
-        required: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - run: echo "Deployment for ${{ inputs.host }}"
     - name: Connect to Tailscale
       uses: tailscale/github-action@v4
       with:
@@ -34,13 +28,5 @@ jobs:
         oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
         tags: tag:ci
         ping: ${{ inputs.host }}
-    - name: Configure ssh for host
-      run: |
-        mkdir -p ~/.ssh
-        cat >> ~/.ssh/config <<EOF
-        Host ${{ inputs.host }}
-            User ci
-            StrictHostKeyChecking no
-        EOF
     - name: Trigger nixos-upgrade.service
-      run: ssh ${{ inputs.host }} "systemctl start nixos-upgrade.service"
+      run: tailscale ssh ci@${{ inputs.host }} 'systemctl start nixos-upgrade.service'
