@@ -1,0 +1,35 @@
+name: "Promote main to a host deploy branch"
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: 'NixOS host to promote to'
+        type: string
+        required: true
+      sha:
+        description: 'Commit on main to promote (defaults to tip of main)'
+        type: string
+        required: false
+jobs:
+  promote:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      HOST: ${{ inputs.host }}
+      SHA: ${{ inputs.sha }}
+    steps:
+    - name: Check out git repository
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.OWNER_PAT }}
+    - name: Check deploy branch exists
+      run: git rev-parse --verify -q "origin/deploy/$HOST"
+    - name: Resolve commit to promote
+      run: echo "SHA=$(git rev-parse "${SHA:-origin/main}^{commit}")" >> "$GITHUB_ENV"
+    - name: Check commit is on main
+      run: git merge-base --is-ancestor "$SHA" origin/main
+    - name: Check promotion is a fast-forward
+      run: git merge-base --is-ancestor "origin/deploy/$HOST" "$SHA"
+    - name: Fast-forward deploy branch
+      run: git push origin "$SHA:refs/heads/deploy/$HOST"
