@@ -7,6 +7,8 @@
       den.aspects.auto-upgrade
       den.aspects.tailscale
       den.aspects.samba
+
+      den.aspects.tau.nginx
     ];
 
     disk = {
