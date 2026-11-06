@@ -7,23 +7,6 @@
       den.aspects.auto-upgrade
       den.aspects.tailscale
       den.aspects.samba
-
-      den.aspects.nu.adguardhome
-      den.aspects.nu.audiobookshelf
-      den.aspects.nu.baikal
-      den.aspects.nu.bentopdf
-      den.aspects.nu.homeassistant
-      den.aspects.nu.immich
-      den.aspects.nu.jellyfin
-      den.aspects.nu.jellyseerr
-      den.aspects.nu.komga
-      den.aspects.nu.ntfy
-      den.aspects.nu.paperless-ngx
-      den.aspects.nu.prowlarr
-      den.aspects.nu.radarr
-      den.aspects.nu.sonarr
-      den.aspects.nu.sparkyfitness
-      den.aspects.nu.transmission
     ];
 
     disk =
