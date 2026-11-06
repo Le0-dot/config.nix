@@ -1,12 +1,18 @@
 {
-  den.hosts.x86_64-linux.nu = {
-    users.ci.classes = [ "user" ];
-  };
-  den.hosts.x86_64-linux.tau = {
-    users.ci.classes = [ "user" ];
-  };
-  den.hosts.x86_64-linux.omega = {
-    class = "systemManager";
-    users."lev.koliadich".classes = [ "homeManager" ];
+  den.hosts = {
+    nu = {
+      system = "x86_64-linux";
+      users.ci.classes = [ "user" ];
+    };
+    tau = {
+      system = "x86_64-linux";
+      users.ci.classes = [ "user" ];
+      containers.nginx.class = "quadlet";
+    };
+    omega = {
+      system = "x86_64-linux";
+      class = "systemManager";
+      users."lev.koliadich".classes = [ "homeManager" ];
+    };
   };
 }
