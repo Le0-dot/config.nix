@@ -15,7 +15,6 @@
     nixos = {
       imports = [
         inputs.agenix.nixosModules.default
-        inputs.quadlet-nix.nixosModules.quadlet
       ];
       system.stateVersion = lib.mkDefault "25.05";
       system.configurationRevision = self.rev or self.dirtyRev or null;

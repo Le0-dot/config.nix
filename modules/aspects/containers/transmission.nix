@@ -1,0 +1,57 @@
+{ self, ... }:
+{
+  den.aspects.transmission.quadlet =
+    {
+      osConfig,
+      pods,
+      volumes,
+      ...
+    }:
+    let
+      btrfsVolume = self.lib.btrfsVolume osConfig.disko;
+      mountVolume = self.lib.mountVolume;
+    in
+    {
+      pods.transmission.podConfig = {
+        publishPorts = [
+          "9091:9091"
+          "51413:51413/tcp"
+          "51413:51413/udp"
+        ];
+        networks = [ "podman" ];
+        labels = {
+          "tailscale.service.transmission.https" = "9091";
+        };
+      };
+      volumes = {
+        transmission = btrfsVolume {
+          disk = "main";
+          partition = "root";
+          subvol = "containers/transmission/active";
+        };
+        downloads = btrfsVolume {
+          disk = "data";
+          subvol = "downloads/active";
+        };
+      };
+      containers.transmission-main.containerConfig = {
+        image = "lscr.io/linuxserver/transmission:4.0.6";
+        pod = pods.transmission.ref;
+        mounts = [
+          (mountVolume {
+            volume = volumes.transmission.ref;
+            subpath = "/config";
+            destination = "/config";
+          })
+          (mountVolume {
+            volume = volumes.downloads.ref;
+            destination = "/downloads";
+          })
+        ];
+        environments = {
+          PUID = "0";
+          PGID = "0";
+        };
+      };
+    };
+}

@@ -20,6 +20,9 @@
         adaptArgs =
           args:
           args
+          // {
+            osConfig = args.config;
+          }
           // lib.genAttrs [
             "builds"
             "containers"
