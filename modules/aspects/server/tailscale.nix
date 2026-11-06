@@ -13,6 +13,10 @@
         };
 
         config = lib.mkIf config.services.tailscale.enable {
+          # TODO: merge with the other den.aspects.tailscale in modules/aspects/tailscale.nix.
+          # NOTE: reads config.virtualisation.quadlet.pods, so every host including
+          # this aspect needs the quadlet module, which is only imported when the
+          # host declares a container with class = "quadlet" (host.quadlet.enable).
           systemd.services =
             let
               labels = lib.attrsets.concatMapAttrs (
