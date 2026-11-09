@@ -1,5 +1,14 @@
 {
   den.aspects.nginx = {
+    oci-contaier = {
+      nginx = {
+        image = "docker.io/library/nginx:latest";
+        ports = [ "8080:80" ];
+        labels = {
+          "tailscale.service.nginx.https" = "8080";
+        };
+      };
+    };
     quadlet =
       { pods, ... }:
       {

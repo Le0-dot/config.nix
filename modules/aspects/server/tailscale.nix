@@ -21,7 +21,7 @@
             let
               labels = lib.attrsets.concatMapAttrs (
                 _name: pod: pod.podConfig.labels or { }
-              ) config.virtualisation.quadlet.pods;
+              ) config.virtualisation.quadlet.pods or config.virtualisation.oci-containers.containers;
               filteredLabels = lib.attrsets.filterAttrs (
                 label: value:
                 lib.strings.hasPrefix "tailscale.service." label && lib.strings.hasSuffix ".https" label

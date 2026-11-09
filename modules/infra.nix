@@ -25,7 +25,7 @@
     tau = {
       system = "x86_64-linux";
       users.ci.classes = [ "user" ];
-      containers.nginx.class = "quadlet";
+      containers.nginx.class = "oci-container";
     };
     omega = {
       system = "x86_64-linux";

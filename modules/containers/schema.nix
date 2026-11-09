@@ -35,7 +35,10 @@ in
                   options = {
                     class = lib.mkOption {
                       description = "Container runtime this container is deployed with.";
-                      type = lib.types.enum [ "quadlet" ];
+                      type = lib.types.enum [
+                        "quadlet"
+                        "oci-container"
+                      ];
                       example = "quadlet";
                     };
                     containerName = lib.mkOption {
