@@ -1,6 +1,6 @@
 {
   den.aspects.nginx = {
-    oci-contaier = {
+    oci-container = {
       nginx = {
         image = "docker.io/library/nginx:latest";
         ports = [ "8080:80" ];
