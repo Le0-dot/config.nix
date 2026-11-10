@@ -13,6 +13,12 @@ in
 {
   "secrets/tailscale-key.age".publicKeys = all;
   "secrets/le0-password.age".publicKeys = all;
-  "secrets/garage-rpc-secret.age".publicKeys = all;
-  "secrets/sparkyfitness.age".publicKeys = all;
+  "secrets/garage-rpc-secret.age".publicKeys = [
+    omega-user
+    tau
+  ];
+  "secrets/sparkyfitness.age".publicKeys = [
+    omega-user
+    nu
+  ];
 }
