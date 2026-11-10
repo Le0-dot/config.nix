@@ -20,7 +20,7 @@
       den.aspects.desktop.ghostty
       den.aspects.terminal.television
       (den.aspects.terminal.neovim "projects/config.nvim")
-      den.aspects.tailscale
+      den.aspects.tailscale-userspace
 
       (den.batteries.unfree [ "claude-code" ])
     ];

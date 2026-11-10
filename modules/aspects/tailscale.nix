@@ -1,5 +1,71 @@
 {
-  den.aspects.tailscale = { host, ... }: {
+  den.aspects.tailscale-services = {
+    nixos =
+      {
+        lib,
+        pkgs,
+        config,
+        ...
+      }:
+      let
+        servicesFromLabels =
+          unit: labels:
+          lib.attrsets.mapAttrs'
+            (
+              label: port:
+              lib.attrsets.nameValuePair (lib.strings.removePrefix "tailscale.service." (
+                lib.strings.removeSuffix ".https" label
+              )) { inherit port unit; }
+            )
+            (
+              lib.attrsets.filterAttrs (
+                label: _: lib.strings.hasPrefix "tailscale.service." label && lib.strings.hasSuffix ".https" label
+              ) labels
+            );
+
+        quadletServices = lib.attrsets.concatMapAttrs (
+          name: pod: servicesFromLabels "${name}-pod.service" (pod.podConfig.labels or { })
+        ) (config.virtualisation.quadlet.pods or { });
+
+        ociServices = lib.attrsets.concatMapAttrs (
+          _name: container: servicesFromLabels "${container.serviceName}.service" container.labels
+        ) config.virtualisation.oci-containers.containers;
+
+        duplicates = lib.lists.intersectLists (lib.attrNames quadletServices) (lib.attrNames ociServices);
+      in
+      {
+        assertions = [
+          {
+            assertion = duplicates == [ ];
+            message = "Tailscale services defined by both a quadlet pod and an oci-container: ${toString duplicates}";
+          }
+        ];
+
+        systemd.services = lib.attrsets.mapAttrs' (
+          service:
+          { port, unit }:
+          lib.attrsets.nameValuePair "${service}-tailscale" {
+            serviceConfig = {
+              Type = "oneshot";
+              RemainAfterExit = true;
+            };
+            environment = {
+              TAILSCALE_SERVICE = service;
+              PROXY_PORT = port;
+            };
+            path = [ pkgs.tailscale ];
+            script = "tailscale serve --service=svc:$TAILSCALE_SERVICE --https=443 $PROXY_PORT";
+            preStop = "tailscale serve drain svc:$TAILSCALE_SERVICE";
+            postStop = "tailscale serve clear svc:$TAILSCALE_SERVICE";
+            upheldBy = [ unit ];
+            partOf = [ unit ];
+            after = [ "tailscaled.service" ];
+          }
+        ) (quadletServices // ociServices);
+      };
+  };
+
+  den.aspects.tailscale-userspace = { host, ... }: {
     homeManager =
       { pkgs, lib, ... }:
       let
