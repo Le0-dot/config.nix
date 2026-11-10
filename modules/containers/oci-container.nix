@@ -13,10 +13,7 @@
           "oci-containers"
           "containers"
         ];
-        adaptArgs =
-          args:
-          args
-          // { osConfig = args.config; } (name: args.config.virtualisation.oci-containers.containers.${name});
+        adaptArgs = args: args // { osConfig = args.config; };
       }
     );
 
