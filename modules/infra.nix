@@ -31,7 +31,7 @@
     tau = {
       system = "x86_64-linux";
       users.ci.classes = [ "user" ];
-      disks.main.device = "/dev/sda";
+      disks.main.device = "/dev/disk/by-id/ata-N900-512_RNG00000000000002475";
       containers.nginx.class = "oci-container";
     };
     omega = {
