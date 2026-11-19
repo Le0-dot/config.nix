@@ -1,5 +1,6 @@
 pragma Singleton
 import Quickshell
+import QtQuick
 import Quickshell.Io
 
 Singleton {
@@ -9,15 +10,24 @@ Singleton {
     property bool full: online && percentage == 100
     property bool critical: !online && percentage <= 20
 
+    // sysfs doesn't emit inotify events, so watchChanges never fires; poll instead.
+    Timer {
+        interval: 5000
+        running: true
+        repeat: true
+        onTriggered: {
+            capacityFile.reload();
+            onlineFile.reload();
+        }
+    }
+
     FileView {
         id: capacityFile
         path: "/sys/class/power_supply/BAT0/capacity"
-        watchChanges: true
     }
 
     FileView {
         id: onlineFile
         path: "/sys/class/power_supply/AC/online"
-        watchChanges: true
     }
 }
