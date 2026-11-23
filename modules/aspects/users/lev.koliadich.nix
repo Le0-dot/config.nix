@@ -25,7 +25,7 @@
       (den.batteries.unfree [ "claude-code" ])
     ];
     homeManager =
-      { pkgs, ... }:
+      { pkgs, lib, ... }:
       {
         home.packages = [
           pkgs.tilt
@@ -52,6 +52,21 @@
               exec uwsm start default
             fi
           '';
+        };
+
+        systemd.user.services.minikube = {
+          Unit = {
+            Description = "Minikube Kubernetes cluster";
+            After = [ "network-online.target" ];
+          };
+          Service = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            TimeoutStartSec = "10min";
+            ExecStart = "${lib.getExe pkgs.minikube} start";
+            ExecStop = "${lib.getExe pkgs.minikube} stop";
+          };
+          Install.WantedBy = [ "default.target" ];
         };
       };
   };
