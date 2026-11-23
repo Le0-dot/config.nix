@@ -8,6 +8,7 @@
       den.lib.policy.route {
         fromClass = "oci-container";
         intoClass = host.class;
+        receiver = host;
         path = [
           "virtualisation"
           "oci-containers"

@@ -13,6 +13,7 @@
       den.lib.policy.route {
         fromClass = "disko";
         intoClass = host.class;
+        receiver = host;
         path = [
           "disko"
           "devices"

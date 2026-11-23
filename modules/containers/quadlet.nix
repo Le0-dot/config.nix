@@ -13,6 +13,7 @@
       den.lib.policy.route {
         fromClass = "quadlet";
         intoClass = host.class;
+        receiver = host;
         path = [
           "virtualisation"
           "quadlet"
