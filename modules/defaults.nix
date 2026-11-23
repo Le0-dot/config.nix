@@ -11,6 +11,7 @@
       den.aspects.nix
       den.aspects.stylix
       den.aspects.nix-system-graphics
+      den.batteries.user-aspects
     ];
     nixos = {
       imports = [
